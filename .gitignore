@@ -1,0 +1,15 @@
+node_modules
+/dist
+/codegen
+
+*.d.ts
+*.js
+*.js.map
+*.min.js
+*.css
+*.log
+*.tgz
+.taskkey
+
+!rollup.config.js
+!map_sources.js
