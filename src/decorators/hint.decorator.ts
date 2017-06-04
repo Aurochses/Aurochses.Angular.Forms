@@ -14,7 +14,7 @@
  * @param template        The Name that appears in form fields as a watermark.
  * @param params          Depending of template some additional values as a dictionary.
  */
-export function Hint(template: string, params: { key: string, value: any }[]) {
+export function Hint(template: string, params: { key: any, value: any }[]) {
     // the original decorator
     function hintInternal(target: Object, name: string): void {
         let hintMetadata = new HintMetadata(target, name, template, params);

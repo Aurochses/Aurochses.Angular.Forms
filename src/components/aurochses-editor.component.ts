@@ -6,25 +6,22 @@ import { AurochsesFormService } from '../services/aurochses-form.service';
 
 @Component({
     selector: 'aurochses-editor',
-    template: `<textarea *ngIf="model.type == 'textarea'" [id]="name" [readOnly]='model.readonly'
-                          [formControlName]="name" [attr.rows]="getParams('rows')" [attr.cols]="getParams('cols')">
-                </textarea>
-                <md-select *ngIf="model.type == 'enum'" [id]="name" placeholder="{{model.label}}" [formControlName]="name">
-                    <md-option *ngFor="let option of enumValues" [value]="option.key">
-                    {{option.val}}
-                    </md-option>
-                </md-select>
-                <md-input-container [formGroup]="formGroup">
-                    <input mdInput placeholder="{{model.label}}" type="{{model.type}}">
-                </md-input-container>
-                <span class="fa fa-warning text-danger form-control-feedback"
-                      [hidden]="formGroup.controls[name].valid || formGroup.controls[name].pristine"></span>
-                <small class="text-danger"
-                       [hidden]="formGroup.controls[name].valid || formGroup.controls[name].pristine">
-                  <span *ngFor="let error of errors">{{ formGroup.controls[name].messages[error] }}</span>
-                </small>
+    template: `<div [formGroup]="formGroup">
+                    <textarea *ngIf="model.type == 'textarea'" [id]="name" [readOnly]='model.readonly'
+                            [formControlName]="name" [attr.rows]="getParams('rows')" [attr.cols]="getParams('cols')">
+                    </textarea>
+                    <md-select *ngIf="model.type == 'enum'" [id]="name" placeholder="{{model.label}}" [formControlName]="name">
+                        <md-option *ngFor="let option of params" [value]="option.key">
+                        {{option.value}}
+                        </md-option>
+                    </md-select>
+                    <md-input-container *ngIf="model.type != 'enum'">
+                        <input mdInput placeholder="{{model.label}}" type="{{model.type}}" [formControlName]="name">
+                        <md-error *ngFor="let error of errors">{{ formGroup.controls[name].messages[error] }}</md-error>
+                    </md-input-container>
+                </div>
                 <div [formGroup]="formGroup">
-                <input *ngIf="model.type == 'hidden'" [id]="name" [formControlName]="name" type="hidden" />
+                    <input *ngIf="model.type == 'hidden'" [id]="name" [formControlName]="name" type="hidden" />
                 </div>`
 })
 export class AurochsesEditorComponent implements OnInit {
