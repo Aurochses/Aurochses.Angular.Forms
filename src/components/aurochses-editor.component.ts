@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DisplayMetadata } from '../decorators/display.decorator';
-import { HintMetadata } from '../decorators/hint.decorator';
+import { DisplayMetadata } from '../decorators/display';
+import { HintMetadata } from '../decorators/hint';
 import { AurochsesFormService } from '../services/aurochses-form.service';
 
 @Component({
@@ -74,16 +74,21 @@ export class AurochsesEditorComponent implements OnInit {
         let editorModel = (<any>this.formGroup)[`${AurochsesFormService.editorModel}`];
         // get type from form
         if (editorModel) {
-            // get elementary types, this might get overwritten later according to decorators found
-            if (typeof editorModel[this.name] === 'string') {
-                this.model.type = 'text';
+
+            switch (editorModel[this.name]) {
+                case 'string':
+                    this.model.type = 'text';
+                    break;
+                case 'boolean':
+                    this.model.type = 'boolean';
+                    break;
+                case 'number':
+                    this.model.type = 'number';
+                    break;
+                default:
+                    break;
             }
-            if (typeof editorModel[this.name] === 'boolean') {
-                this.model.type = 'boolean';
-            }
-            if (typeof editorModel[this.name] === 'number') {
-                this.model.type = 'number';
-            }
+
             if (editorModel[this.name] instanceof Date) {
                 this.model.type = 'calendar';
             }
