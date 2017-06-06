@@ -1,28 +1,12 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DisplayMetadata } from '../decorators/display';
-import { HintMetadata } from '../decorators/hint';
+import { DisplayMetadata, HiddenMetadata, HintMetadata, PlaceHolderMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { RangeMetadata } from '../decorators/validate/metadata';
 import { AurochsesFormService } from '../services/aurochses-form.service';
 
 @Component({
     selector: 'aurochses-editor',
-    template: `<div [formGroup]="formGroup">
-                    <textarea *ngIf="model.type == 'textarea'" [id]="name" [readOnly]='model.readonly'
-                            [formControlName]="name" [attr.rows]="getParams('rows')" [attr.cols]="getParams('cols')">
-                    </textarea>
-                    <md-select *ngIf="model.type == 'enum'" [id]="name" placeholder="{{model.label}}" [formControlName]="name">
-                        <md-option *ngFor="let option of params" [value]="option.key">
-                        {{option.value}}
-                        </md-option>
-                    </md-select>
-                    <md-input-container *ngIf="model.type != 'enum'">
-                        <input mdInput placeholder="{{model.label}}" type="{{model.type}}" [formControlName]="name">
-                        <md-error *ngFor="let error of errors">{{ formGroup.controls[name].messages[error] }}</md-error>
-                    </md-input-container>
-                </div>
-                <div [formGroup]="formGroup">
-                    <input *ngIf="model.type == 'hidden'" [id]="name" [formControlName]="name" type="hidden" />
-                </div>`
+    template: `<date [formGroup]="formGroup" [name]="name"></date>`
 })
 export class AurochsesEditorComponent implements OnInit {
 
@@ -75,7 +59,7 @@ export class AurochsesEditorComponent implements OnInit {
         // get type from form
         if (editorModel) {
 
-            switch (editorModel[this.name]) {
+            switch (typeof editorModel[this.name]) {
                 case 'string':
                     this.model.type = 'text';
                     break;
@@ -96,18 +80,19 @@ export class AurochsesEditorComponent implements OnInit {
             this.model.label = editorModel[`${DisplayMetadata.displayName}${this.name}`] || this.model.label || this.name;
             this.model.tooltip = editorModel[`${DisplayMetadata.displayDesc}${this.name}`] || this.model.tooltip || this.name;
             // render as range id there is a range definition
-            // if (editorModel[`__hasRangeFrom__${this.name}`] && Number(editorModel[`__hasRangeFrom__${this.name}`])) {
-            //     this.fromValue = <number>editorModel[`__hasRangeFrom__${this.name}`];
-            //     this.type = 'range';
-            // }
-            // if (editorModel[`__hasRangeTo__${this.name}`] && Number(editorModel[`__hasRangeTo__${this.name}`])) {
-            //     this.toValue = <number>editorModel[`__hasRangeTo__${this.name}`];
-            //     this.type = 'range';
-            // }
-            // // placeholder
-            // if (editorModel[`__hasWatermark__${this.name}`]) {
-            //     this.waterMark = editorModel[`__watermark__${this.name}`];
-            // }
+            if (editorModel[`${RangeMetadata.hasRangeFrom}${this.name}`]
+                && Number(editorModel[`${RangeMetadata.hasRangeFrom}${this.name}`])) {
+                this.model.fromValue = <number>editorModel[`${RangeMetadata.hasRangeFrom}${this.name}`];
+                this.model.type = 'range';
+            }
+            if (editorModel[`${RangeMetadata.hasRangeTo}_${this.name}`] && Number(editorModel[`${RangeMetadata.hasRangeTo}${this.name}`])) {
+                this.model.toValue = <number>editorModel[`${RangeMetadata.hasRangeTo}${this.name}`];
+                this.model.type = 'range';
+            }
+            // placeholder
+            if (editorModel[`${PlaceHolderMetadata.hasWatermark}${this.name}`]) {
+                this.model.waterMark = editorModel[`${PlaceHolderMetadata.watermark}${this.name}`];
+            }
             // templates
             if (editorModel[`${HintMetadata.hasHint}${this.name}`]) {
                 this.model.type = (<string>editorModel[`${HintMetadata.hint}${this.name}`]).toLowerCase();
@@ -116,14 +101,14 @@ export class AurochsesEditorComponent implements OnInit {
                 }
             }
 
-            // // render hidden fields as hidden even in forms
-            // if (editorModel[`__isHidden__${this.name}`]) {
-            //     this.type = 'hidden';
-            // }
-            // // check readonly
-            // if (editorModel[`__isReadonly__${this.name}`]) {
-            //     this.readonly = !!editorModel[`__isReadonly__${this.name}`];
-            // }
+            // render hidden fields as hidden even in forms
+            if (editorModel[`${HiddenMetadata.isHidden}${this.name}`]) {
+                this.model.type = 'hidden';
+            }
+            // check readonly
+            if (editorModel[`${ReadonlyMetadata.isReadonly}${this.name}`]) {
+                this.model.readonly = !!editorModel[`${ReadonlyMetadata.isReadonly}${this.name}`];
+            }
         }
     }
 

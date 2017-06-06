@@ -1,5 +1,5 @@
-import { MaxLengthObject } from './max-length';
-import { MinLengthObject } from './min-length';
+import { MaxLengthObject } from './shared/max-length.object';
+import { MinLengthObject } from './shared/min-length.object';
 
 export function StringLength(min: number, max: number, minMessage?: string, maxMessage?: string) {
     return function stringLengthInternal(target: Object, property: string | symbol): void {

@@ -1,4 +1,4 @@
-import { PatternObject } from './pattern';
+import { PatternObject } from './shared/pattern.object';
 
 export function Email(message?: string) {
     // tslint:disable-next-line:max-line-length
