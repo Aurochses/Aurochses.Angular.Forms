@@ -5,15 +5,15 @@ import { FormGroup } from '@angular/forms';
     selector: 'date',
     template: `
                 <md-input-container [formGroup]="formGroup">
-                    <input mdInput [mdDatepicker]="datepicker" [formControlName]="name">
-                    <button [mdDatepickerToggle]="datepicker"></button>
+                    <input mdInput [mdDatepicker]="datepicker" [formControlName]="control.name" [readOnly]="control.isReadonly">
+                    <button *ngIf="!control.isReadonly" mdSuffix [mdDatepickerToggle]="datepicker"></button>
                 </md-input-container>
                 <md-datepicker #datepicker></md-datepicker>`
 })
 export class DateComponent {
 
     @Input()
-    name: string;
+    control: Array<{ key: number, name: string, type: string, isReadonly: boolean }>;
 
     @Input()
     formGroup: FormGroup;

@@ -6,7 +6,7 @@ import { AurochsesFormService } from '../services/aurochses-form.service';
 
 @Component({
     selector: 'aurochses-editor',
-    template: `<date [formGroup]="formGroup" [name]="name"></date>`
+    template: `<date [formGroup]="formGroup"></date>`
 })
 export class AurochsesEditorComponent implements OnInit {
 

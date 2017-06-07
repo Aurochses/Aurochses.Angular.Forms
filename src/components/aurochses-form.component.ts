@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DisplayGroupMetadata, DisplayMetadata } from '../decorators/display/metadata';
+import { DisplayGroupMetadata, DisplayMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
 import { AurochsesFormService } from '../services/aurochses-form.service';
 
 @Component({
     selector: 'aurochses-form',
-    template: `<ng-container *ngFor="let editor of editors" [ngSwitch]="getType(editor.editor)">
-                    <date *ngSwitchCase="date" [formGroup]="formGroup" [name]="editor.editor"></date>
+    template: `<ng-container *ngFor="let control of controls" [ngSwitch]="getType(control.name)">
+                    <date *ngSwitchCase="'date'" [formGroup]="formGroup" [control]="control"></date>
                </ng-container>`
 })
 
@@ -15,45 +15,59 @@ export class AurochsesFormComponent implements OnInit {
     @Input()
     formGroup: FormGroup;
 
-    editors: Array<{ key: number, editor: string }>;
+    controls: Array<{ key: number, name: string, type: string, isReadonly: boolean }>;
+
+    editorModel: any;
+
     constructor() {
-        this.editors = new Array<{ key: number, editor: string }>();
+        this.controls = new Array<{ key: number, name: string, type: string, isReadonly: boolean }>();
     }
 
     ngOnInit() {
-        for (let controlName in this.formGroup.controls) {
-            if (this.formGroup.controls.hasOwnProperty(controlName)) {
+        this.editorModel = (<any>this.formGroup)[`${AurochsesFormService.editorModel}`];
+
+        for (let name in this.formGroup.controls) {
+            if (this.formGroup.controls.hasOwnProperty(name)) {
                 let editorModel = (<any>this.formGroup)[`${AurochsesFormService.editorModel}`];
 
                 if (editorModel) {
-                    this.editors.push({
-                        key: editorModel[`${DisplayMetadata.displayOrder}${controlName}`],
-                        editor: controlName
+                    this.controls.push({
+                        key: editorModel[`${DisplayMetadata.displayOrder}${name}`],
+                        name: name,
+                        type: this.getType(name),
+                        isReadonly: this.isReadonly(name)
                     });
                 }
             }
         }
 
-        this.editors.sort((e, n) => e.key - n.key);
+
+
+        this.controls.sort((e, n) => e.key - n.key);
     }
 
-    getType(name: string) {
-        let editorModel = (<any>this.formGroup)[`${AurochsesFormService.editorModel}`];
+    getType(name: string): string {
 
-        if (typeof editorModel[name] === 'string') {
+        if (typeof this.editorModel[name] === 'string') {
             return 'text';
         }
 
-        if (typeof editorModel[name] === 'boolean') {
+        if (typeof this.editorModel[name] === 'boolean') {
             return 'boolean';
         }
 
-        if (typeof editorModel[name] === 'number') {
+        if (typeof this.editorModel[name] === 'number') {
             return 'number';
         }
 
-        if (editorModel[name] instanceof Date) {
+        if (this.editorModel[name] instanceof Date) {
             return 'date';
         }
+
+        return '';
+    }
+
+    isReadonly(name: string): boolean {
+        return !!this.editorModel[`${ReadonlyMetadata.isReadonly}${name}`];
     }
 }
