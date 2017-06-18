@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AurochsesEditorComponent } from './components/aurochses-editor.component';
 import { AurochsesFormComponent } from './components/aurochses-form.component';
 import { DateComponent } from './components/editors/date.component';
+import { HiddenComponent } from './components/editors/hidden.component';
 import { AurochsesFormService } from './services/aurochses-form.service';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { AurochsesFormService } from './services/aurochses-form.service';
     ],
     declarations: [
         DateComponent,
+        HiddenComponent,
         AurochsesFormComponent,
         AurochsesEditorComponent
     ],
