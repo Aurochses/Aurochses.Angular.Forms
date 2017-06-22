@@ -29,11 +29,18 @@
         ],
         "member-ordering": [
             true,
-            "public-before-private",
-            "static-before-instance",
-            "variables-before-functions"
+            {
+                "order": [
+                    "static-field",
+                    "instance-field",
+                    "constructor",
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
         ],
-        "no-any": false,
+        "no-any": true,
         "no-arg": true,
         "no-bitwise": true,
         "no-conditional-assignment": true,
@@ -62,7 +69,7 @@
         "no-use-before-declare": true,
         "no-var-keyword": true,
         "no-var-requires": true,
-        "object-literal-sort-keys": false,
+        "object-literal-sort-keys": true,
         "one-line": [
             true,
             "check-open-brace",
