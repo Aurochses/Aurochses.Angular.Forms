@@ -2,13 +2,15 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { ControlModel } from '../../models/control.model';
+import { CustomErrorModel } from '../../models/custom-error.model';
+import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'text',
     template: `<md-input-container [formGroup]="formGroup">
                     <input mdInput [formControlName]="control.name" [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder" [required]="control.isRequired">
-                    <md-error *ngFor="let message of messages()">{{ message }}</md-error>
+                    <md-error>{{ message() }}</md-error>
                 </md-input-container>`
 })
 
@@ -19,4 +21,10 @@ export class TextComponent {
 
     @Input()
     formGroup: FormGroup;
+
+    message(): string {
+        return (<CustomFormControl>this.formGroup.controls[this.control.name]).errorMessages
+            .filter((error: CustomErrorModel) => this.formGroup.controls[this.control.name].hasError(error.type))
+            .map((error: CustomErrorModel) => error.message)[0];
+    }
 }

@@ -1,3 +1,4 @@
+export { Disabled } from './disabled';
 export { Display } from './display';
 export { DisplayGroup } from './display-group';
 export { Hidden } from './hidden';

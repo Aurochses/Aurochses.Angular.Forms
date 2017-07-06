@@ -17,9 +17,10 @@ export class CustomFormControl extends FormControl {
         validator?: ValidatorFn | ValidatorFn[] | null,
         isReadonly: boolean = false,
         isRequired: boolean = false,
+        isDisabled: boolean = false,
         errorMessages:  Array<CustomErrorModel> = new Array<CustomErrorModel>()
     ) {
-        super('', validator);
+        super({value: '', disabled: isDisabled}, validator);
 
         this.type = type;
         this.display = display;

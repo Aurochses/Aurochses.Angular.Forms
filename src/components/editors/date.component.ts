@@ -12,7 +12,7 @@ import { CustomFormControl } from '../../services/custom-form-control';
                     <input mdInput [mdDatepicker]="datepicker" [formControlName]="control.name" [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder" [required]="control.isRequired">
                     <button *ngIf="!control.isReadonly" mdSuffix [mdDatepickerToggle]="datepicker"></button>
-                    <md-error *ngFor="let message of messages()">{{ message }}</md-error>
+                    <md-error>{{ message() }}</md-error>
                 </md-input-container>
                 <md-datepicker #datepicker></md-datepicker>`
 })
@@ -24,9 +24,9 @@ export class DateComponent {
     @Input()
     formGroup: FormGroup;
 
-    messages(): string[] {
+    message(): string {
         return (<CustomFormControl>this.formGroup.controls[this.control.name]).errorMessages
             .filter((error: CustomErrorModel) => this.formGroup.controls[this.control.name].hasError(error.type))
-            .map((error: CustomErrorModel) => error.message);
+            .map((error: CustomErrorModel) => error.message)[0];
     }
 }

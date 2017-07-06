@@ -13,6 +13,7 @@ import { CustomFormControl } from '../services/custom-form-control';
     template: `<ng-container *ngFor="let control of controls" [ngSwitch]="control.type">
                     <hidden *ngSwitchCase="'hidden'" [formGroup]="formGroup" [control]="control"></hidden>
                     <date *ngSwitchCase="'date'" [formGroup]="formGroup" [control]="control"></date>
+                    <text *ngSwitchCase="'text'" [formGroup]="formGroup" [control]="control"></text>
                </ng-container>`
 })
 
@@ -33,9 +34,8 @@ export class AurochsesFormComponent implements OnInit {
                 let control = <CustomFormControl>this.formGroup.controls[name];
                 if (control) {
                     let model: ControlModel = {
-                        // isDisabled: false,
                         isReadonly: control.isReadonly,
-                        // isRequired: this.control[`${RequiredMetadata.isRequired}${name}`],
+                        isRequired: control.isRequired,
                         key: control.display.order,
                         name: name,
                         placeholder: control.display.name,

@@ -3,10 +3,9 @@ import { HiddenMetadata } from './metadata/hidden.metadata';
 export function Hidden(hide = true) {
     return function hiddenInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(target, `${HiddenMetadata.isHidden}${property.toString()}`, {
-            value: hide,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: hide
         });
     };
 }
-

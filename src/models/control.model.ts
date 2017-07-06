@@ -3,7 +3,6 @@ export class ControlModel {
     name: string;
     placeholder: string;
     type: string;
-    // isDisabled: boolean;
     isReadonly: boolean;
-    // isRequired: boolean;
+    isRequired: boolean;
 }

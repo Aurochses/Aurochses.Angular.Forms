@@ -12,7 +12,7 @@ import {
     RequiredMetadata
 } from '../decorators/validate/metadata';
 
-import { DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { DisabledMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
 
 import { Display } from '../decorators/display/models/display.model';
 
@@ -141,12 +141,13 @@ export class AurochsesFormService {
                     let inputType = this.getType(modelInstance, propName);
                     let readonly = this.isReadonly(modelInstance, propName);
                     let required = this.isRequired(modelInstance, propName);
+                    let disabled = this.isDisabled(modelInstance, propName);
 
                     if (validators.length === 0) {
-                        map[propName] = new CustomFormControl(inputType, display, null, readonly, required);
+                        map[propName] = new CustomFormControl(inputType, display, null, readonly, required, disabled);
                     }
                     if (validators.length >= 1) {
-                        map[propName] = new CustomFormControl(inputType, display, validators, readonly, required, errorMessages);
+                        map[propName] = new CustomFormControl(inputType, display, validators, readonly, required, disabled, errorMessages);
                     }
                     // (<any>errGroup)[propName] = errorMessages;
                 }
@@ -224,5 +225,11 @@ export class AurochsesFormService {
         let prototype = Object.getPrototypeOf(instance);
 
         return !!prototype[`${RequiredMetadata.isRequired}${name}`];
+    }
+
+    private isDisabled<T>(instance: T, name: string): boolean {
+        let prototype = Object.getPrototypeOf(instance);
+
+        return !!prototype[`${DisabledMetadata.isDisabled}${name}`];
     }
 }
