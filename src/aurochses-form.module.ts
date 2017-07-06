@@ -5,13 +5,24 @@ import { HttpModule } from '@angular/http';
 import { MdDatepickerModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AurochsesEditorComponent } from './components/aurochses-editor.component';
 import { AurochsesFormComponent } from './components/aurochses-form.component';
 import { DateComponent } from './components/editors/date.component';
 import { HiddenComponent } from './components/editors/hidden.component';
+import { TextComponent } from './components/editors/text.component';
+import { TextAreaComponent } from './components/editors/textarea.component';
 import { AurochsesFormService } from './services/aurochses-form.service';
 
 @NgModule({
+    declarations: [
+        DateComponent,
+        TextComponent,
+        TextAreaComponent,
+        HiddenComponent,
+        AurochsesFormComponent
+    ],
+    exports: [
+        AurochsesFormComponent
+    ],
     imports: [
         CommonModule,
         BrowserAnimationsModule,
@@ -22,15 +33,6 @@ import { AurochsesFormService } from './services/aurochses-form.service';
         MdSelectModule,
         FormsModule,
         ReactiveFormsModule
-    ],
-    exports: [
-        AurochsesFormComponent
-    ],
-    declarations: [
-        DateComponent,
-        HiddenComponent,
-        AurochsesFormComponent,
-        AurochsesEditorComponent
     ],
     providers: [
         AurochsesFormService

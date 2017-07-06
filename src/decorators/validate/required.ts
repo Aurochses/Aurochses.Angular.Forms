@@ -3,15 +3,15 @@ import { RequiredMetadata } from './metadata/required.metadata';
 export function Required(message?: string) {
     return function requiredInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(target, `${RequiredMetadata.isRequired}${property.toString()}`, {
-            get: function () { return true; },
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: true
         });
 
         Object.defineProperty(target, `${RequiredMetadata.errRequired}${property.toString()}`, {
-            value: message || `The field ${property.toString()} is required`,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: message || `The field ${property.toString()} is required`
         });
     };
 }
