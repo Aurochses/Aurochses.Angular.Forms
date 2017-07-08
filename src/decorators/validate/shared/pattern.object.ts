@@ -1,17 +1,17 @@
 import { PatternMetadata } from '../metadata/pattern.metadata';
 
 export class PatternObject {
-    constructor(public target: any, public key: string, public pattern: RegExp, public message?: string) {
+    constructor(public target: Object, public key: string, public pattern: RegExp, public message?: string) {
         Object.defineProperty(target, `${PatternMetadata.hasPattern}${key}`, {
-            value: pattern,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: pattern
         });
 
         Object.defineProperty(target, `${PatternMetadata.errPattern}${key}`, {
-            value: message || `The field ${key} must fullfill the pattern ${pattern}`,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: message || `The field ${key} must fullfill the pattern ${pattern}`
         });
     }
 }

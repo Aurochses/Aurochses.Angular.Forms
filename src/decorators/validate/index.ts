@@ -2,6 +2,8 @@ export { Compare } from './compare';
 export { Email } from './email';
 export { MaxLength} from './max-length';
 export { MinLength} from './min-length';
+export { Max} from './max';
+export { Min} from './min';
 export { Pattern } from './pattern';
 export { Range } from './range';
 export { Required } from './required';

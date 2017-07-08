@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-// import { CustomError } from '../models/custom-error';
+import { AurochsesValidators } from './validators';
 
 import {
     CompareMetadata,
     MaxLengthMetadata,
+    MaxMetadata,
     MinLengthMetadata,
+    MinMetadata,
     PatternMetadata,
     RangeMetadata,
     RequiredMetadata
@@ -19,61 +21,12 @@ import { Display } from '../decorators/display/models/display.model';
 import { CustomErrorModel } from '../models/custom-error.model';
 import { CustomFormControl } from './custom-form-control';
 
-// function validateCompare(p: string) {
-//     let changeEventWasAdded: boolean = false;
-//     return function (formControl: FormControl) {
-//         let form: FormGroup = formControl.root as FormGroup;
-//         if (form && form.controls && !changeEventWasAdded) {
-//             form.controls[p].valueChanges.subscribe(() => {
-//                 formControl.updateValueAndValidity();
-//             });
-//             changeEventWasAdded = true;
-//         }
-//         if (formControl.value) {
-//             return (!formControl.value || formControl.value === (<any>formControl.root)[`controls`][p].value) ? null : {
-//                 'compare': {
-//                     valid: false
-//                 }
-//             };
-//         }
-//     };
-// }
-
-// function validateRange(from: number | Date, to: number | Date) {
-
-//     return function (formControl: FormControl) {
-//         if ((Number(from) || Number(to)) && Number(formControl.value)) {
-//             from = Number(from);
-//             to = Number(to);
-//             let value = Number(formControl.value);
-//             return (!from || value >= from) && (!to || value <= to) ? null : {
-//                 'range': {
-//                     valid: false
-//                 }
-//             };
-//         }
-//         if ((Date.parse(from.toString()) || Date.parse(to.toString())) && Date.parse(formControl.value)) {
-//             from = Date.parse(from.toString());
-//             to = Date.parse(to.toString());
-//             let value = Date.parse(formControl.value);
-//             return (!from || value >= from) && (!to || value <= to) ? null : {
-//                 'range': {
-//                     valid: false
-//                 }
-//             };
-//         }
-//     };
-// }
-
-
 @Injectable()
 export class AurochsesFormService {
 
     constructor(private formBuilder: FormBuilder) { }
 
     public build<T>(type: new () => T): FormGroup | null {
-
-        let form: FormGroup;
         let modelInstance = new type();
 
         if (modelInstance) {
@@ -83,91 +36,57 @@ export class AurochsesFormService {
                 if (propName) {
                     let validators = new Array<ValidatorFn>();
                     let errorMessages = new Array<CustomErrorModel>();
-                    let prototype = Object.getPrototypeOf(modelInstance);
-
-                    // if (`${CompareMetadata.hasCompareProperty}${propName}` in prototype) {
-                    //     errorMessages.push(
-                    //         new CustomErrorModel('compare', prototype[`${CompareMetadata.errCompareProperty}${propName}`])
-                    //     );
-                    //     validators.push(validateCompare(prototype[`${CompareMetadata.withCompare}${propName}`]));
-                    // }
-
-                    if (`${MaxLengthMetadata.hasMaxLength}${propName}` in prototype) {
-                        errorMessages.push(
-                            new CustomErrorModel('maxlength', prototype[`${MaxLengthMetadata.errMaxLength}${propName}`])
-                            );
-                        let maxLength = parseInt(prototype[`${MaxLengthMetadata.hasMaxLength}${propName}`], 10);
-                        validators.push(Validators.maxLength(maxLength));
-                    }
-
-                    if (`${MinLengthMetadata.hasMinLength}${propName}` in prototype) {
-                        errorMessages.push(
-                            new CustomErrorModel('minlength', prototype[`${MinLengthMetadata.errMinLength}${propName}`])
-                        );
-                        let minLength = parseInt(prototype[`${MinLengthMetadata.hasMinLength}${propName}`], 10);
-                        validators.push(Validators.minLength(minLength));
-                    }
-
-                    if (`${PatternMetadata.hasPattern}${propName}` in prototype) {
-                        errorMessages.push(
-                            new CustomErrorModel('pattern', prototype[`${PatternMetadata.errPattern}${propName}`])
-                        );
-                        let pattern = new RegExp(prototype[`${PatternMetadata.hasPattern}${propName}`]);
-                        validators.push(Validators.pattern(pattern));
-                    }
-
-                    // if (`${RangeMetadata.hasRangeFrom}${propName}` in prototype
-                    //     || `${RangeMetadata.hasRangeTo}${propName}` in prototype) {
-                    //     errorMessages.push(
-                    //         new CustomErrorModel('range', prototype[`${RangeMetadata.errRange}${propName}`])
-                    //     );
-                    //     let from: number | Date = Number(prototype[`${RangeMetadata.hasRangeFrom}${propName}`]);
-                    //     let to: number | Date = Number(prototype[`${RangeMetadata.hasRangeTo}${propName}`]);
-                    //     if (!from && !to) {
-                    //         from = Date.parse(from.toString());
-                    //         to = Date.parse(to.toString());
-                    //     }
-                    //     validators.push(validateRange(from, to));
-                    // }
-
-                    if (`${RequiredMetadata.isRequired}${propName}` in prototype) {
-                        errorMessages.push(
-                            new CustomErrorModel('required', prototype[`${RequiredMetadata.errRequired}${propName}`])
-                        );
-                        validators.push(Validators.required);
-                    }
 
                     let display = this.getDisplay(modelInstance, propName);
                     let inputType = this.getType(modelInstance, propName);
                     let readonly = this.isReadonly(modelInstance, propName);
-                    let required = this.isRequired(modelInstance, propName);
                     let disabled = this.isDisabled(modelInstance, propName);
+                    let required = this.isRequired(modelInstance, propName, errorMessages, validators);
+                    let maxLength = this.getMaxLength(modelInstance, propName, errorMessages, validators);
+                    let minLength = this.getMinLength(modelInstance, propName, errorMessages, validators);
+                    let max = this.getMax(modelInstance, propName, errorMessages, validators);
+                    let min = this.getMin(modelInstance, propName, errorMessages, validators);
+                    let pattern = this.getPattern(modelInstance, propName, errorMessages, validators);
+                    let compare = this.getCompare(modelInstance, propName, errorMessages, validators);
 
                     if (validators.length === 0) {
-                        map[propName] = new CustomFormControl(inputType, display, null, readonly, required, disabled);
+                        map[propName] = new CustomFormControl(
+                            inputType,
+                            display,
+                            readonly,
+                            required,
+                            disabled,
+                            maxLength,
+                            minLength,
+                            max,
+                            min,
+                            pattern,
+                            compare
+                        );
                     }
                     if (validators.length >= 1) {
-                        map[propName] = new CustomFormControl(inputType, display, validators, readonly, required, disabled, errorMessages);
+                        map[propName] = new CustomFormControl(
+                            inputType,
+                            display,
+                            readonly,
+                            required,
+                            disabled,
+                            maxLength,
+                            minLength,
+                            max,
+                            min,
+                            pattern,
+                            compare,
+                            validators,
+                            errorMessages
+                        );
                     }
-                    // (<any>errGroup)[propName] = errorMessages;
                 }
             }
-            // tODO: debug this place.
-            form = this.formBuilder.group(map);
-            // (<any>form)[`${AurochsesFormService.editorModel}`] = modelInstance;
 
-            // for (let propName in errGroup) {
-            //     if (propName) {
-            //         if (!<CustomFormControl>form.controls[propName]) {
-            //             continue;
-            //         }
-
-            //         (<CustomFormControl>form.controls[propName]).messages = (<any>errGroup)[propName];
-            //     }
-            // }
-
-            return form;
+            return this.formBuilder.group(map);
         }
+
         return null;
     }
 
@@ -221,15 +140,169 @@ export class AurochsesFormService {
         return !!prototype[`${ReadonlyMetadata.isReadonly}${name}`];
     }
 
-    private isRequired<T>(instance: T, name: string): boolean {
-        let prototype = Object.getPrototypeOf(instance);
-
-        return !!prototype[`${RequiredMetadata.isRequired}${name}`];
-    }
-
     private isDisabled<T>(instance: T, name: string): boolean {
         let prototype = Object.getPrototypeOf(instance);
 
         return !!prototype[`${DisabledMetadata.isDisabled}${name}`];
+    }
+
+    private isRequired<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): boolean {
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${RequiredMetadata.isRequired}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('required', prototype[`${RequiredMetadata.errRequired}${name}`])
+            );
+            validators.push(Validators.required);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private getMaxLength<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): number | null {
+
+        let prototype = Object.getPrototypeOf(instance);
+        let maxLength = null;
+
+        if (`${MaxLengthMetadata.hasMaxLength}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('maxlength', prototype[`${MaxLengthMetadata.errMaxLength}${name}`])
+            );
+
+            maxLength = parseInt(prototype[`${MaxLengthMetadata.hasMaxLength}${name}`], 10);
+            validators.push(Validators.maxLength(maxLength));
+        }
+
+        return maxLength;
+    }
+
+    private getMinLength<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): number | null {
+
+        let prototype = Object.getPrototypeOf(instance);
+        let minLength = null;
+
+        if (`${MinLengthMetadata.hasMinLength}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('minlength', prototype[`${MinLengthMetadata.errMinLength}${name}`])
+            );
+
+            minLength = parseInt(prototype[`${MinLengthMetadata.hasMinLength}${name}`], 10);
+            validators.push(Validators.minLength(minLength));
+        }
+
+        return minLength;
+    }
+
+    private getMax<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): number | null {
+
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${MaxMetadata.hasMax}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('max', prototype[`${MaxMetadata.errMax}${name}`])
+            );
+            let max: number | Date = Number(prototype[`${MaxMetadata.hasMax}${name}`]);
+            if (!max) {
+                max = Date.parse(max.toString());
+            }
+
+            validators.push(AurochsesValidators.max(max));
+
+            return max;
+        }
+
+        return null;
+    }
+
+    private getMin<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): number | null {
+
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${MinMetadata.hasMin}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('min', prototype[`${MinMetadata.errMin}${name}`])
+            );
+            let min: number | Date = Number(prototype[`${MinMetadata.hasMin}${name}`]);
+            if (!min) {
+                min = Date.parse(min.toString());
+            }
+
+            validators.push(AurochsesValidators.min(min));
+
+            return min;
+        }
+
+        return null;
+    }
+
+    private getPattern<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): boolean {
+
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${PatternMetadata.hasPattern}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('pattern', prototype[`${PatternMetadata.errPattern}${name}`])
+            );
+
+            validators.push(Validators.pattern(new RegExp(prototype[`${PatternMetadata.hasPattern}${name}`])));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private getCompare<T>(
+        instance: T,
+        name: string,
+        errorMessages: Array<CustomErrorModel>,
+        validators: Array<ValidatorFn>
+    ): boolean {
+
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${CompareMetadata.hasCompareProperty}${name}` in prototype) {
+            errorMessages.push(
+                new CustomErrorModel('compare', prototype[`${CompareMetadata.errCompareProperty}${name}`])
+            );
+
+            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`]));
+
+            return true;
+        }
+
+        return false;
     }
 }

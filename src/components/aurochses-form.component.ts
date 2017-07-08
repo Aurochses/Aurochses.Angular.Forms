@@ -37,6 +37,10 @@ export class AurochsesFormComponent implements OnInit {
                         isReadonly: control.isReadonly,
                         isRequired: control.isRequired,
                         key: control.display.order,
+                        max: control.max,
+                        maxLength: control.maxLength,
+                        min: control.min,
+                        minLength: control.minLength,
                         name: name,
                         placeholder: control.display.name,
                         type: control.type
