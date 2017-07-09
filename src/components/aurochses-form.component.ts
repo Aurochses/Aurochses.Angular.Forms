@@ -14,6 +14,7 @@ import { CustomFormControl } from '../services/custom-form-control';
                     <hidden *ngSwitchCase="'hidden'" [formGroup]="formGroup" [control]="control"></hidden>
                     <date *ngSwitchCase="'date'" [formGroup]="formGroup" [control]="control"></date>
                     <text *ngSwitchCase="'text'" [formGroup]="formGroup" [control]="control"></text>
+                    <aurochses-form *ngSwitchCase="'object'" [formGroup]="control"></aurochses-form>
                </ng-container>`
 })
 
