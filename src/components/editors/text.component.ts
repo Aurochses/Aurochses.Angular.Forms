@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ControlModel } from '../../models/control.model';
 import { CustomErrorModel } from '../../models/custom-error.model';
 import { CustomFormControl } from '../../services/custom-form-control';
 
@@ -29,7 +28,7 @@ import { CustomFormControl } from '../../services/custom-form-control';
 export class TextComponent {
 
     @Input()
-    control: ControlModel;
+    control: CustomFormControl;
 
     @Input()
     formGroup: FormGroup;

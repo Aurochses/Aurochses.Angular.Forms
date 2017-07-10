@@ -20,6 +20,8 @@ import { Display } from '../decorators/display/models/display.model';
 
 import { CustomErrorModel } from '../models/custom-error.model';
 import { CustomFormControl } from './custom-form-control';
+import { CustomFormGroup } from './custom-form-group';
+import { InputType } from './input.type';
 
 @Injectable()
 export class AurochsesFormService {
@@ -43,14 +45,17 @@ export class AurochsesFormService {
             if (instance.hasOwnProperty(property)) {
 
                 let inputType = this.getType(instance, property);
+                let display = this.getDisplay(instance, property);
 
-                if (inputType === 'object') {
-                    map[property] = this.formBuilder.group(this.iterate(instance[property]));
+                if (inputType === InputType.object) {
+                    map[property] = new CustomFormGroup(
+                        this.formBuilder.group(this.iterate(instance[property])).controls, inputType, display
+                    );
                 } else {
                     let validators = new Array<ValidatorFn>();
                     let errorMessages = new Array<CustomErrorModel>();
 
-                    let display = this.getDisplay(instance, property);
+
                     let readonly = this.isReadonly(instance, property);
                     let disabled = this.isDisabled(instance, property);
                     let required = this.isRequired(instance, property, errorMessages, validators);
@@ -62,6 +67,7 @@ export class AurochsesFormService {
                     let compare = this.getCompare(instance, property, errorMessages, validators);
 
                     map[property] = new CustomFormControl(
+                        property,
                         inputType,
                         display,
                         readonly,
@@ -101,34 +107,34 @@ export class AurochsesFormService {
         return display;
     }
 
-    private getType<T>(instance: T, name: keyof T): string {
+    private getType<T>(instance: T, name: keyof T): InputType {
         let prototype = Object.getPrototypeOf(instance);
 
         if (`${HiddenMetadata.isHidden}${name}` in prototype && prototype[`${HiddenMetadata.isHidden}${name}`] === true) {
-            return 'hidden';
+            return InputType.hidden;
         }
 
         if (typeof instance[name] === 'string') {
-            return 'text';
+            return InputType.text;
         }
 
         if (typeof instance[name] === 'boolean') {
-            return 'boolean';
+            return InputType.boolean;
         }
 
         if (typeof instance[name] === 'number') {
-            return 'number';
+            return InputType.number;
         }
 
         if (instance[name] instanceof Date) {
-            return 'date';
+            return InputType.date;
         }
 
         if (typeof instance[name] === 'object') {
-            return 'object';
+            return InputType.object;
         }
 
-        return '';
+        return InputType.default;
     }
 
     private isReadonly<T>(instance: T, name: string): boolean {
