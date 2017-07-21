@@ -15,6 +15,8 @@ import { InputType } from '../services/input.type';
                     <hidden *ngSwitchCase="inputType.hidden" [formGroup]="formGroup" [control]="control"></hidden>
                     <date *ngSwitchCase="inputType.date" [formGroup]="formGroup" [control]="control"></date>
                     <text *ngSwitchCase="inputType.text" [formGroup]="formGroup" [control]="control"></text>
+                    <boolean *ngSwitchCase="inputType.boolean" [formGroup]="formGroup" [control]="control"></boolean>
+                    <number *ngSwitchCase="inputType.number" [formGroup]="formGroup" [control]="control"></number>
                     <aurochses-form *ngSwitchCase="inputType.object" [formGroup]="control"></aurochses-form>
                </ng-container>`
 })
