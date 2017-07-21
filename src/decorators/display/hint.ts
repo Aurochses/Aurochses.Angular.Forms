@@ -1,23 +1,23 @@
 import { HintMetadata } from './metadata/hint.metadata';
 
-export function Hint(template: string, params: { key: any, value: any }[]) {
+export function Hint(template: string, params: { key: {}, value: {} }[]) {
     return function hintInternal(target: Object, name: string): void {
         Object.defineProperty(target, `${HintMetadata.hint}${name}`, {
-            value: template,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: template
         });
 
         Object.defineProperty(target, `${HintMetadata.hintParams}${name}`, {
-            value: params,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: params
         });
 
         Object.defineProperty(target, `${HintMetadata.hasHint}${name}`, {
-            value: true,
+            configurable: false,
             enumerable: false,
-            configurable: false
+            value: true
         });
     };
 }

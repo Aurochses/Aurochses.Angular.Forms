@@ -20,6 +20,8 @@ import { Display } from '../decorators/display/models/display.model';
 
 import { CustomErrorModel } from '../models/custom-error.model';
 import { CustomFormControl } from './custom-form-control';
+import { CustomFormGroup } from './custom-form-group';
+import { InputType } from './input.type';
 
 @Injectable()
 export class AurochsesFormService {
@@ -30,64 +32,61 @@ export class AurochsesFormService {
         let modelInstance = new type();
 
         if (modelInstance) {
-            let map: { [key: string]: FormControl; } = {};
-
-            for (let propName in modelInstance) {
-                if (propName) {
-                    let validators = new Array<ValidatorFn>();
-                    let errorMessages = new Array<CustomErrorModel>();
-
-                    let display = this.getDisplay(modelInstance, propName);
-                    let inputType = this.getType(modelInstance, propName);
-                    let readonly = this.isReadonly(modelInstance, propName);
-                    let disabled = this.isDisabled(modelInstance, propName);
-                    let required = this.isRequired(modelInstance, propName, errorMessages, validators);
-                    let maxLength = this.getMaxLength(modelInstance, propName, errorMessages, validators);
-                    let minLength = this.getMinLength(modelInstance, propName, errorMessages, validators);
-                    let max = this.getMax(modelInstance, propName, errorMessages, validators);
-                    let min = this.getMin(modelInstance, propName, errorMessages, validators);
-                    let pattern = this.getPattern(modelInstance, propName, errorMessages, validators);
-                    let compare = this.getCompare(modelInstance, propName, errorMessages, validators);
-
-                    if (validators.length === 0) {
-                        map[propName] = new CustomFormControl(
-                            inputType,
-                            display,
-                            readonly,
-                            required,
-                            disabled,
-                            maxLength,
-                            minLength,
-                            max,
-                            min,
-                            pattern,
-                            compare
-                        );
-                    }
-                    if (validators.length >= 1) {
-                        map[propName] = new CustomFormControl(
-                            inputType,
-                            display,
-                            readonly,
-                            required,
-                            disabled,
-                            maxLength,
-                            minLength,
-                            max,
-                            min,
-                            pattern,
-                            compare,
-                            validators,
-                            errorMessages
-                        );
-                    }
-                }
-            }
-
-            return this.formBuilder.group(map);
+            return this.iterate(modelInstance);
         }
 
         return null;
+    }
+
+    private iterate<T>(instance: T) {
+
+        const formGroup: FormGroup = new FormGroup({});
+        for (let property in instance) {
+            if (instance.hasOwnProperty(property)) {
+
+                let inputType = this.getType(instance, property);
+                let display = this.getDisplay(instance, property);
+
+                if (inputType === InputType.object) {
+                    formGroup.addControl(property.toString(), new CustomFormGroup(
+                        this.formBuilder.group(this.iterate(instance[property])).controls, inputType, display
+                    ));
+                } else {
+                    let validators = new Array<ValidatorFn>();
+                    let errorMessages = new Array<CustomErrorModel>();
+
+
+                    let readonly = this.isReadonly(instance, property);
+                    let disabled = this.isDisabled(instance, property);
+                    let required = this.isRequired(instance, property, errorMessages, validators);
+                    let maxLength = this.getMaxLength(instance, property, errorMessages, validators);
+                    let minLength = this.getMinLength(instance, property, errorMessages, validators);
+                    let max = this.getMax(instance, property, errorMessages, validators);
+                    let min = this.getMin(instance, property, errorMessages, validators);
+                    let pattern = this.getPattern(instance, property, errorMessages, validators);
+                    let compare = this.getCompare(instance, property, errorMessages, validators, formGroup);
+
+                    formGroup.addControl(property.toString(), new CustomFormControl(
+                        property,
+                        inputType,
+                        display,
+                        readonly,
+                        required,
+                        disabled,
+                        maxLength,
+                        minLength,
+                        max,
+                        min,
+                        pattern,
+                        compare,
+                        validators,
+                        errorMessages
+                    ));
+                }
+            }
+        }
+
+        return formGroup;
     }
 
     private getDisplay<T>(instance: T, name: string): Display {
@@ -108,30 +107,34 @@ export class AurochsesFormService {
         return display;
     }
 
-    private getType<T>(instance: T, name: keyof T): string {
+    private getType<T>(instance: T, name: keyof T): InputType {
         let prototype = Object.getPrototypeOf(instance);
 
         if (`${HiddenMetadata.isHidden}${name}` in prototype && prototype[`${HiddenMetadata.isHidden}${name}`] === true) {
-            return 'hidden';
+            return InputType.hidden;
         }
 
         if (typeof instance[name] === 'string') {
-            return 'text';
+            return InputType.text;
         }
 
         if (typeof instance[name] === 'boolean') {
-            return 'boolean';
+            return InputType.boolean;
         }
 
         if (typeof instance[name] === 'number') {
-            return 'number';
+            return InputType.number;
         }
 
         if (instance[name] instanceof Date) {
-            return 'date';
+            return InputType.date;
         }
 
-        return '';
+        if (typeof instance[name] === 'object') {
+            return InputType.object;
+        }
+
+        return InputType.default;
     }
 
     private isReadonly<T>(instance: T, name: string): boolean {
@@ -288,7 +291,8 @@ export class AurochsesFormService {
         instance: T,
         name: string,
         errorMessages: Array<CustomErrorModel>,
-        validators: Array<ValidatorFn>
+        validators: Array<ValidatorFn>,
+        formGroup: FormGroup
     ): boolean {
 
         let prototype = Object.getPrototypeOf(instance);
@@ -298,7 +302,7 @@ export class AurochsesFormService {
                 new CustomErrorModel('compare', prototype[`${CompareMetadata.errCompareProperty}${name}`])
             );
 
-            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`]));
+            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`], formGroup));
 
             return true;
         }

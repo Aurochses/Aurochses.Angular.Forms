@@ -4,16 +4,18 @@ import { FormGroup } from '@angular/forms';
 import { DisplayGroupMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
 import { Display } from '../decorators/display/models/display.model';
 import { RequiredMetadata } from '../decorators/validate/metadata';
-import { ControlModel } from '../models/control.model';
 import { AurochsesFormService } from '../services/aurochses-form.service';
 import { CustomFormControl } from '../services/custom-form-control';
+import { CustomFormGroup } from '../services/custom-form-group';
+import { InputType } from '../services/input.type';
 
 @Component({
     selector: 'aurochses-form',
     template: `<ng-container *ngFor="let control of controls" [ngSwitch]="control.type">
-                    <hidden *ngSwitchCase="'hidden'" [formGroup]="formGroup" [control]="control"></hidden>
-                    <date *ngSwitchCase="'date'" [formGroup]="formGroup" [control]="control"></date>
-                    <text *ngSwitchCase="'text'" [formGroup]="formGroup" [control]="control"></text>
+                    <hidden *ngSwitchCase="inputType.hidden" [formGroup]="formGroup" [control]="control"></hidden>
+                    <date *ngSwitchCase="inputType.date" [formGroup]="formGroup" [control]="control"></date>
+                    <text *ngSwitchCase="inputType.text" [formGroup]="formGroup" [control]="control"></text>
+                    <aurochses-form *ngSwitchCase="inputType.object" [formGroup]="control"></aurochses-form>
                </ng-container>`
 })
 
@@ -22,32 +24,19 @@ export class AurochsesFormComponent implements OnInit {
     @Input()
     formGroup: FormGroup;
 
-    controls: Array<ControlModel>;
+    controls: Array<CustomFormControl | CustomFormGroup>;
+
+    inputType = InputType;
 
     constructor() {
-        this.controls = new Array<ControlModel>();
+        this.controls = new Array<CustomFormControl | CustomFormGroup>();
     }
 
     ngOnInit() {
         for (let name in this.formGroup.controls) {
             if (this.formGroup.controls.hasOwnProperty(name)) {
-                let control = <CustomFormControl>this.formGroup.controls[name];
-                if (control) {
-                    let model: ControlModel = {
-                        isReadonly: control.isReadonly,
-                        isRequired: control.isRequired,
-                        key: control.display.order,
-                        max: control.max,
-                        maxLength: control.maxLength,
-                        min: control.min,
-                        minLength: control.minLength,
-                        name: name,
-                        placeholder: control.display.name,
-                        type: control.type
-                    };
-
-                    this.controls.push(model);
-                }
+                let control = <CustomFormControl | CustomFormGroup>this.formGroup.controls[name];
+                this.controls.push(control);
             }
         }
 

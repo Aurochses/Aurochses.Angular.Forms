@@ -2,11 +2,14 @@ import { AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 
 import { Display } from '../decorators/display/models/display.model';
 import { CustomErrorModel } from '../models/custom-error.model';
+import { InputType } from './input.type';
 
 export class CustomFormControl extends FormControl {
 
-    type: string;
-    display: Display;
+    type: InputType;
+    key: number;
+    name: string;
+    placeholder: string;
     isReadonly: boolean;
     isRequired: boolean;
     maxLength?: number | null;
@@ -18,7 +21,8 @@ export class CustomFormControl extends FormControl {
     errorMessages: Array<CustomErrorModel>;
 
     constructor(
-        type: string,
+        property: string,
+        type: InputType,
         display: Display,
         isReadonly: boolean = false,
         isRequired: boolean = false,
@@ -35,7 +39,9 @@ export class CustomFormControl extends FormControl {
         super({ value: '', disabled: isDisabled }, validator);
 
         this.type = type;
-        this.display = display;
+        this.key = display.order;
+        this.name = property;
+        this.placeholder = display.name;
         this.isReadonly = isReadonly;
         this.isRequired = isRequired;
         this.maxLength = maxLength;

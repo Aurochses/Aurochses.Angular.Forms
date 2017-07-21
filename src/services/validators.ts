@@ -1,4 +1,5 @@
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { CustomFormControl } from './custom-form-control';
 
 // tslint:disable-next-line:no-any
 function isEmptyInputValue(value: any): boolean {
@@ -8,7 +9,7 @@ function isEmptyInputValue(value: any): boolean {
 export class AurochsesValidators {
 
     static min(min: number | Date): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
+        return (control: CustomFormControl): ValidationErrors | null => {
 
             if (isEmptyInputValue(control.value) || isEmptyInputValue(min)) {
                 return null;
@@ -30,7 +31,7 @@ export class AurochsesValidators {
     }
 
     static max(max: number | Date): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
+        return (control: CustomFormControl): ValidationErrors | null => {
 
             if (isEmptyInputValue(control.value) || isEmptyInputValue(max)) {
                 return null;
@@ -52,19 +53,18 @@ export class AurochsesValidators {
         };
     }
 
-    static compare(propertyName: string) {
+    static compare(propertyName: string, formGroup: FormGroup) {
         let changeEventWasAdded: boolean = false;
-        return (control: AbstractControl): ValidationErrors | null => {
-            let form: FormGroup = control.root as FormGroup;
-            if (form && form.controls && !changeEventWasAdded) {
-                form.controls[propertyName].valueChanges.subscribe(() => {
+        return (control: CustomFormControl): ValidationErrors | null => {
+            if (formGroup && formGroup.controls && !changeEventWasAdded) {
+                formGroup.controls[propertyName].valueChanges.subscribe(() => {
                     control.updateValueAndValidity();
                 });
                 changeEventWasAdded = true;
             }
 
             let value = control.value;
-            return (!isNaN(value) && value === form.controls[propertyName].value) ? { 'compare': { valid: false } } : null;
+            return (!isNaN(value) && value === formGroup.controls[propertyName].value) ? null : { 'compare': { valid: false } };
         };
     }
 }
