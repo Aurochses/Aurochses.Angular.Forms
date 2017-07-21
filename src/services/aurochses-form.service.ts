@@ -32,7 +32,7 @@ export class AurochsesFormService {
         let modelInstance = new type();
 
         if (modelInstance) {
-            return this.formBuilder.group(this.iterate(modelInstance));
+            return this.iterate(modelInstance);
         }
 
         return null;
@@ -40,7 +40,7 @@ export class AurochsesFormService {
 
     private iterate<T>(instance: T) {
 
-        let map: { [key: string]: FormControl | FormGroup; } = {};
+        const formGroup: FormGroup = new FormGroup({});
         for (let property in instance) {
             if (instance.hasOwnProperty(property)) {
 
@@ -48,9 +48,9 @@ export class AurochsesFormService {
                 let display = this.getDisplay(instance, property);
 
                 if (inputType === InputType.object) {
-                    map[property] = new CustomFormGroup(
+                    formGroup.addControl(property.toString(), new CustomFormGroup(
                         this.formBuilder.group(this.iterate(instance[property])).controls, inputType, display
-                    );
+                    ));
                 } else {
                     let validators = new Array<ValidatorFn>();
                     let errorMessages = new Array<CustomErrorModel>();
@@ -64,9 +64,9 @@ export class AurochsesFormService {
                     let max = this.getMax(instance, property, errorMessages, validators);
                     let min = this.getMin(instance, property, errorMessages, validators);
                     let pattern = this.getPattern(instance, property, errorMessages, validators);
-                    let compare = this.getCompare(instance, property, errorMessages, validators);
+                    let compare = this.getCompare(instance, property, errorMessages, validators, formGroup);
 
-                    map[property] = new CustomFormControl(
+                    formGroup.addControl(property.toString(), new CustomFormControl(
                         property,
                         inputType,
                         display,
@@ -81,12 +81,12 @@ export class AurochsesFormService {
                         compare,
                         validators,
                         errorMessages
-                    );
+                    ));
                 }
             }
         }
 
-        return map;
+        return formGroup;
     }
 
     private getDisplay<T>(instance: T, name: string): Display {
@@ -291,7 +291,8 @@ export class AurochsesFormService {
         instance: T,
         name: string,
         errorMessages: Array<CustomErrorModel>,
-        validators: Array<ValidatorFn>
+        validators: Array<ValidatorFn>,
+        formGroup: FormGroup
     ): boolean {
 
         let prototype = Object.getPrototypeOf(instance);
@@ -301,7 +302,7 @@ export class AurochsesFormService {
                 new CustomErrorModel('compare', prototype[`${CompareMetadata.errCompareProperty}${name}`])
             );
 
-            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`]));
+            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`], formGroup));
 
             return true;
         }

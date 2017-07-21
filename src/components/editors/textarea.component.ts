@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ControlModel } from '../../models/control.model';
+import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'textarea',
@@ -15,7 +15,7 @@ import { ControlModel } from '../../models/control.model';
 export class TextAreaComponent {
 
     @Input()
-    control: ControlModel;
+    control: CustomFormControl;
 
     @Input()
     formGroup: FormGroup;
