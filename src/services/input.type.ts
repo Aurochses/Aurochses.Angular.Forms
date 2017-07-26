@@ -2,8 +2,9 @@ export enum InputType {
     default = -1,
     hidden = 0,
     text = 1,
-    boolean = 2,
-    number = 3,
-    date = 4,
-    object = 5
+    textarea = 2,
+    boolean = 3,
+    number = 4,
+    date = 5,
+    object = 6
 }

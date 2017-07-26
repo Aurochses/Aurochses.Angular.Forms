@@ -14,7 +14,7 @@ import {
     RequiredMetadata
 } from '../decorators/validate/metadata';
 
-import { DisabledMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { DisabledMetadata, DisplayMetadata, HiddenMetadata, HintMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
 
 import { Display } from '../decorators/display/models/display.model';
 
@@ -109,6 +109,10 @@ export class AurochsesFormService {
 
     private getType<T>(instance: T, name: keyof T): InputType {
         let prototype = Object.getPrototypeOf(instance);
+
+        if (`${HintMetadata.hasHint}${name}` in prototype) {
+            return this.getHintType(prototype[`${HintMetadata.hint}${name}`]);
+        }
 
         if (`${HiddenMetadata.isHidden}${name}` in prototype && prototype[`${HiddenMetadata.isHidden}${name}`] === true) {
             return InputType.hidden;
@@ -308,5 +312,16 @@ export class AurochsesFormService {
         }
 
         return false;
+    }
+
+    private getHintType(hintName: string): InputType {
+        switch (hintName) {
+            case 'textarea':
+                return InputType.textarea;
+
+            default:
+                return InputType.default;
+        }
+
     }
 }

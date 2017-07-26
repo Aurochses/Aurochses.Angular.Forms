@@ -13,9 +13,7 @@ import { CustomFormControl } from '../../services/custom-form-control';
                     [placeholder]="control.placeholder"
                     [required]="control.isRequired"
                     [maxlength]="control.maxLength"
-                    [minlength]="control.minLength"
-                    [max]="control.max"
-                    [min]="control.min">
+                    [minlength]="control.minLength">
                     <md-hint *ngIf="control.maxLength" align="end">
                         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
                     </md-hint>

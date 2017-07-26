@@ -8,8 +8,14 @@ import { CustomFormControl } from '../../services/custom-form-control';
     selector: 'date',
     template: `
                 <md-input-container [formGroup]="formGroup">
-                    <input mdInput [mdDatepicker]="datepicker" [formControlName]="control.name" [readOnly]="control.isReadonly"
-                    [placeholder]="control.placeholder" [required]="control.isRequired">
+                    <input mdInput
+                    [mdDatepicker]="datepicker"
+                    [formControlName]="control.name"
+                    [readOnly]="control.isReadonly"
+                    [placeholder]="control.placeholder"
+                    [required]="control.isRequired"
+                    [max]="control.max"
+                    [min]="control.min" />
                     <button *ngIf="!control.isReadonly" mdSuffix [mdDatepickerToggle]="datepicker"></button>
                     <md-error>{{ message() }}</md-error>
                 </md-input-container>
