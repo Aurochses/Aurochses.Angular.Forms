@@ -5,26 +5,23 @@ import { CustomErrorModel } from '../../models/custom-error.model';
 import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
-    selector: 'text',
-    template: ` <md-input-container [formGroup]="formGroup">
-                    <textarea mdInput
-                    mdTextareaAutosize
+    selector: 'number',
+    template: `<md-input-container [formGroup]="formGroup">
+                <input mdInput
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder"
                     [required]="control.isRequired"
-                    [maxlength]="control.maxLength"
-                    [minlength]="control.minLength"></textarea>
-                    <md-hint *ngIf="control.maxLength" align="end">
-                        {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
-                    </md-hint>
+                    [max]="control.max"
+                    [min]="control.min"
+                    type="number" />
                     <md-error>
                         {{ message() }}
                     </md-error>
-                </md-input-container>`
+               </md-input-container>`
 })
+export class NumberComponent {
 
-export class TextComponent {
     @Input()
     control: CustomFormControl;
 

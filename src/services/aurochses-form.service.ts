@@ -14,10 +14,11 @@ import {
     RequiredMetadata
 } from '../decorators/validate/metadata';
 
-import { DisabledMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { DisabledMetadata, DisplayMetadata, HiddenMetadata, HintMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
 
 import { Display } from '../decorators/display/models/display.model';
 
+import { HintType } from '../decorators/display/models/hint.type';
 import { CustomErrorModel } from '../models/custom-error.model';
 import { CustomFormControl } from './custom-form-control';
 import { CustomFormGroup } from './custom-form-group';
@@ -25,7 +26,6 @@ import { InputType } from './input.type';
 
 @Injectable()
 export class AurochsesFormService {
-
     constructor(private formBuilder: FormBuilder) { }
 
     public build<T>(type: new () => T): FormGroup | null {
@@ -65,6 +65,7 @@ export class AurochsesFormService {
                     let min = this.getMin(instance, property, errorMessages, validators);
                     let pattern = this.getPattern(instance, property, errorMessages, validators);
                     let compare = this.getCompare(instance, property, errorMessages, validators, formGroup);
+                    let hint = this.getHint(instance, property);
 
                     formGroup.addControl(property.toString(), new CustomFormControl(
                         property,
@@ -79,6 +80,7 @@ export class AurochsesFormService {
                         min,
                         pattern,
                         compare,
+                        hint,
                         validators,
                         errorMessages
                     ));
@@ -110,12 +112,16 @@ export class AurochsesFormService {
     private getType<T>(instance: T, name: keyof T): InputType {
         let prototype = Object.getPrototypeOf(instance);
 
+        if (`${HintMetadata.hasHint}${name}` in prototype) {
+            return InputType.hint; // this.getHintType(prototype[`${HintMetadata.hint}${name}`]);
+        }
+
         if (`${HiddenMetadata.isHidden}${name}` in prototype && prototype[`${HiddenMetadata.isHidden}${name}`] === true) {
             return InputType.hidden;
         }
 
         if (typeof instance[name] === 'string') {
-            return InputType.text;
+            return InputType.string;
         }
 
         if (typeof instance[name] === 'boolean') {
@@ -308,5 +314,17 @@ export class AurochsesFormService {
         }
 
         return false;
+    }
+
+    private getHint<T>(instance: T, name: string): { params: Array<{ key: string, value: string }>, type: HintType } | null {
+        let prototype = Object.getPrototypeOf(instance);
+
+        if (`${HintMetadata.hasHint}${name}` in prototype) {
+            return {
+                params: prototype[`${HintMetadata.hintParams}${name}`],
+                type: <HintType>prototype[`${HintMetadata.hint}${name}`]
+            };
+        }
+        return null;
     }
 }

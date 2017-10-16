@@ -5,16 +5,15 @@ import { CustomErrorModel } from '../../models/custom-error.model';
 import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
-    selector: 'text',
-    template: ` <md-input-container [formGroup]="formGroup">
-                    <textarea mdInput
-                    mdTextareaAutosize
+    selector: 'string',
+    template: `<md-input-container [formGroup]="formGroup">
+                    <input mdInput
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder"
                     [required]="control.isRequired"
                     [maxlength]="control.maxLength"
-                    [minlength]="control.minLength"></textarea>
+                    [minlength]="control.minLength">
                     <md-hint *ngIf="control.maxLength" align="end">
                         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
                     </md-hint>
@@ -24,7 +23,8 @@ import { CustomFormControl } from '../../services/custom-form-control';
                 </md-input-container>`
 })
 
-export class TextComponent {
+export class StringComponent {
+
     @Input()
     control: CustomFormControl;
 
@@ -32,6 +32,7 @@ export class TextComponent {
     formGroup: FormGroup;
 
     message(): string {
+        // this.control.errorMessages
         return (<CustomFormControl>this.formGroup.controls[this.control.name]).errorMessages
             .filter((error: CustomErrorModel) => this.formGroup.controls[this.control.name].hasError(error.type))
             .map((error: CustomErrorModel) => error.message)[0];
