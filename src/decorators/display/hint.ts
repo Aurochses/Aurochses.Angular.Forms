@@ -1,11 +1,12 @@
 import { HintMetadata } from './metadata/hint.metadata';
+import { HintType } from './models/hint.type';
 
-export function Hint(template: string, params: { key: {}, value: {} }[]) {
+export function Hint(type: HintType, params?: { key: {}, value: {} }[]) {
     return function hintInternal(target: Object, name: string): void {
         Object.defineProperty(target, `${HintMetadata.hint}${name}`, {
             configurable: false,
             enumerable: false,
-            value: template
+            value: type
         });
 
         Object.defineProperty(target, `${HintMetadata.hintParams}${name}`, {

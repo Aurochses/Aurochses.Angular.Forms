@@ -1,6 +1,7 @@
 import { AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 
 import { Display } from '../decorators/display/models/display.model';
+import { HintType } from '../decorators/display/models/hint.type';
 import { CustomErrorModel } from '../models/custom-error.model';
 import { InputType } from './input.type';
 
@@ -18,6 +19,7 @@ export class CustomFormControl extends FormControl {
     min?: number | Date | null;
     pattern: boolean;
     compare: boolean;
+    hint?: { params: Array<{ key: string, value: string }>, type: HintType } | null;
     errorMessages: Array<CustomErrorModel>;
 
     constructor(
@@ -33,6 +35,7 @@ export class CustomFormControl extends FormControl {
         min?: number | Date | null,
         pattern: boolean = false,
         compare: boolean = false,
+        hint?: { params: Array<{ key: string, value: string }>, type: HintType } | null,
         validator?: ValidatorFn | ValidatorFn[] | null,
         errorMessages: Array<CustomErrorModel> = new Array<CustomErrorModel>()
     ) {
@@ -50,6 +53,7 @@ export class CustomFormControl extends FormControl {
         this.min = min;
         this.pattern = pattern;
         this.compare = compare;
+        this.hint = hint;
         this.errorMessages = errorMessages;
     }
 }
