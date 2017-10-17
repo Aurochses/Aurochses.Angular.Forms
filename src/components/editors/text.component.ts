@@ -6,8 +6,8 @@ import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'text',
-    template: ` <md-input-container [formGroup]="formGroup">
-                    <textarea mdInput
+    template: ` <mat-form-field [formGroup]="formGroup">
+                    <textarea matInput
                     mdTextareaAutosize
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
@@ -15,13 +15,13 @@ import { CustomFormControl } from '../../services/custom-form-control';
                     [required]="control.isRequired"
                     [maxlength]="control.maxLength"
                     [minlength]="control.minLength"></textarea>
-                    <md-hint *ngIf="control.maxLength" align="end">
+                    <mat-hint *ngIf="control.maxLength" align="end">
                         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
-                    </md-hint>
-                    <md-error>
+                    </mat-hint>
+                    <mat-error>
                         {{ message() }}
-                    </md-error>
-                </md-input-container>`
+                    </mat-error>
+                </mat-form-field>`
 })
 
 export class TextComponent {

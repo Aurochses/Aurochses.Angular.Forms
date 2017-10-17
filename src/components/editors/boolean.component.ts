@@ -6,7 +6,7 @@ import { CustomFormControl } from '../../services/custom-form-control';
 @Component({
     selector: 'boolean',
     template: `<div [formGroup]="formGroup">
-                <md-checkbox [formControlName]="control.name">{{ control.placeholder }}</md-checkbox>
+                <mat-checkbox [formControlName]="control.name">{{ control.placeholder }}</mat-checkbox>
                </div>`
 })
 export class BooleanComponent {

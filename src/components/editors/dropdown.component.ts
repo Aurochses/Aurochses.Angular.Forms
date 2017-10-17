@@ -6,13 +6,14 @@ import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'dropdown',
-    template: ` <md-select [formGroup]="formGroup"
-                [formControlName]="control.name"
-                [placeholder]="control.placeholder">
-                    <md-option *ngFor="let item of dropDownValues" [value]="item.key">
-                        {{item.value}}
-                    </md-option>
-                </md-select>`
+    template: ` <mat-form-field [formGroup]="formGroup">
+                    <mat-select [formControlName]="control.name"
+                    [placeholder]="control.placeholder">
+                        <mat-option *ngFor="let item of dropDownValues" [value]="item.key">
+                            {{item.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>`
 })
 export class DropDownComponent implements OnInit {
 
@@ -28,6 +29,13 @@ export class DropDownComponent implements OnInit {
     dropDownValues: Array<{ key: string, value: string }>;
 
     ngOnInit(): void {
-        this.dropDownValues = Object.getPrototypeOf(this.component)['get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropDownValues']();
+
+        let methodName = 'get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropDownValues';
+
+        try {
+            this.dropDownValues = Object.getPrototypeOf(this.component)[methodName]();
+        } catch (error) {
+            console.error(methodName, error);
+        }
     }
 }

@@ -7,19 +7,19 @@ import { CustomFormControl } from '../../services/custom-form-control';
 @Component({
     selector: 'date',
     template: `
-                <md-input-container [formGroup]="formGroup">
-                    <input mdInput
-                    [mdDatepicker]="datepicker"
+                <mat-form-field [formGroup]="formGroup">
+                    <input matInput
+                    [matDatepicker]="datepicker"
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder"
                     [required]="control.isRequired"
                     [max]="control.max"
                     [min]="control.min" />
-                    <button *ngIf="!control.isReadonly" mdSuffix [mdDatepickerToggle]="datepicker"></button>
-                    <md-error>{{ message() }}</md-error>
-                </md-input-container>
-                <md-datepicker #datepicker></md-datepicker>`
+                    <mat-datepicker-toggle *ngIf="!control.isReadonly" matSuffix  [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
+                    <mat-error>{{ message() }}</mat-error>
+                </mat-form-field>`
 })
 export class DateComponent {
 

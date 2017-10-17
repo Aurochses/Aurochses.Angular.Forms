@@ -6,8 +6,8 @@ import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'number',
-    template: `<md-input-container [formGroup]="formGroup">
-                <input mdInput
+    template: `<mat-form-field [formGroup]="formGroup">
+                <input matInput
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder"
@@ -15,10 +15,10 @@ import { CustomFormControl } from '../../services/custom-form-control';
                     [max]="control.max"
                     [min]="control.min"
                     type="number" />
-                    <md-error>
+                    <mat-error>
                         {{ message() }}
-                    </md-error>
-               </md-input-container>`
+                    </mat-error>
+               </mat-form-field>`
 })
 export class NumberComponent {
 

@@ -6,21 +6,21 @@ import { CustomFormControl } from '../../services/custom-form-control';
 
 @Component({
     selector: 'string',
-    template: `<md-input-container [formGroup]="formGroup">
-                    <input mdInput
+    template: `<mat-form-field [formGroup]="formGroup">
+                    <input matInput
                     [formControlName]="control.name"
                     [readOnly]="control.isReadonly"
                     [placeholder]="control.placeholder"
                     [required]="control.isRequired"
                     [maxlength]="control.maxLength"
                     [minlength]="control.minLength">
-                    <md-hint *ngIf="control.maxLength" align="end">
+                    <mat-hint *ngIf="control.maxLength" align="end">
                         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
-                    </md-hint>
-                    <md-error>
+                    </mat-hint>
+                    <mat-error>
                         {{ message() }}
-                    </md-error>
-                </md-input-container>`
+                    </mat-error>
+                </mat-form-field>`
 })
 
 export class StringComponent {

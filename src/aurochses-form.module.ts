@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MdCheckboxModule, MdDatepickerModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
+import { MatCheckboxModule, MatDatepickerModule, MatInputModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AurochsesFormComponent } from './components/aurochses-form.component';
@@ -33,11 +33,11 @@ import { AurochsesFormService } from './services/aurochses-form.service';
         CommonModule,
         BrowserAnimationsModule,
         HttpModule,
-        MdCheckboxModule,
-        MdDatepickerModule,
-        MdInputModule,
-        MdNativeDateModule,
-        MdSelectModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatNativeDateModule,
+        MatSelectModule,
         FormsModule,
         ReactiveFormsModule
     ],
