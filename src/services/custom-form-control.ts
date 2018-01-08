@@ -1,4 +1,4 @@
-import { AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl, ValidatorFn } from '@angular/forms';
 
 import { Display } from '../decorators/display/models/display.model';
 import { HintType } from '../decorators/display/models/hint.type';

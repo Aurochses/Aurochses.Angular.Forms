@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { DisplayGroupMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { DisplayGroupMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata } from '../decorators/display/metadata/index';
 import { Display } from '../decorators/display/models/display.model';
 import { HintType } from '../decorators/display/models/hint.type';
-import { RequiredMetadata } from '../decorators/validate/metadata';
+import { RequiredMetadata } from '../decorators/validate/metadata/index';
 import { AurochsesFormService } from '../services/aurochses-form.service';
 import { CustomFormControl } from '../services/custom-form-control';
 import { CustomFormGroup } from '../services/custom-form-group';
@@ -55,8 +55,5 @@ export class AurochsesFormComponent implements OnInit {
         }
 
         this.controls.sort((e, n) => e.key - n.key);
-
-        console.log(this.component);
-
     }
 }

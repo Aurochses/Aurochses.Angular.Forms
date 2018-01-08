@@ -13,40 +13,15 @@ compilePackage() {
     echo "{\"__symbolic\":\"module\",\"version\":3,\"metadata\":{},\"exports\":[{\"from\":\"./${package_name}/index\"}]}" > ${2}/../${package_name}.metadata.json
 }
 
-moveTypings() {
-  if [[ -f ${1}/index.d.ts && -f ${1}/index.metadata.json ]]; then
-    mv ${1}/index.d.ts ${1}/${2}.d.ts
-    mv ${1}/index.metadata.json ${1}/${2}.metadata.json
-  fi
-}
-
 rollupIndex() {
-  local regex=".+/(.+)/index.js"
-  if [[ "${1}/index.js" =~ $regex ]]; then
-    in_file="${1}/index.js"
-    out_file="${2}/${BASH_REMATCH[1]}.js"
+  $ROLLUP -i "${1}/${3}.js" -o "${2}/${3}.js" -f es --sourcemap
 
-    if [[ -f "${3}" ]]; then
-      $ROLLUP -i ${in_file} -o ${out_file} -c ${3} --sourcemap
-    else
-      $ROLLUP -i ${in_file} -o ${out_file} --sourcemap
-    fi
-    mapSources "${out_file}"
-  fi
+  mapSources "${out_file}"
 }
 
-downlevelES2015() {
-  regex="(.+).js"
-  for file in ${1}/*.js ; do
-    if [[ ${file} =~ $regex ]]; then
-      ts_file="${BASH_REMATCH[1]}${2:-".es5.ts"}"
-      cp ${file} ${ts_file}
-
-      ($TSC ${ts_file} --target es5 --module es2015 --noLib --sourceMap) > /dev/null 2>&1 || true
-      mapSources "${BASH_REMATCH[1]}${2:-".es5.js"}"
-      rm -f ${ts_file}
-    fi
-  done
+compilePackageES5() {
+  local package_name=$(basename "${2}")
+  $NGC -p ${1}/tsconfig.json --target es5 -d false --outDir ${2} --importHelpers true --sourceMap
 }
 
 runRollup() {
@@ -98,6 +73,10 @@ NPM_DIR=${PWD}/dist/packages-dist/${PACKAGE}
 MODULES_DIR=${NPM_DIR}/@aurochses
 BUNDLES_DIR=${NPM_DIR}/bundles
 
+ESM2015_DIR=${NPM_DIR}/esm2015
+OUT_DIR_ESM5=${ROOT_OUT_DIR}/${PACKAGE}/esm5
+ESM5_DIR=${NPM_DIR}/esm5
+
 rm -rf ${PWD}/dist 
 
 compilePackage ${SRC_DIR} ${OUT_DIR} ${PACKAGE}
@@ -106,12 +85,12 @@ mkdir -p ${NPM_DIR}
 
 rsync -a --exclude=*.js --exclude=*.js.map ${OUT_DIR}/ ${NPM_DIR}
 
-moveTypings ${NPM_DIR} ${PACKAGE}
-
 cd  ${SRC_DIR}
-rollupIndex ${OUT_DIR} ${MODULES_DIR} ${ROOT_DIR}
 
-downlevelES2015 ${MODULES_DIR}
+rollupIndex ${OUT_DIR} ${ESM2015_DIR} ${PACKAGE}
+
+compilePackageES5 ${SRC_DIR} ${OUT_DIR_ESM5} ${PACKAGE}
+rollupIndex ${OUT_DIR_ESM5} ${ESM5_DIR} ${PACKAGE}
 
 runRollup ${SRC_DIR}
 

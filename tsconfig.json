@@ -7,11 +7,11 @@
         "strictNullChecks": true,
         "noImplicitAny": true,
         "module": "es2015",
+        "sourceMap": true,
+        "inlineSources": true,
         "moduleResolution": "node",
         "rootDir": ".",
         "outDir": "dist/packages/forms",
-        "sourceMap": true,
-        "inlineSources": true,
         "target": "es2015",
         "skipLibCheck": true,
         "lib": [
@@ -25,8 +25,9 @@
     "angularCompilerOptions": {
         "genDir": "./codegen",
         "annotateForClosureCompiler": true,
-        "strictMetadataEmit": true,
-        "flatModuleOutFile": "index.js",
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true,
+        "flatModuleOutFile": "forms.js",
         "flatModuleId": "@aurochses/forms"
     }
 }

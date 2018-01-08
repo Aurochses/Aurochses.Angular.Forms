@@ -1,5 +1,5 @@
 export { AurochsesFormModule } from './aurochses-form.module';
 
-export * from './services';
+export * from './services/index';
 
-export * from './decorators';
+export * from './decorators/index';

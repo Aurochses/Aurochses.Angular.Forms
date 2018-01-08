@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AsyncValidatorFn, FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { AurochsesValidators } from './validators';
+import { Compare, Max, Min } from './validators';
 
 import {
     CompareMetadata,
@@ -12,9 +12,9 @@ import {
     PatternMetadata,
     RangeMetadata,
     RequiredMetadata
-} from '../decorators/validate/metadata';
+} from '../decorators/validate/metadata/index';
 
-import { DisabledMetadata, DisplayMetadata, HiddenMetadata, HintMetadata, ReadonlyMetadata } from '../decorators/display/metadata';
+import { DisabledMetadata, DisplayMetadata, HiddenMetadata, HintMetadata, ReadonlyMetadata } from '../decorators/display/metadata/index';
 
 import { Display } from '../decorators/display/models/display.model';
 
@@ -237,7 +237,7 @@ export class AurochsesFormService {
                 max = Date.parse(max.toString());
             }
 
-            validators.push(AurochsesValidators.max(max));
+            validators.push(Max(max));
 
             return max;
         }
@@ -263,7 +263,7 @@ export class AurochsesFormService {
                 min = Date.parse(min.toString());
             }
 
-            validators.push(AurochsesValidators.min(min));
+            validators.push(Min(min));
 
             return min;
         }
@@ -308,7 +308,7 @@ export class AurochsesFormService {
                 new CustomErrorModel('compare', prototype[`${CompareMetadata.errCompareProperty}${name}`])
             );
 
-            validators.push(AurochsesValidators.compare(prototype[`${CompareMetadata.withCompare}${name}`], formGroup));
+            validators.push(Compare(prototype[`${CompareMetadata.withCompare}${name}`], formGroup));
 
             return true;
         }
