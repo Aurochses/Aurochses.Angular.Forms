@@ -1,6 +1,6 @@
 {
     "name": "@aurochses/forms",
-    "version": "1.0.0",
+    "version": "1.0.0-beta.0",
     "description": "Forms",
     "main": "./bundles/forms.umd.js",
     "module": "./@aurochses/forms.es5.js",
