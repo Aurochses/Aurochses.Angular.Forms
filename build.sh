@@ -99,5 +99,4 @@ minify ${BUNDLES_DIR}
 rsync -am --include="package.json" --exclude=* ${SRC_DIR}/ ${NPM_DIR}/
 
 cp ${ROOT_DIR}/README.md ${NPM_DIR}/
-cp ${ROOT_DIR}/.npmrc ${NPM_DIR}/
 cp ${ROOT_DIR}/.npmignore ${NPM_DIR}/
