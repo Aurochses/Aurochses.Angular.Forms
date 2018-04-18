@@ -1,44 +1,54 @@
 {
-    "name": "@aurochses/forms",
-    "version": "1.0.0-beta.1",
-    "description": "Forms",
-    "main": "./bundles/forms.umd.js",
-    "module": "./@aurochses/forms.es5.js",
-    "es2015": "./@aurochses/forms.js",
-    "typings": "./forms.d.ts",
-    "repository": {
-        "type": "git",
-        "url": "https://aurochses.visualstudio.com/Aurochses.Angular/_git/forms"
-    },
-    "scripts": {},
-    "keywords": [
-        "forms"
-    ],
-    "author": "Aurochses",
-    "license": "ISC",
-    "dependencies": {
-        "@angular/animations": "5.2.7",
-        "@angular/cdk": "5.2.3",
-        "@angular/common": "5.2.7",
-        "@angular/core": "5.2.7",
-        "@angular/forms": "5.2.7",
-        "@angular/http": "5.2.7",
-        "@angular/platform-browser": "5.2.7",
-        "@angular/material": "5.2.3",
-        "rxjs": "5.5.6",
-        "zone.js": "0.8.20"
-    },
-    "devDependencies": {
-        "@angular/compiler": "5.2.7",
-        "@angular/compiler-cli": "5.2.7",
-        "@types/node": "9.4.6",
-        "tslint": "5.9.1",
-        "typescript": "2.4.2",
-        "rollup": "0.56.3",
-        "rollup-plugin-node-resolve": "3.0.3",
-        "rollup-plugin-sourcemaps": "0.4.2",
-        "uglify-js": "3.3.12",
-        "sorcery": "0.10.0",
-        "yargs": "11.0.0"
-    }
+  "name": "@aurochses/forms",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "packagr": "ng-packagr -p ng-package.json"
+  },
+  "private": false,
+  "dependencies": {
+    "@angular/animations": "6.0.0-rc.5",
+    "@angular/cdk": "6.0.0-rc.5",
+    "@angular/common": "6.0.0-rc.5",
+    "@angular/compiler": "6.0.0-rc.5",
+    "@angular/core": "6.0.0-rc.5",
+    "@angular/forms": "6.0.0-rc.5",
+    "@angular/http": "6.0.0-rc.5",
+    "@angular/material": "6.0.0-rc.5",
+    "@angular/platform-browser": "6.0.0-rc.5",
+    "@angular/platform-browser-dynamic": "6.0.0-rc.5",
+    "@angular/router": "6.0.0-rc.5",
+    "core-js": "2.5.5",
+    "rxjs": "6.0.0-rc.0",
+    "zone.js": "0.8.26"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "0.5.7",
+    "@angular/cli": "6.0.0-rc.5",
+    "@angular/compiler-cli": "6.0.0-rc.5",
+    "@angular/language-service": "6.0.0-rc.5",
+    "@types/jasmine": "2.8.6",
+    "@types/jasminewd2": "2.0.3",
+    "@types/node": "9.6.5",
+    "codelyzer": "4.2.1",
+    "jasmine": "3.1.0",
+    "jasmine-core": "3.1.0",
+    "jasmine-spec-reporter": "4.2.1",
+    "karma": "2.0.0",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-coverage-istanbul-reporter": "1.4.2",
+    "karma-jasmine": "1.1.1",
+    "karma-jasmine-html-reporter": "1.0.0",
+    "ng-packagr": "2.4.2",
+    "protractor": "5.3.1",
+    "ts-node": "6.0.0",
+    "tslint": "5.9.1",
+    "typescript": "2.7.2"
+  }
 }

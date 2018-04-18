@@ -1,0 +1,309 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming';
+@import 'styles/material.icons';
+@include mat-core();
+$mat-toolbar-height-mobile-portrait: 56px !default;
+$mat-toolbar-height-desktop: 64px !default;
+body {
+    max-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    * {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        box-sizing: inherit;
+    }
+}
+
+.fa-sort:before {
+    content: "sort";
+}
+
+.fa-sort-asc:before {
+    content: "keyboard_arrow_up";
+}
+
+.fa-sort-desc:before {
+    content: "keyboard_arrow_down";
+}
+
+.fa {
+    @extend .material-icons;
+}
+
+app-root {
+    position: absolute;
+    display: block;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    md-toolbar {
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+    }
+}
+
+span.filler {
+    flex: 1 auto;
+}
+
+p {
+    margin: 0;
+}
+
+ ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow: hidden;
+}
+
+mat-toolbar.topnav-container {
+    position: fixed;
+    z-index: 4;
+    .topnav-menu-btn {
+        margin-top: -4px;
+    }
+    .topnav-title {
+        font-weight: 200;
+        padding: 0;
+        display: inline;
+        img {
+            display: inline;
+            padding-right: 8px;
+        }
+    }
+    app-logo {
+        padding-left: 16px;
+        img {
+            margin: 0 8px 0 0;
+            height: 22px;
+            vertical-align: top;
+        }
+    }
+    app-breadcrumb {
+        padding-left: 16px;
+        cursor: default;
+    }
+    .topnav-avatar {
+        height: 28px;
+        width: 28px;
+        border-radius: 50%;
+        border: 2px double rgba(255, 255, 255, 0.5);
+    }
+    .topnav-search {
+        display: inline;
+        .autocomplete {
+            visibility: hidden;
+            width: 0;
+            transition: all .32s;
+            opacity: 0;
+        }
+        .autocomplete.show {
+            visibility: visible;
+            width: 280px;
+            opacity: 1;
+        }
+    }
+}
+
+mat-toolbar.page-footer {
+    font-size: 14px;
+}
+
+mat-sidenav-container {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    mat-sidenav.mat-sidenav-opened.mat-sidenav-side,
+    mat-sidenav.mat-sidenav-side.mat-sidenav-opening {
+        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, .1), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    }
+    div.page-container .page-content {
+        padding: 16px;
+    }
+    div.sidenav-container {
+        width: 280px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        mat-list [md-subheader],
+        mat-nav-list [md-subheader] {
+            height: 24px;
+            padding: 4px 16px 4px 16px;
+        }
+        div.mat-list-item {
+            font-size: 14px;
+        }
+        div.mat-list-text {
+            a {
+                overflow: hidden;
+                text-overflow: clip;
+            }
+            i {
+                width: 28px;
+            }
+        }
+        .sidenav-menu-sub {
+            transition: all .32s;
+            opacity: 0;
+            visibility: hidden;
+            height: 0;
+            .mat-list-item-content {
+                padding-left: 48px;
+            }
+        }
+        .sidenav-menu-sub.show {
+            visibility: visible;
+            opacity: 1;
+            height: 48px;
+        }
+        .sidenav-menu-sub-title {
+            padding-left: 48px;
+        }
+        mat-nav-list {
+            padding-top: 0;
+            padding-bottom: 64px;
+            .material-icons,
+            .sidenav-collapse-item {
+                vertical-align: middle;
+            }
+        }
+    }
+    mat-sidenav.sidenav-collapse {
+        min-width: 0;
+        div.sidenav-container {
+            transition: all .32s;
+            width: 48px;
+            div.mat-list-item-content {
+                padding: 0 13px;
+            }
+            div.mat-list-item {
+                padding-right: 0;
+            }
+            div.mat-list-text {
+                a {
+                    text-overflow: clip;
+                }
+            }
+            .sidenav-collapse-item {
+                display: none;
+            }
+            span.label {
+                display: none;
+            }
+            mat-list-item.sidenav-menu-sub {
+                display: none;
+            }
+        }
+    }
+    mat-sidenav.sidenav-collapse:hover {
+        div.sidenav-container {
+            width: 280px;
+            div.mat-list-item {
+                padding-right: 16px;
+            }
+            .sidenav-collapse-item {
+                display: inline-block;
+            }
+            span.label {
+                display: inline-block;
+            }
+            mat-list-item.sidenav-menu-sub {
+                display: block;
+            }
+        }
+    }
+}
+
+button[mat-fab] {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: $z-index-fab;
+}
+
+@mixin bg-color($theme) {
+    $foreground: map-get($theme, foreground);
+     ::-webkit-scrollbar-thumb {
+        background-color: map-get($foreground, hint-text);
+    }
+}
+
+@mixin toolbar-responsive-height($height) {
+    div.page-container {
+        padding-top: $height;
+    }
+    div.sidenav-container {
+        padding-top: $height;
+    }
+    div.message-panel {
+        padding-top: $height;
+    }
+}
+
+@include toolbar-responsive-height($mat-toolbar-height-desktop);
+@media ($mat-xsmall) and (orientation: portrait) {
+    @include toolbar-responsive-height($mat-toolbar-height-mobile-portrait);
+}
+
+@mixin sidenav-theme($theme) {
+    $background: map-get($theme, background);
+    mat-list-item.active {
+        background-color: map-get($background, disabled-button);
+    }
+    div.sidenav-container {
+        div.sidenav-bottom {
+            background-color: map-get($background, background);
+            border-color: map-get($background, disabled-button);
+        }
+    }
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+// md-select {
+//     // todo: fix this
+//     padding-top: 15px;
+//     .mat-select-trigger {
+//         font-size: 14px;
+//     }
+// }
+//----------------------------------------------------------------------------------------------------------------------
+// Mixin light theme
+//----------------------------------------------------------------------------------------------------------------------
+body.light {
+    $light-primary: mat-palette($mat-indigo);
+    $light-accent: mat-palette($mat-pink, A200, A100, A400);
+    $light-warn: mat-palette($mat-red);
+    $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+    @include angular-material-theme($light-theme);
+    @include bg-color($light-theme);
+    @include sidenav-theme($light-theme);
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Mixin dark theme
+//----------------------------------------------------------------------------------------------------------------------
+body.dark {
+    $dark-primary: mat-palette($mat-blue-grey);
+    $dark-accent: mat-palette($mat-amber, A200, A100, A400);
+    $dark-warn: mat-palette($mat-deep-orange);
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+    @include angular-material-theme($dark-theme);
+    @include bg-color($dark-theme);
+    @include sidenav-theme($dark-theme);
+}
