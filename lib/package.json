@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "name": "@aurochses/forms",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "@angular/animations": "6.0.0-rc.5",
+    "@angular/cdk": "6.0.0-rc.5",
+    "@angular/common": "6.0.0-rc.5",
+    "@angular/compiler": "6.0.0-rc.5",
+    "@angular/core": "6.0.0-rc.5",
+    "@angular/forms": "6.0.0-rc.5",
+    "@angular/http": "6.0.0-rc.5",
+    "@angular/material": "6.0.0-rc.5",
+    "@angular/platform-browser": "6.0.0-rc.5",
+    "@angular/platform-browser-dynamic": "6.0.0-rc.5",
+    "@angular/router": "6.0.0-rc.5",
+    "core-js": "2.5.5",
+    "rxjs": "6.0.0-rc.0",
+    "zone.js": "0.8.26"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "./public_api.ts"
+    },
+    "dest": "../dist/lib"
+  }
+}

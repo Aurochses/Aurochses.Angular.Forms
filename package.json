@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
+    "packagr": "ng-packagr -p lib/package.json"
   },
   "private": false,
   "dependencies": {
@@ -45,7 +45,7 @@
     "karma-coverage-istanbul-reporter": "1.4.2",
     "karma-jasmine": "1.1.1",
     "karma-jasmine-html-reporter": "1.0.0",
-    "ng-packagr": "2.4.2",
+    "ng-packagr": "3.0.0-rc.1",
     "protractor": "5.3.1",
     "ts-node": "6.0.0",
     "tslint": "5.9.1",
