@@ -15,6 +15,12 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@aurochses/angular-forms": [
+        //"dist/angular-forms"
+        "projects/angular-forms/src/public_api.ts"
+      ]
+    }
   }
 }

@@ -29,7 +29,7 @@
             ],
             "styles": [
               {
-                "input": "src/styles.css"
+                "input": "src/styles.scss"
               }
             ],
             "scripts": []
@@ -80,7 +80,7 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               {
-                "input": "styles.css"
+                "input": "styles.scss"
               }
             ],
             "scripts": [],
@@ -127,6 +127,46 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "angular-forms": {
+      "root": "projects/angular-forms",
+      "sourceRoot": "projects/angular-forms/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/angular-forms/tsconfig.lib.json",
+            "project": "projects/angular-forms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/angular-forms/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-forms/src/test.ts",
+            "tsConfig": "projects/angular-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-forms/tsconfig.lib.json",
+              "projects/angular-forms/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
