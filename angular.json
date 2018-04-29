@@ -136,14 +136,12 @@
     },
     "angular-forms": {
       "root": "projects/angular-forms",
-      "sourceRoot": "projects/angular-forms/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/angular-forms/tsconfig.lib.json",
             "project": "projects/angular-forms/ng-package.json"
           },
           "configurations": {
@@ -164,7 +162,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/angular-forms/tsconfig.lib.json",
+              "projects/angular-forms/tsconfig.lint.json",
               "projects/angular-forms/tsconfig.spec.json"
             ],
             "exclude": [
