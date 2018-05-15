@@ -25,7 +25,7 @@ import { CustomFormGroup } from './custom-form-group';
 import { InputType } from './input.type';
 
 @Injectable()
-export class AurochsesFormService {
+export class AurFormsService {
     constructor(private formBuilder: FormBuilder) { }
 
     public build<T>(type: new () => T): FormGroup | null {

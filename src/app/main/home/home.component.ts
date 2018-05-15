@@ -1,11 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+import { AurFormsService } from '@aurochses/angular-forms';
+import { UserModel } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  constructor() { }
+  formGroup: FormGroup;
+  component: Object;
+
+  constructor(private formsService: AurFormsService) { }
+
+  ngOnInit(): void {
+    this.formGroup = this.formsService.build(UserModel);
+
+    console.log(this.formGroup);
+  }
 
 }

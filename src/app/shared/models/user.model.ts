@@ -1,4 +1,8 @@
+import { Display } from '@aurochses/angular-forms';
+
 export class UserModel {
-    firstName: string;
-    lastName: string;
+    @Display('First Name')
+    firstName = '';
+
+    lastName = '';
 }

@@ -13,7 +13,6 @@ import { HiddenComponent } from './components/editors/hidden.component';
 import { NumberComponent } from './components/editors/number.component';
 import { StringComponent } from './components/editors/string.component';
 import { TextComponent } from './components/editors/text.component';
-import { AurochsesFormService } from './services/aurochses-form.service';
 
 @NgModule({
     imports: [
@@ -37,9 +36,6 @@ import { AurochsesFormService } from './services/aurochses-form.service';
         HiddenComponent,
         NumberComponent,
         AurochsesFormComponent
-    ],
-    providers: [
-        AurochsesFormService
     ],
     exports: [
         AurochsesFormComponent

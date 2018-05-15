@@ -5,7 +5,6 @@ import { DisplayGroupMetadata, DisplayMetadata, HiddenMetadata, ReadonlyMetadata
 import { Display } from '../decorators/display/models/display.model';
 import { HintType } from '../decorators/display/models/hint.type';
 import { RequiredMetadata } from '../decorators/validate/metadata/index';
-import { AurochsesFormService } from '../services/aurochses-form.service';
 import { CustomFormControl } from '../services/custom-form-control';
 import { CustomFormGroup } from '../services/custom-form-group';
 import { InputType } from '../services/input.type';
