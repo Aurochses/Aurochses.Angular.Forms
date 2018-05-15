@@ -2,15 +2,19 @@ import { DisplayMetadata } from '../decorators/display.decorator';
 
 export class Display {
 
-    constructor(prototype: any) {
-        if (`${DisplayMetadata.displayName}${name}` in prototype) {
-            display.name = prototype[`${DisplayMetadata.displayName}${name}`];
+    constructor(prototype: any, property: string) {
+        if (`${DisplayMetadata.displayName}${property}` in prototype) {
+            this.name = prototype[`${DisplayMetadata.displayName}${property}`];
+        } else {
+            this.name = property;
         }
-        if (`${DisplayMetadata.displayOrder}${name}` in prototype) {
-            display.order = prototype[`${DisplayMetadata.displayOrder}${name}`];
+
+        if (`${DisplayMetadata.displayOrder}${property}` in prototype) {
+            this.order = parseInt(prototype[`${DisplayMetadata.displayOrder}${property}`], 10);
         }
-        if (`${DisplayMetadata.displayDesc}${name}` in prototype) {
-            display.description = prototype[`${DisplayMetadata.displayDesc}${name}`];
+
+        if (`${DisplayMetadata.displayDescription}${property}` in prototype) {
+            this.description = prototype[`${DisplayMetadata.displayDescription}${property}`];
         }
     }
 
