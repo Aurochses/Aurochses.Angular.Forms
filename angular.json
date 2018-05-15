@@ -120,6 +120,46 @@
           }
         }
       }
+    },
+    "@aurochses/angular-forms": {
+      "root": "projects/aurochses/angular-forms",
+      "sourceRoot": "projects/aurochses/angular-forms/src",
+      "projectType": "library",
+      "prefix": "aur",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/aurochses/angular-forms/tsconfig.lib.json",
+            "project": "projects/aurochses/angular-forms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/aurochses/angular-forms/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/aurochses/angular-forms/src/test.ts",
+            "tsConfig": "projects/aurochses/angular-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/aurochses/angular-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/aurochses/angular-forms/tsconfig.lib.json",
+              "projects/aurochses/angular-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "demo"
