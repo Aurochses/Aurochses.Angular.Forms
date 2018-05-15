@@ -17,7 +17,7 @@
       "dom"
     ],
     "paths": {
-      "angular-forms": [
+      "@aurochses/angular-forms": [
         //"dist/angular-forms"
         "projects/aurochses/angular-forms/src/public_api.ts"
       ]

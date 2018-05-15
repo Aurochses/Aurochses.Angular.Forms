@@ -16,19 +16,6 @@ import { TextComponent } from './components/editors/text.component';
 import { AurochsesFormService } from './services/aurochses-form.service';
 
 @NgModule({
-    declarations: [
-        BooleanComponent,
-        DateComponent,
-        DropDownComponent,
-        StringComponent,
-        TextComponent,
-        HiddenComponent,
-        NumberComponent,
-        AurochsesFormComponent
-    ],
-    exports: [
-        AurochsesFormComponent
-    ],
     imports: [
         CommonModule,
         BrowserAnimationsModule,
@@ -41,9 +28,22 @@ import { AurochsesFormService } from './services/aurochses-form.service';
         FormsModule,
         ReactiveFormsModule
     ],
+    declarations: [
+        BooleanComponent,
+        DateComponent,
+        DropDownComponent,
+        StringComponent,
+        TextComponent,
+        HiddenComponent,
+        NumberComponent,
+        AurochsesFormComponent
+    ],
     providers: [
         AurochsesFormService
+    ],
+    exports: [
+        AurochsesFormComponent
     ]
 })
 
-export class AurochsesFormModule { }
+export class AurFormsModule { }

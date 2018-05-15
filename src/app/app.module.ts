@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
+import { AurFormsModule } from '@aurochses/angular-forms';
+
+import { AppRoutesModule } from './app-routes.module';
 import { AppComponent } from './app.component';
-import { AurochsesFormModule } from 'angular-forms';
+import { MainModule } from './main/main.module';
 
 @NgModule({
   declarations: [
@@ -10,9 +14,11 @@ import { AurochsesFormModule } from 'angular-forms';
   ],
   imports: [
     BrowserModule,
-    AurochsesFormModule
+    RouterModule,
+    AurFormsModule,
+    AppRoutesModule,
+    MainModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

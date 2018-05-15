@@ -11,7 +11,7 @@ import { CustomFormGroup } from '../services/custom-form-group';
 import { InputType } from '../services/input.type';
 
 @Component({
-    selector: 'aurochses-form',
+    selector: 'aur-forms',
     template: `<ng-container *ngFor="let control of controls" [ngSwitch]="control.type">
                     <hidden *ngSwitchCase="inputType.hidden" [formGroup]="formGroup" [control]="control"></hidden>
                     <date *ngSwitchCase="inputType.date" [formGroup]="formGroup" [control]="control"></date>
@@ -25,7 +25,7 @@ import { InputType } from '../services/input.type';
                             [component]="component"></dropdown>
                         <text *ngSwitchCase="hintType.text" [formGroup]="formGroup" [control]="control"></text>
                     </ng-container>
-                    <aurochses-form *ngSwitchCase="inputType.object" [formGroup]="control"></aurochses-form>
+                    <aur-forms *ngSwitchCase="inputType.object" [formGroup]="control"></aur-forms>
                </ng-container>`
 })
 
@@ -47,9 +47,9 @@ export class AurochsesFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        for (let name in this.formGroup.controls) {
+        for (const name in this.formGroup.controls) {
             if (this.formGroup.controls.hasOwnProperty(name)) {
-                let control = <CustomFormControl | CustomFormGroup>this.formGroup.controls[name];
+                const control = <CustomFormControl | CustomFormGroup>this.formGroup.controls[name];
                 this.controls.push(control);
             }
         }
