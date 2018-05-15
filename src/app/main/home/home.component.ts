@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { AurFormsService } from '@aurochses/angular-forms';
-import { UserModel } from '../../shared/models/user.model';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-home',
