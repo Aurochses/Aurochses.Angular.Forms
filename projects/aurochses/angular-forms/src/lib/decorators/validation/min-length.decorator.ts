@@ -32,7 +32,26 @@ export function MinLength(length: number, message?: string) {
     };
 }
 
-export class MinLengthMetadata {
+export function hasMinLength<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${MinLengthMetadata.hasMinLength}${property}`];
+}
+
+export function getMinLengthModel<T>(instance: T, property: keyof T): { minLength: number, message: string } | null {
+    if (hasMinLength(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            minLength: parseInt(prototype[`${MinLengthMetadata.minLength}${property}`], 10),
+            message: prototype[`${MinLengthMetadata.minLengthMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class MinLengthMetadata {
     public static hasMinLength = '__hasMinLength__';
     public static minLength = '__minLength__';
     public static minLengthMessage = `__minLengthMessage__`;

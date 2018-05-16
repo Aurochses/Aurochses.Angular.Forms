@@ -12,6 +12,12 @@ export function Hidden(hide = true) {
     };
 }
 
-export class HiddenMetadata {
+export function isHidden<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${HiddenMetadata.hidden}${property}`];
+}
+
+class HiddenMetadata {
     public static hidden = '__hidden__';
 }

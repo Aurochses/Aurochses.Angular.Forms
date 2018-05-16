@@ -42,7 +42,7 @@ export function DisplayGroup(name: string, order: number = 0, description?: stri
     };
 }
 
-export class DisplayGroupMetadata {
+class DisplayGroupMetadata {
     public static isGrouped = '__isGrouped__';
     public static displayGroupName = `__groupName__`;
     public static displayGroupOrder = `__groupOrder__`;

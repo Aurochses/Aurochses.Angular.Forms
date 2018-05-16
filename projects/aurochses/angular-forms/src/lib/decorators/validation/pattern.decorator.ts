@@ -36,7 +36,26 @@ export function definePattern(target: Object, property: string | symbol, pattern
     );
 }
 
-export class PatternMetadata {
+export function hasPattern<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${PatternMetadata.hasPattern}${property}`];
+}
+
+export function getPatternModel<T>(instance: T, property: keyof T): { pattern: string, message: string } | null {
+    if (hasPattern(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            pattern: prototype[`${PatternMetadata.pattern}${property}`],
+            message: prototype[`${PatternMetadata.patternMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class PatternMetadata {
     public static hasPattern = `__hasPattern__`;
     public static pattern = `__pattern__`;
     public static patternMessage = `__patternMessage__`;

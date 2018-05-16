@@ -42,7 +42,7 @@ export function Range(min: number | Date, max: number | Date, message?: string) 
     };
 }
 
-export class RangeMetadata {
+class RangeMetadata {
     public static hasRange = '__hasRange__';
     public static rangeMin = `__rangeMin__`;
     public static rangeMax = `__rangeMax__`;

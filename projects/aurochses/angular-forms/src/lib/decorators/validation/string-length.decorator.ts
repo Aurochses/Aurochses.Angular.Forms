@@ -42,7 +42,7 @@ export function StringLength(min: number, max: number, message?: string) {
     };
 }
 
-export class StringLengthMetadata {
+class StringLengthMetadata {
     public static hasStringLength = '__hasStringLength__';
     public static stringLengthMin = `__stringLengthMin__`;
     public static stringLengthMax = `__stringLengthMax__`;

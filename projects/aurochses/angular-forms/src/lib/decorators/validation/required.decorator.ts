@@ -22,7 +22,25 @@ export function Required(message?: string) {
     };
 }
 
-export class RequiredMetadata {
+export function isRequired<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${RequiredMetadata.isRequired}${property}`];
+}
+
+export function getRequiredModel<T>(instance: T, property: keyof T): { message: string } | null {
+    if (isRequired(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            message: prototype[`${RequiredMetadata.requiredMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class RequiredMetadata {
     public static isRequired = `__isRequired__`;
     public static requiredMessage = `__requiredMessage__`;
 }

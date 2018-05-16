@@ -32,7 +32,26 @@ export function MaxLength(length: number, message?: string) {
     };
 }
 
-export class MaxLengthMetadata {
+export function hasMaxLength<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${MaxLengthMetadata.hasMaxLength}${property}`];
+}
+
+export function getMaxLengthModel<T>(instance: T, property: keyof T): { maxLength: number, message: string } | null {
+    if (hasMaxLength(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            maxLength: parseInt(prototype[`${MaxLengthMetadata.maxLength}${property}`], 10),
+            message: prototype[`${MaxLengthMetadata.maxLengthMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class MaxLengthMetadata {
     public static hasMaxLength = '__hasMaxLength__';
     public static maxLength = '__maxLength__';
     public static maxLengthMessage = `__maxLengthMessage__`;

@@ -12,6 +12,12 @@ export function Disabled(disabled = true) {
     };
 }
 
-export class DisabledMetadata {
+export function isDisabled<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${DisabledMetadata.disabled}${property}`];
+}
+
+class DisabledMetadata {
     public static disabled = '__disabled__';
 }

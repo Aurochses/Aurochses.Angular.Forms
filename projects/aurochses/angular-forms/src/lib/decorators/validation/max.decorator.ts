@@ -33,7 +33,26 @@ export function Max(max: number | Date, message?: string) {
     };
 }
 
-export class MaxMetadata {
+export function hasMax<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${MaxMetadata.hasMax}${property}`];
+}
+
+export function getMaxModel<T>(instance: T, property: keyof T): { max: number | Date, message: string } | null {
+    if (hasMax(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            max: prototype[`${MaxMetadata.max}${property}`],
+            message: prototype[`${MaxMetadata.maxMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class MaxMetadata {
     public static hasMax = '__hasMax__';
     public static max = `__max__`;
     public static maxMessage = `__maxMessage__`;

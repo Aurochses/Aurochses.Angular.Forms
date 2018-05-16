@@ -1,4 +1,4 @@
-export class CustomErrorModel {
+export class MessageModel {
 
     type: string;
     message: string;

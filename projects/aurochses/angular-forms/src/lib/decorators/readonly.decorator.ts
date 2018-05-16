@@ -12,6 +12,12 @@ export function Readonly(readonly = true) {
     };
 }
 
-export class ReadonlyMetadata {
+export function isReadonly<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${ReadonlyMetadata.readonly}${property}`];
+}
+
+class ReadonlyMetadata {
     public static readonly = '__readonly__';
 }

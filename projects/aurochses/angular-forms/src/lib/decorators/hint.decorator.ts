@@ -1,6 +1,6 @@
 import { HintType } from '../models/hint.type';
 
-export function Hint(hint: HintType, params?: { key: {}, value: {} }[]) {
+export function Hint(type: HintType, params?: { key: {}, value: {} }[]) {
     return function hintInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -14,9 +14,9 @@ export function Hint(hint: HintType, params?: { key: {}, value: {} }[]) {
 
         Object.defineProperty(
             target,
-            `${HintMetadata.hint}${property.toString()}`,
+            `${HintMetadata.hintType}${property.toString()}`,
             {
-                value: hint,
+                value: type,
                 configurable: false,
                 enumerable: false
             }
@@ -34,8 +34,27 @@ export function Hint(hint: HintType, params?: { key: {}, value: {} }[]) {
     };
 }
 
-export class HintMetadata {
+export function hasHint<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${HintMetadata.hasHint}${property}`];
+}
+
+export function getHintModel<T>(instance: T, property: keyof T): { type: HintType, params: Array<{ key: string, value: string }> } | null {
+    if (hasHint(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            type: <HintType>prototype[`${HintMetadata.hintType}${property}`],
+            params: prototype[`${HintMetadata.hintParams}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class HintMetadata {
     public static hasHint = '__hasHint__';
-    public static hint = '__hint__';
+    public static hintType = '__hintType__';
     public static hintParams = '__hintParams__';
 }

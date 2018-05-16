@@ -33,7 +33,26 @@ export function Min(min: number | Date, message?: string) {
     };
 }
 
-export class MinMetadata {
+export function hasMin<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${MinMetadata.hasMin}${property}`];
+}
+
+export function getMinModel<T>(instance: T, property: keyof T): { min: number | Date, message: string } | null {
+    if (hasMin(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            min: prototype[`${MinMetadata.min}${property}`],
+            message: prototype[`${MinMetadata.minMessage}${property}`]
+        };
+    }
+
+    return null;
+}
+
+class MinMetadata {
     public static hasMin = '__hasMin__';
     public static min = `__min__`;
     public static minMessage = `__minMessage__`;
