@@ -11,7 +11,6 @@ import { UserModel } from '../../models/user.model';
 export class HomeComponent implements OnInit {
 
   formGroup: FormGroup;
-  component: Object;
 
   constructor(private formService: AurFormService) { }
 

@@ -16,7 +16,7 @@ export class FormComponent implements OnInit {
     formGroup: FormGroup;
 
     @Input()
-    component: Object;
+    component?: Object;
 
     controls: Array<AurFormControl | AurFormGroup>;
 
