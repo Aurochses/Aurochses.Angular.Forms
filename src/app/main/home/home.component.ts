@@ -17,8 +17,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formService.build(UserModel);
-
-    console.log(this.formGroup);
   }
 
 }

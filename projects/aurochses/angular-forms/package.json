@@ -3,7 +3,11 @@
   "version": "1.0.0-rc.0",
   "author": "Aurochses",
   "peerDependencies": {
+    "@angular/animations": "^6.0.0",
+    "@angular/cdk": "^6.0.0",
     "@angular/common": "^6.0.0",
-    "@angular/core": "^6.0.0"
+    "@angular/core": "^6.0.0",
+    "@angular/flex-layout": "^6.0.0-beta.15",
+    "@angular/material": "^6.0.0"
   }
 }

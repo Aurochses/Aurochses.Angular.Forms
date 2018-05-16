@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,6 +8,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { FormComponent } from './components/form.component';
 import { BooleanComponent } from './components/editors/boolean.component';
@@ -20,8 +23,10 @@ import { TextComponent } from './components/editors/text.component';
 @NgModule({
     imports: [
         CommonModule,
+        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        FlexLayoutModule,
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
