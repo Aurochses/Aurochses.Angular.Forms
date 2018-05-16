@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { AurFormsService } from '@aurochses/angular-forms';
+import { AurFormService } from '@aurochses/angular-forms';
 import { UserModel } from '../../models/user.model';
 
 @Component({
@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit {
   formGroup: FormGroup;
   component: Object;
 
-  constructor(private formsService: AurFormsService) { }
+  constructor(private formService: AurFormService) { }
 
   ngOnInit(): void {
-    this.formGroup = this.formsService.build(UserModel);
+    this.formGroup = this.formService.build(UserModel);
 
     console.log(this.formGroup);
   }

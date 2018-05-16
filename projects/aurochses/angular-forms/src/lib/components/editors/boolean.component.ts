@@ -1,19 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CustomFormControl } from '../../services/custom-form-control';
+import { AurFormControl } from '../../models/form-control.model';
 
 @Component({
-    selector: 'boolean',
-    template: `<div [formGroup]="formGroup">
-                <mat-checkbox [formControlName]="control.name">{{ control.placeholder }}</mat-checkbox>
-               </div>`
+    selector: 'aur-boolean',
+    templateUrl: './boolean.component.html'
 })
 export class BooleanComponent {
 
     @Input()
-    control: CustomFormControl;
+    formGroup: FormGroup;
 
     @Input()
-    formGroup: FormGroup;
+    control: AurFormControl;
 }

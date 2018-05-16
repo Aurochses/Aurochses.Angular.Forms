@@ -1,11 +1,11 @@
 export class MessageModel {
 
     type: string;
-    message: string;
+    text: string;
 
-    constructor(type: string, message: string) {
+    constructor(type: string, text: string) {
         this.type = type;
-        this.message = message;
+        this.text = text;
     }
 
 }

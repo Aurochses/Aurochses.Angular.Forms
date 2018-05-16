@@ -1,19 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CustomFormControl } from '../../services/custom-form-control';
+import { AurFormControl } from '../../models/form-control.model';
 
 @Component({
-    selector: 'hidden',
-    template: `<div [formGroup]="formGroup">
-                <input [formControlName]="control.name" type="hidden" />
-               </div>`
+    selector: 'aur-hidden',
+    templateUrl: './hidden.component.html'
 })
 export class HiddenComponent {
 
     @Input()
-    control: CustomFormControl;
+    formGroup: FormGroup;
 
     @Input()
-    formGroup: FormGroup;
+    control: AurFormControl;
 }

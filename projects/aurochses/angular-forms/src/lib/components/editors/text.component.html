@@ -1,0 +1,16 @@
+<mat-form-field [formGroup]="formGroup">
+    <textarea matInput
+    mdTextareaAutosize
+    [formControlName]="control.name"
+    [readOnly]="control.isReadonly"
+    [placeholder]="control.placeholder"
+    [required]="control.isRequired"
+    [maxlength]="control.maxLength"
+    [minlength]="control.minLength"></textarea>
+    <mat-hint *ngIf="control.maxLength" align="end">
+        {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
+    </mat-hint>
+    <mat-error>
+        {{ message() }}
+    </mat-error>
+</mat-form-field>
