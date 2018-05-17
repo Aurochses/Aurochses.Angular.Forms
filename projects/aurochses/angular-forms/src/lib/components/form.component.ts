@@ -3,11 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { getActionsModel } from '../decorators/actions.decorator';
 
-import { AurFormControl } from '../models/form-control.model';
-import { AurFormGroup } from '../models/form-group.model';
-import { InputType } from '../models/input.type';
-import { HintType } from '../models/hint.type';
 import { ActionsModel } from '../models/actions.model';
+
+import { AurFormService } from '../services/form.service';
 
 @Component({
     selector: 'aur-form',
@@ -15,44 +13,27 @@ import { ActionsModel } from '../models/actions.model';
 })
 export class FormComponent<T> implements OnInit {
 
-    @Input()
-    viewModel: T;
+    @Input() viewModel: T;
+    @Input() component: Object;
 
-    @Input()
-    formGroup: FormGroup;
-
-    @Input()
-    component?: Object;
-
-    @Output() submitted = new EventEmitter<any>();
+    @Output() submitted = new EventEmitter<T>();
     @Output() canceled = new EventEmitter();
 
-    controls: Array<AurFormControl | AurFormGroup>;
-
-    inputType = InputType;
-    hintType = HintType;
+    formGroup: FormGroup;
 
     actions: ActionsModel;
 
-    constructor() {
-        this.controls = new Array<AurFormControl | AurFormGroup>();
-    }
+    constructor(private formService: AurFormService) { }
 
-    ngOnInit() {
-        for (const control in this.formGroup.controls) {
-            if (this.formGroup.controls.hasOwnProperty(control)) {
-                this.controls.push(<AurFormControl | AurFormGroup>this.formGroup.controls[control]);
-            }
-        }
+    ngOnInit(): void {
+        this.formGroup = this.formService.build(this.viewModel);
 
         this.actions = getActionsModel(this.viewModel);
-
-        this.controls.sort((e, n) => e.key - n.key);
     }
 
     onSubmit(): void {
         if (this.formGroup.valid) {
-            this.submitted.emit(this.formGroup.value);
+            this.submitted.emit(<T>this.formGroup.value);
         } else {
             this.validate(this.formGroup);
         }
@@ -62,6 +43,7 @@ export class FormComponent<T> implements OnInit {
         Object.keys(formGroup.controls).forEach(
             key => {
                 const control = formGroup.get(key);
+
                 if (control instanceof FormControl) {
                     control.markAsTouched({ onlySelf: true });
                 } else if (control instanceof FormGroup) {

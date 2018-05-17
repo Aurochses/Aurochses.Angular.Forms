@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { AurFormService } from '@aurochses/angular-forms';
 import { UserModel } from '../../models/user.model';
 
 @Component({
@@ -10,13 +9,12 @@ import { UserModel } from '../../models/user.model';
 })
 export class HomeComponent implements OnInit {
 
-  viewModel: UserModel = new UserModel();
-  formGroup: FormGroup;
+  viewModel: UserModel;
 
-  constructor(private formService: AurFormService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.formGroup = this.formService.build(UserModel);
+    this.viewModel = new UserModel();
   }
 
   submit(item: UserModel): void {

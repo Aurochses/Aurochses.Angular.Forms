@@ -1,4 +1,4 @@
-export function Max(max: number | Date, message?: string) {
+export function Max(max: number | Date, errorMessage?: string) {
     return function maxInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -22,10 +22,10 @@ export function Max(max: number | Date, message?: string) {
 
         Object.defineProperty(
             target,
-            `${MaxMetadata.maxMessage}${property.toString()}`,
+            `${MaxMetadata.maxErrorMessage}${property.toString()}`,
             {
                 // todo: Ask v.rodchenko message for this place
-                value: message || `The field ${property.toString()} has max length of ${max} characters`,
+                value: errorMessage || `The field ${property.toString()} has max length of ${max} characters`,
                 configurable: false,
                 enumerable: false
             }
@@ -39,13 +39,13 @@ export function hasMax<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${MaxMetadata.hasMax}${property}`];
 }
 
-export function getMaxModel<T>(instance: T, property: keyof T): { max: number | Date, message: string } | null {
+export function getMaxModel<T>(instance: T, property: keyof T): { max: number | Date, errorMessage: string } | null {
     if (hasMax(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             max: prototype[`${MaxMetadata.max}${property}`],
-            message: prototype[`${MaxMetadata.maxMessage}${property}`]
+            errorMessage: prototype[`${MaxMetadata.maxErrorMessage}${property}`]
         };
     }
 
@@ -55,5 +55,5 @@ export function getMaxModel<T>(instance: T, property: keyof T): { max: number | 
 class MaxMetadata {
     public static hasMax = '__hasMax__';
     public static max = `__max__`;
-    public static maxMessage = `__maxMessage__`;
+    public static maxErrorMessage = `__maxErrorMessage__`;
 }

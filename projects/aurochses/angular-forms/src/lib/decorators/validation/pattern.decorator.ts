@@ -1,10 +1,10 @@
-export function Pattern(pattern: RegExp, message?: string) {
+export function Pattern(pattern: RegExp, errorMessage?: string) {
     return function patternInternal(target: Object, property: string | symbol): void {
-        definePattern(target, property, pattern, message);
+        definePattern(target, property, pattern, errorMessage);
     };
 }
 
-export function definePattern(target: Object, property: string | symbol, pattern: RegExp, message?: string) {
+export function definePattern(target: Object, property: string | symbol, pattern: RegExp, errorMessage?: string) {
     Object.defineProperty(
         target,
         `${PatternMetadata.hasPattern}${property.toString()}`,
@@ -27,9 +27,9 @@ export function definePattern(target: Object, property: string | symbol, pattern
 
     Object.defineProperty(
         target,
-        `${PatternMetadata.patternMessage}${property.toString()}`,
+        `${PatternMetadata.patternErrorMessage}${property.toString()}`,
         {
-            value: message || `The field ${property.toString()} must fullfill the pattern ${pattern}`,
+            value: errorMessage || `The field ${property.toString()} must fullfill the pattern ${pattern}`,
             configurable: false,
             enumerable: false
         }
@@ -42,13 +42,13 @@ export function hasPattern<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${PatternMetadata.hasPattern}${property}`];
 }
 
-export function getPatternModel<T>(instance: T, property: keyof T): { pattern: string, message: string } | null {
+export function getPatternModel<T>(instance: T, property: keyof T): { pattern: string, errorMessage: string } | null {
     if (hasPattern(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             pattern: prototype[`${PatternMetadata.pattern}${property}`],
-            message: prototype[`${PatternMetadata.patternMessage}${property}`]
+            errorMessage: prototype[`${PatternMetadata.patternErrorMessage}${property}`]
         };
     }
 
@@ -58,5 +58,5 @@ export function getPatternModel<T>(instance: T, property: keyof T): { pattern: s
 class PatternMetadata {
     public static hasPattern = `__hasPattern__`;
     public static pattern = `__pattern__`;
-    public static patternMessage = `__patternMessage__`;
+    public static patternErrorMessage = `__patternErrorMessage__`;
 }

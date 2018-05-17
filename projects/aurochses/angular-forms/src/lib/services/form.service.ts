@@ -5,7 +5,7 @@ import { Compare, Max, Min } from './validators';
 
 import { AurFormControl } from '../models/form-control.model';
 import { AurFormGroup } from '../models/form-group.model';
-import { MessageModel } from '../models/message.model';
+import { ErrorMessageModel } from '../models/error-message.model';
 
 import { InputType, getInputType } from '../models/input.type';
 import { HintType } from '../models/hint.type';
@@ -28,11 +28,9 @@ export class AurFormService {
 
     constructor(private formBuilder: FormBuilder) { }
 
-    public build<T>(type: new () => T): FormGroup | null {
-        const modelInstance = new type();
-
-        if (modelInstance) {
-            return this.iterate(modelInstance);
+    public build<T>(instance: T): FormGroup | null {
+        if (instance) {
+            return this.iterate(instance);
         }
 
         return null;
@@ -57,7 +55,7 @@ export class AurFormService {
                     );
                 } else {
                     const validators = new Array<ValidatorFn>();
-                    const messages = new Array<MessageModel>();
+                    const errorMessages = new Array<ErrorMessageModel>();
 
                     const disabled = isDisabled(instance, property);
                     const hint: { type: HintType, params: Array<{ key: string, value: string }> } | null = getHintModel(instance, property);
@@ -68,7 +66,7 @@ export class AurFormService {
                         const compareModel = getCompareModel(instance, property);
 
                         validators.push(Compare(compareModel.withProperty, formGroup));
-                        messages.push(new MessageModel('compare', compareModel.message));
+                        errorMessages.push(new ErrorMessageModel('compare', compareModel.errorMessage));
                     }
 
                     // todo: v.rodchenko: email decorator???
@@ -79,7 +77,7 @@ export class AurFormService {
 
                         maxLength = maxLengthModel.maxLength;
                         validators.push(Validators.maxLength(maxLength));
-                        messages.push(new MessageModel('maxlength', maxLengthModel.message));
+                        errorMessages.push(new ErrorMessageModel('maxlength', maxLengthModel.errorMessage));
                     }
 
                     let max: number | Date | null = null;
@@ -88,7 +86,7 @@ export class AurFormService {
 
                         max = maxModel.max;
                         validators.push(Max(max));
-                        messages.push(new MessageModel('max', maxModel.message));
+                        errorMessages.push(new ErrorMessageModel('max', maxModel.errorMessage));
                     }
 
                     let minLength: number | null = null;
@@ -97,7 +95,7 @@ export class AurFormService {
 
                         minLength = minLengthModel.minLength;
                         validators.push(Validators.minLength(minLength));
-                        messages.push(new MessageModel('minlength', minLengthModel.message));
+                        errorMessages.push(new ErrorMessageModel('minlength', minLengthModel.errorMessage));
                     }
 
                     let min: number | Date | null = null;
@@ -106,7 +104,7 @@ export class AurFormService {
 
                         min = minModel.min;
                         validators.push(Min(min));
-                        messages.push(new MessageModel('min', minModel.message));
+                        errorMessages.push(new ErrorMessageModel('min', minModel.errorMessage));
                     }
 
                     const pattern = hasPattern(instance, property);
@@ -114,7 +112,7 @@ export class AurFormService {
                         const patternModel = getPatternModel(instance, property);
 
                         validators.push(Validators.pattern(patternModel.pattern));
-                        messages.push(new MessageModel('pattern', patternModel.message));
+                        errorMessages.push(new ErrorMessageModel('pattern', patternModel.errorMessage));
                     }
 
                     // todo: v.rodchenko: range decorator???
@@ -124,7 +122,7 @@ export class AurFormService {
                         const requiredModel = getRequiredModel(instance, property);
 
                         validators.push(Validators.required);
-                        messages.push(new MessageModel('required', requiredModel.message));
+                        errorMessages.push(new ErrorMessageModel('required', requiredModel.errorMessage));
                     }
 
                     // todo: v.rodchenko: string-length decorator???
@@ -151,7 +149,7 @@ export class AurFormService {
                             required,
 
                             validators,
-                            messages
+                            errorMessages
                         )
                     );
                 }

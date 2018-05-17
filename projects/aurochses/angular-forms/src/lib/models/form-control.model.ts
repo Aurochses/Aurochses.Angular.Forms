@@ -3,7 +3,7 @@ import { FormControl, ValidatorFn } from '@angular/forms';
 import { InputType } from './input.type';
 import { HintType } from './hint.type';
 import { DisplayModel } from './display.model';
-import { MessageModel } from './message.model';
+import { ErrorMessageModel } from './error-message.model';
 
 export class AurFormControl extends FormControl {
 
@@ -24,7 +24,7 @@ export class AurFormControl extends FormControl {
     hasPattern: boolean;
     isRequired: boolean;
 
-    messages: Array<MessageModel>;
+    errorMessages: Array<ErrorMessageModel>;
 
     constructor(
         property: string,
@@ -46,7 +46,7 @@ export class AurFormControl extends FormControl {
         isRequired: boolean = false,
 
         validator?: ValidatorFn | ValidatorFn[] | null,
-        messages: Array<MessageModel> = new Array<MessageModel>()
+        errorMessages: Array<ErrorMessageModel> = new Array<ErrorMessageModel>()
     ) {
         super({ value: '', disabled: isDisabled }, validator);
 
@@ -67,6 +67,6 @@ export class AurFormControl extends FormControl {
         this.hasPattern = hasPattern;
         this.isRequired = isRequired;
 
-        this.messages = messages;
+        this.errorMessages = errorMessages;
     }
 }

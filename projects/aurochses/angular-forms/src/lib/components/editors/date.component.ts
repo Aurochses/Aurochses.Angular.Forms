@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { AurFormControl } from '../../models/form-control.model';
-import { MessageModel } from '../../models/message.model';
+import { ErrorMessageModel } from '../../models/error-message.model';
 
 @Component({
     selector: 'aur-date',
@@ -10,15 +10,12 @@ import { MessageModel } from '../../models/message.model';
 })
 export class DateComponent {
 
-    @Input()
-    formGroup: FormGroup;
+    @Input() formGroup: FormGroup;
+    @Input() control: AurFormControl;
 
-    @Input()
-    control: AurFormControl;
-
-    message(): string {
-        return (<AurFormControl>this.formGroup.controls[this.control.name]).messages
-            .filter((message: MessageModel) => this.formGroup.controls[this.control.name].hasError(message.type))
-            .map((message: MessageModel) => message.text)[0];
+    getErrorMessage(): string {
+        return (<AurFormControl>this.formGroup.controls[this.control.name]).errorMessages
+            .filter((errorMessage: ErrorMessageModel) => this.formGroup.controls[this.control.name].hasError(errorMessage.type))
+            .map((errorMessage: ErrorMessageModel) => errorMessage.text)[0];
     }
 }

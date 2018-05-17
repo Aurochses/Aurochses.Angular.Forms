@@ -1,4 +1,4 @@
-export function Min(min: number | Date, message?: string) {
+export function Min(min: number | Date, errorMessage?: string) {
     return function minInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -22,10 +22,10 @@ export function Min(min: number | Date, message?: string) {
 
         Object.defineProperty(
             target,
-            `${MinMetadata.minMessage}${property.toString()}`,
+            `${MinMetadata.minErrorMessage}${property.toString()}`,
             {
                 // todo: Ask v.rodchenko message for this place
-                value: message || `The field ${property.toString()} needs at least ${min} characters`,
+                value: errorMessage || `The field ${property.toString()} needs at least ${min} characters`,
                 configurable: false,
                 enumerable: false
             }
@@ -39,13 +39,13 @@ export function hasMin<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${MinMetadata.hasMin}${property}`];
 }
 
-export function getMinModel<T>(instance: T, property: keyof T): { min: number | Date, message: string } | null {
+export function getMinModel<T>(instance: T, property: keyof T): { min: number | Date, errorMessage: string } | null {
     if (hasMin(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             min: prototype[`${MinMetadata.min}${property}`],
-            message: prototype[`${MinMetadata.minMessage}${property}`]
+            errorMessage: prototype[`${MinMetadata.minErrorMessage}${property}`]
         };
     }
 
@@ -55,5 +55,5 @@ export function getMinModel<T>(instance: T, property: keyof T): { min: number | 
 class MinMetadata {
     public static hasMin = '__hasMin__';
     public static min = `__min__`;
-    public static minMessage = `__minMessage__`;
+    public static minErrorMessage = `__minErrorMessage__`;
 }

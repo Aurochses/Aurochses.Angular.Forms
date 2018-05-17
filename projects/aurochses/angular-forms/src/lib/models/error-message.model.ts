@@ -1,4 +1,4 @@
-export class MessageModel {
+export class ErrorMessageModel {
 
     type: string;
     text: string;

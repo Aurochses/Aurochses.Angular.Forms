@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { AurFormControl } from '../../models/form-control.model';
-import { MessageModel } from '../../models/message.model';
 
 @Component({
     selector: 'aur-dropdown',
@@ -10,14 +9,9 @@ import { MessageModel } from '../../models/message.model';
 })
 export class DropDownComponent implements OnInit {
 
-    @Input()
-    formGroup: FormGroup;
-
-    @Input()
-    control: AurFormControl;
-
-    @Input()
-    component: Component;
+    @Input() formGroup: FormGroup;
+    @Input() control: AurFormControl;
+    @Input() component: Component;
 
     dropDownValues: Array<{ key: string, value: string }>;
 

@@ -1,4 +1,4 @@
-export function StringLength(min: number, max: number, message?: string) {
+export function StringLength(min: number, max: number, errorMessage?: string) {
     return function stringLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -32,9 +32,9 @@ export function StringLength(min: number, max: number, message?: string) {
 
         Object.defineProperty(
             target,
-            `${StringLengthMetadata.stringLengthMessage}${property.toString()}`,
+            `${StringLengthMetadata.stringLengthErrorMessage}${property.toString()}`,
             {
-                value: message || `${property.toString()} must be between ${min} and ${max} characters`,
+                value: errorMessage || `${property.toString()} must be between ${min} and ${max} characters`,
                 configurable: false,
                 enumerable: false
             }
@@ -46,5 +46,5 @@ class StringLengthMetadata {
     public static hasStringLength = '__hasStringLength__';
     public static stringLengthMin = `__stringLengthMin__`;
     public static stringLengthMax = `__stringLengthMax__`;
-    public static stringLengthMessage = `__stringLengthMessage__`;
+    public static stringLengthErrorMessage = `__stringLengthErrorMessage__`;
 }

@@ -1,4 +1,4 @@
-export function MaxLength(length: number, message?: string) {
+export function MaxLength(length: number, errorMessage?: string) {
     return function maxLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -22,9 +22,9 @@ export function MaxLength(length: number, message?: string) {
 
         Object.defineProperty(
             target,
-            `${MaxLengthMetadata.maxLengthMessage}${property.toString()}`,
+            `${MaxLengthMetadata.maxLengthErrorMessage}${property.toString()}`,
             {
-                value: message || `The field ${property.toString()} has max length of ${length} characters`,
+                value: errorMessage || `The field ${property.toString()} has max length of ${length} characters`,
                 configurable: false,
                 enumerable: false
             }
@@ -38,13 +38,13 @@ export function hasMaxLength<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${MaxLengthMetadata.hasMaxLength}${property}`];
 }
 
-export function getMaxLengthModel<T>(instance: T, property: keyof T): { maxLength: number, message: string } | null {
+export function getMaxLengthModel<T>(instance: T, property: keyof T): { maxLength: number, errorMessage: string } | null {
     if (hasMaxLength(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             maxLength: parseInt(prototype[`${MaxLengthMetadata.maxLength}${property}`], 10),
-            message: prototype[`${MaxLengthMetadata.maxLengthMessage}${property}`]
+            errorMessage: prototype[`${MaxLengthMetadata.maxLengthErrorMessage}${property}`]
         };
     }
 
@@ -54,5 +54,5 @@ export function getMaxLengthModel<T>(instance: T, property: keyof T): { maxLengt
 class MaxLengthMetadata {
     public static hasMaxLength = '__hasMaxLength__';
     public static maxLength = '__maxLength__';
-    public static maxLengthMessage = `__maxLengthMessage__`;
+    public static maxLengthErrorMessage = `__maxLengthErrorMessage__`;
 }

@@ -1,4 +1,4 @@
-export function Compare(withProperty: string, message?: string) {
+export function Compare(withProperty: string, errorMessage?: string) {
     return function compareInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -22,9 +22,9 @@ export function Compare(withProperty: string, message?: string) {
 
         Object.defineProperty(
             target,
-            `${CompareMetadata.compareMessage}${property.toString()}`,
+            `${CompareMetadata.compareErrorMessage}${property.toString()}`,
             {
-                value: message || `The field ${property.toString()} must have the same value as field ${withProperty}`,
+                value: errorMessage || `The field ${property.toString()} must have the same value as field ${withProperty}`,
                 configurable: false,
                 enumerable: false
             }
@@ -38,13 +38,13 @@ export function hasCompare<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${CompareMetadata.hasCompare}${property}`];
 }
 
-export function getCompareModel<T>(instance: T, property: keyof T): { withProperty: string, message: string } | null {
+export function getCompareModel<T>(instance: T, property: keyof T): { withProperty: string, errorMessage: string } | null {
     if (hasCompare(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             withProperty: prototype[`${CompareMetadata.compareWithProperty}${property}`],
-            message: prototype[`${CompareMetadata.compareMessage}${property}`]
+            errorMessage: prototype[`${CompareMetadata.compareErrorMessage}${property}`]
         };
     }
 
@@ -54,5 +54,5 @@ export function getCompareModel<T>(instance: T, property: keyof T): { withProper
 class CompareMetadata {
     public static hasCompare = '__hasCompare__';
     public static compareWithProperty = `__compareWithProperty__`;
-    public static compareMessage = `__compareMessage__`;
+    public static compareErrorMessage = `__compareErrorMessage__`;
 }

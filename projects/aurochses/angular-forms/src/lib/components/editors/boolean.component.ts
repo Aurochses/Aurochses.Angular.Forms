@@ -9,9 +9,6 @@ import { AurFormControl } from '../../models/form-control.model';
 })
 export class BooleanComponent {
 
-    @Input()
-    formGroup: FormGroup;
-
-    @Input()
-    control: AurFormControl;
+    @Input() formGroup: FormGroup;
+    @Input() control: AurFormControl;
 }

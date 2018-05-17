@@ -2,6 +2,8 @@ import { Actions, Display, MinLength, MaxLength, Required } from '@aurochses/ang
 
 @Actions()
 export class UserModel {
+    isActive = false;
+
     @Display('First Name')
     firstName = '';
 

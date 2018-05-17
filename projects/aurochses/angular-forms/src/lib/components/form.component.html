@@ -1,16 +1,5 @@
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" fxLayout="column">
-    <ng-container *ngFor="let control of controls" [ngSwitch]="control.inputType">
-        <aur-hidden *ngSwitchCase="inputType.hidden" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-hidden>
-        <aur-date *ngSwitchCase="inputType.date" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-date>
-        <aur-string *ngSwitchCase="inputType.string" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-string>
-        <aur-boolean *ngSwitchCase="inputType.boolean" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-boolean>
-        <aur-number *ngSwitchCase="inputType.number" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-number>
-        <ng-container *ngSwitchCase="inputType.hint" [ngSwitch]="control.hint.type">
-            <aur-dropdown *ngSwitchCase="hintType.dropdown" fxLayout="row" [formGroup]="formGroup" [control]="control" [component]="component"></aur-dropdown>
-            <aur-text *ngSwitchCase="hintType.text" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-text>
-        </ng-container>
-        <aur-form *ngSwitchCase="inputType.object" fxLayout="row" [formGroup]="control"></aur-form>
-    </ng-container>
+    <aur-form-group [formGroup]="formGroup" [component]="component"></aur-form-group>
 
     <div *ngIf="actions.show" fxLayout="row" fxLayoutGap="10px">
         <button mat-raised-button type="submit">Save</button>

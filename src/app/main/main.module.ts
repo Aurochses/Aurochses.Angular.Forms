@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { AurFormsModule, AurFormService } from '@aurochses/angular-forms';
+import { AurFormsModule } from '@aurochses/angular-forms';
 
 import { HomeComponent } from './home/home.component';
 
@@ -10,9 +10,6 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     AurFormsModule
-  ],
-  providers: [
-    AurFormService
   ]
 })
 export class MainModule { }

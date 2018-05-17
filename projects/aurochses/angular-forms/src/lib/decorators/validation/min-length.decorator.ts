@@ -1,4 +1,4 @@
-export function MinLength(length: number, message?: string) {
+export function MinLength(length: number, errorMessage?: string) {
     return function minLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -22,9 +22,9 @@ export function MinLength(length: number, message?: string) {
 
         Object.defineProperty(
             target,
-            `${MinLengthMetadata.minLengthMessage}${property.toString()}`,
+            `${MinLengthMetadata.minLengthErrorMessage}${property.toString()}`,
             {
-                value: message || `The field ${property.toString()} needs at least ${length} characters`,
+                value: errorMessage || `The field ${property.toString()} needs at least ${length} characters`,
                 configurable: false,
                 enumerable: false
             }
@@ -38,13 +38,13 @@ export function hasMinLength<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${MinLengthMetadata.hasMinLength}${property}`];
 }
 
-export function getMinLengthModel<T>(instance: T, property: keyof T): { minLength: number, message: string } | null {
+export function getMinLengthModel<T>(instance: T, property: keyof T): { minLength: number, errorMessage: string } | null {
     if (hasMinLength(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
         return {
             minLength: parseInt(prototype[`${MinLengthMetadata.minLength}${property}`], 10),
-            message: prototype[`${MinLengthMetadata.minLengthMessage}${property}`]
+            errorMessage: prototype[`${MinLengthMetadata.minLengthErrorMessage}${property}`]
         };
     }
 
@@ -54,5 +54,5 @@ export function getMinLengthModel<T>(instance: T, property: keyof T): { minLengt
 class MinLengthMetadata {
     public static hasMinLength = '__hasMinLength__';
     public static minLength = '__minLength__';
-    public static minLengthMessage = `__minLengthMessage__`;
+    public static minLengthErrorMessage = `__minLengthErrorMessage__`;
 }

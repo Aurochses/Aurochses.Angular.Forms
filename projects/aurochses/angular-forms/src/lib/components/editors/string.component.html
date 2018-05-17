@@ -10,6 +10,6 @@
         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
     </mat-hint>
     <mat-error>
-        {{ message() }}
+        {{ getErrorMessage() }}
     </mat-error>
 </mat-form-field>
