@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" fxLayout="column">
     <ng-container *ngFor="let control of controls" [ngSwitch]="control.inputType">
         <aur-hidden *ngSwitchCase="inputType.hidden" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-hidden>
         <aur-date *ngSwitchCase="inputType.date" fxLayout="row" [formGroup]="formGroup" [control]="control"></aur-date>
@@ -11,4 +11,9 @@
         </ng-container>
         <aur-form *ngSwitchCase="inputType.object" fxLayout="row" [formGroup]="control"></aur-form>
     </ng-container>
-</div>
+
+    <div fxLayout="row" fxLayoutGap="10px">
+        <button mat-raised-button type="submit">Save</button>
+        <button mat-raised-button (click)="onCancel()" type="button">Cancel</button>
+    </div>
+</form>

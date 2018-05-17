@@ -18,4 +18,12 @@ export class HomeComponent implements OnInit {
     this.formGroup = this.formService.build(UserModel);
   }
 
+  submit(item: UserModel): void {
+    console.log(item);
+  }
+
+  cancel(): void {
+    console.log('canceled');
+  }
+
 }

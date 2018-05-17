@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -31,7 +32,8 @@ import { TextComponent } from './components/editors/text.component';
         MatDatepickerModule,
         MatNativeDateModule,
         MatInputModule,
-        MatSelectModule
+        MatSelectModule,
+        MatButtonModule
     ],
     declarations: [
         FormComponent,
