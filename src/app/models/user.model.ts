@@ -1,5 +1,6 @@
-import { Display, MinLength, MaxLength, Required } from '@aurochses/angular-forms';
+import { Actions, Display, MinLength, MaxLength, Required } from '@aurochses/angular-forms';
 
+@Actions()
 export class UserModel {
     @Display('First Name')
     firstName = '';

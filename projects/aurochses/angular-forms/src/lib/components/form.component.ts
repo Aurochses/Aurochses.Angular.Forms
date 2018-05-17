@@ -1,16 +1,22 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+import { getActionsModel } from '../decorators/actions.decorator';
+
 import { AurFormControl } from '../models/form-control.model';
 import { AurFormGroup } from '../models/form-group.model';
 import { InputType } from '../models/input.type';
 import { HintType } from '../models/hint.type';
+import { ActionsModel } from '../models/actions.model';
 
 @Component({
     selector: 'aur-form',
     templateUrl: './form.component.html'
 })
-export class FormComponent implements OnInit {
+export class FormComponent<T> implements OnInit {
+
+    @Input()
+    viewModel: T;
 
     @Input()
     formGroup: FormGroup;
@@ -26,6 +32,8 @@ export class FormComponent implements OnInit {
     inputType = InputType;
     hintType = HintType;
 
+    actions: ActionsModel;
+
     constructor() {
         this.controls = new Array<AurFormControl | AurFormGroup>();
     }
@@ -36,6 +44,8 @@ export class FormComponent implements OnInit {
                 this.controls.push(<AurFormControl | AurFormGroup>this.formGroup.controls[control]);
             }
         }
+
+        this.actions = getActionsModel(this.viewModel);
 
         this.controls.sort((e, n) => e.key - n.key);
     }

@@ -12,7 +12,7 @@
         <aur-form *ngSwitchCase="inputType.object" fxLayout="row" [formGroup]="control"></aur-form>
     </ng-container>
 
-    <div fxLayout="row" fxLayoutGap="10px">
+    <div *ngIf="actions.show" fxLayout="row" fxLayoutGap="10px">
         <button mat-raised-button type="submit">Save</button>
         <button mat-raised-button (click)="onCancel()" type="button">Cancel</button>
     </div>

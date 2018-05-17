@@ -10,6 +10,7 @@ import { UserModel } from '../../models/user.model';
 })
 export class HomeComponent implements OnInit {
 
+  viewModel: UserModel = new UserModel();
   formGroup: FormGroup;
 
   constructor(private formService: AurFormService) { }
