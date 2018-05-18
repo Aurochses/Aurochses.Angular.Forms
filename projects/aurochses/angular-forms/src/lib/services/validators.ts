@@ -63,6 +63,6 @@ export function Compare(propertyName: string, formGroup: FormGroup) {
         }
 
         const value = control.value;
-        return (!isNaN(value) && value === formGroup.controls[propertyName].value) ? null : { 'compare': { valid: false } };
+        return value && value === formGroup.controls[propertyName].value ? null : { 'compare': { valid: false } };
     };
 }

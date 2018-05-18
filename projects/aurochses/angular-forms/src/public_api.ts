@@ -8,6 +8,7 @@ export * from './lib/decorators/display-group.decorator';
 export * from './lib/decorators/display.decorator';
 export * from './lib/decorators/hidden.decorator';
 export * from './lib/decorators/hint.decorator';
+export * from './lib/decorators/password.decorator';
 export * from './lib/decorators/readonly.decorator';
 
 export * from './lib/decorators/validation/compare.decorator';
