@@ -13,6 +13,7 @@ import { HintType } from '../models/hint.type';
 import { getDisplayModel } from '../decorators/display.decorator';
 import { isDisabled } from '../decorators/disabled.decorator';
 import { getHintModel } from '../decorators/hint.decorator';
+import { isPassword } from '../decorators/password.decorator';
 import { isReadonly } from '../decorators/readonly.decorator';
 
 import { hasCompare, getCompareModel } from '../decorators/validation/compare.decorator';
@@ -59,6 +60,7 @@ export class AurFormService {
 
                     const disabled = isDisabled(instance, property);
                     const hint: { type: HintType, params: Array<{ key: string, value: string }> } | null = getHintModel(instance, property);
+                    const password = isPassword(instance, property);
                     const readonly = isReadonly(instance, property);
 
                     const compare = hasCompare(instance, property);
@@ -68,8 +70,6 @@ export class AurFormService {
                         validators.push(Compare(compareModel.withProperty, formGroup));
                         errorMessages.push(new ErrorMessageModel('compare', compareModel.errorMessage));
                     }
-
-                    // todo: v.rodchenko: email decorator???
 
                     let maxLength: number | null = null;
                     if (hasMaxLength(instance, property)) {
@@ -138,6 +138,7 @@ export class AurFormService {
 
                             disabled,
                             hint,
+                            password,
                             readonly,
 
                             compare,
