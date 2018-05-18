@@ -1,4 +1,4 @@
-import { Actions, Display, MinLength, MaxLength, Required } from '@aurochses/angular-forms';
+import { Actions, Compare, Display, MinLength, MaxLength, Required } from '@aurochses/angular-forms';
 
 @Actions()
 export class UserModel {
@@ -11,4 +11,9 @@ export class UserModel {
     @MinLength(5)
     @MaxLength(10)
     lastName = '';
+
+    compareOne = '';
+
+    @Compare('compareOne')
+    compareTwo = '';
 }
