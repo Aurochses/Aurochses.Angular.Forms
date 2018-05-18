@@ -1,0 +1,15 @@
+<mat-form-field [formGroup]="formGroup" fxFlex>
+    <input matInput
+    [formControlName]="control.name"
+    [readOnly]="control.isReadonly"
+    [placeholder]="control.placeholder"
+    [required]="control.isRequired"
+    [maxlength]="control.maxLength"
+    [minlength]="control.minLength">
+    <mat-hint *ngIf="control.maxLength" align="end">
+        {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
+    </mat-hint>
+    <mat-error>
+        {{ getErrorMessage() }}
+    </mat-error>
+</mat-form-field>

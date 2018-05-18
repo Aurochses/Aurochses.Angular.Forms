@@ -1,0 +1,13 @@
+<mat-form-field [formGroup]="formGroup" fxFlex>
+    <input matInput
+        [formControlName]="control.name"
+        [readOnly]="control.isReadonly"
+        [placeholder]="control.placeholder"
+        [required]="control.isRequired"
+        [max]="control.max"
+        [min]="control.min"
+        type="number" />
+        <mat-error>
+            {{ getErrorMessage() }}
+        </mat-error>
+   </mat-form-field>
