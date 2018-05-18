@@ -1,0 +1,7 @@
+<mat-form-field [formGroup]="formGroup" fxFlex>
+    <mat-select [formControlName]="control.name" [placeholder]="control.placeholder">
+        <mat-option *ngFor="let item of dropDownValues" [value]="item.key">
+            {{item.value}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
