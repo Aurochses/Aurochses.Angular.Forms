@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { getActionsModel } from '../decorators/actions.decorator';
@@ -11,7 +11,7 @@ import { AurFormService } from '../services/form.service';
     selector: 'aur-form',
     templateUrl: './form.component.html'
 })
-export class FormComponent<T> implements OnInit {
+export class FormComponent<T> implements OnChanges, OnInit {
 
     @Input() viewModel: T;
     @Input() component: Object;
@@ -24,6 +24,12 @@ export class FormComponent<T> implements OnInit {
     actions: ActionsModel;
 
     constructor(private formService: AurFormService) { }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (!changes['viewModel'].firstChange) {
+            this.formGroup.setValue(this.viewModel);
+        }
+    }
 
     ngOnInit(): void {
         this.formGroup = this.formService.build(this.viewModel);
