@@ -25,7 +25,7 @@ import { hasPattern, getPatternModel } from '../decorators/validation/pattern.de
 import { isRequired, getRequiredModel } from '../decorators/validation/required.decorator';
 
 @Injectable()
-export class AurFormService {
+export class FormService {
 
     constructor(private formBuilder: FormBuilder) { }
 

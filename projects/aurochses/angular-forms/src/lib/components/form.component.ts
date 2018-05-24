@@ -5,7 +5,7 @@ import { getActionsModel } from '../decorators/actions.decorator';
 
 import { ActionsModel } from '../models/actions.model';
 
-import { AurFormService } from '../services/form.service';
+import { FormService } from '../services/form.service';
 
 @Component({
     selector: 'aur-form',
@@ -23,7 +23,7 @@ export class FormComponent<T> implements OnChanges, OnInit {
 
     actions: ActionsModel;
 
-    constructor(private formService: AurFormService) { }
+    constructor(private formService: FormService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes['viewModel'].firstChange) {
