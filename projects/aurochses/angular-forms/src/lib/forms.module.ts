@@ -22,7 +22,7 @@ import { HiddenComponent } from './components/editors/hidden.component';
 import { NumberComponent } from './components/editors/number.component';
 import { TextComponent } from './components/editors/text.component';
 
-import { AurFormService } from './services/form.service';
+import { FormService } from './services/form.service';
 
 @NgModule({
     imports: [
@@ -50,7 +50,7 @@ import { AurFormService } from './services/form.service';
         TextComponent
     ],
     providers: [
-        AurFormService
+        FormService
     ],
     exports: [
         FormComponent

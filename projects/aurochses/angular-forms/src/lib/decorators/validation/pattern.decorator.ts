@@ -1,3 +1,9 @@
+class PatternMetadata {
+    public static hasPattern = `__hasPattern__`;
+    public static pattern = `__pattern__`;
+    public static patternErrorMessage = `__patternErrorMessage__`;
+}
+
 export function Pattern(pattern: RegExp, errorMessage?: string) {
     return function patternInternal(target: Object, property: string | symbol): void {
         definePattern(target, property, pattern, errorMessage);
@@ -53,10 +59,4 @@ export function getPatternModel<T>(instance: T, property: keyof T): { pattern: s
     }
 
     return null;
-}
-
-class PatternMetadata {
-    public static hasPattern = `__hasPattern__`;
-    public static pattern = `__pattern__`;
-    public static patternErrorMessage = `__patternErrorMessage__`;
 }

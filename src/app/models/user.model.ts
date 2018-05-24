@@ -21,4 +21,6 @@ export class UserModel {
     email = '';
 
     isActive = false;
+
+    num = 0;
 }

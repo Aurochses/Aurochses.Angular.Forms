@@ -25,4 +25,11 @@ export class HomeComponent implements OnInit {
     console.log('canceled');
   }
 
+  setValue(): void {
+    const newUserModel = new UserModel();
+
+    newUserModel.firstName = 'John';
+
+    this.viewModel = newUserModel;
+  }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/@aurochses/angular-forms",
+  "dest": "../../../dist/aurochses/angular-forms",
   "deleteDestPath": false,
   "lib": {
     "entryFile": "src/public_api.ts"
