@@ -1,3 +1,9 @@
+class MinMetadata {
+    public static hasMin = '__hasMin__';
+    public static min = `__min__`;
+    public static minErrorMessage = `__minErrorMessage__`;
+}
+
 export function Min(min: number | Date, errorMessage?: string) {
     return function minInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -50,10 +56,4 @@ export function getMinModel<T>(instance: T, property: keyof T): { min: number | 
     }
 
     return null;
-}
-
-class MinMetadata {
-    public static hasMin = '__hasMin__';
-    public static min = `__min__`;
-    public static minErrorMessage = `__minErrorMessage__`;
 }

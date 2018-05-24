@@ -1,3 +1,9 @@
+class CompareMetadata {
+    public static hasCompare = '__hasCompare__';
+    public static compareWithProperty = `__compareWithProperty__`;
+    public static compareErrorMessage = `__compareErrorMessage__`;
+}
+
 export function Compare(withProperty: string, errorMessage?: string) {
     return function compareInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -49,10 +55,4 @@ export function getCompareModel<T>(instance: T, property: keyof T): { withProper
     }
 
     return null;
-}
-
-class CompareMetadata {
-    public static hasCompare = '__hasCompare__';
-    public static compareWithProperty = `__compareWithProperty__`;
-    public static compareErrorMessage = `__compareErrorMessage__`;
 }

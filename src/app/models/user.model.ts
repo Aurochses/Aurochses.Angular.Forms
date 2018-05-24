@@ -1,9 +1,7 @@
-import { Actions, Display, MinLength, MaxLength, Required } from '@aurochses/angular-forms';
+import { Actions, Compare, Display, Email, MaxLength, MinLength, Password, Required } from '@aurochses/angular-forms';
 
 @Actions()
 export class UserModel {
-    isActive = false;
-
     @Display('First Name')
     firstName = '';
 
@@ -11,4 +9,18 @@ export class UserModel {
     @MinLength(5)
     @MaxLength(10)
     lastName = '';
+
+    @Password()
+    password = '';
+
+    @Password()
+    @Compare('password')
+    comparePassword = '';
+
+    @Email()
+    email = '';
+
+    isActive = false;
+
+    num = 0;
 }

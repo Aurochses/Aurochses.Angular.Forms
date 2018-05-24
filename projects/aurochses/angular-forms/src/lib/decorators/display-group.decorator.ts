@@ -1,3 +1,10 @@
+class DisplayGroupMetadata {
+    public static isGrouped = '__isGrouped__';
+    public static displayGroupName = `__groupName__`;
+    public static displayGroupOrder = `__groupOrder__`;
+    public static displayGroupDescription = `__groupDescription__`;
+}
+
 export function DisplayGroup(name: string, order: number = 0, description?: string) {
     return function displayGroupInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -40,11 +47,4 @@ export function DisplayGroup(name: string, order: number = 0, description?: stri
             }
         );
     };
-}
-
-class DisplayGroupMetadata {
-    public static isGrouped = '__isGrouped__';
-    public static displayGroupName = `__groupName__`;
-    public static displayGroupOrder = `__groupOrder__`;
-    public static displayGroupDescription = `__groupDescription__`;
 }

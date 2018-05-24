@@ -1,3 +1,11 @@
+class StringLengthMetadata {
+    public static hasStringLength = '__hasStringLength__';
+    public static stringLengthMin = `__stringLengthMin__`;
+    public static stringLengthMax = `__stringLengthMax__`;
+    public static stringLengthErrorMessage = `__stringLengthErrorMessage__`;
+}
+
+
 export function StringLength(min: number, max: number, errorMessage?: string) {
     return function stringLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -40,11 +48,4 @@ export function StringLength(min: number, max: number, errorMessage?: string) {
             }
         );
     };
-}
-
-class StringLengthMetadata {
-    public static hasStringLength = '__hasStringLength__';
-    public static stringLengthMin = `__stringLengthMin__`;
-    public static stringLengthMax = `__stringLengthMax__`;
-    public static stringLengthErrorMessage = `__stringLengthErrorMessage__`;
 }

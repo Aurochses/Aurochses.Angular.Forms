@@ -1,5 +1,6 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
     <input matInput
+    type="{{control.isPassword ? 'password' : 'text'}}"
     [formControlName]="control.name"
     [readOnly]="control.isReadonly"
     [placeholder]="control.placeholder"

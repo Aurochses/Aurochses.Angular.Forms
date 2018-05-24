@@ -1,3 +1,10 @@
+class RangeMetadata {
+    public static hasRange = '__hasRange__';
+    public static rangeMin = `__rangeMin__`;
+    public static rangeMax = `__rangeMax__`;
+    public static rangeErrorMessage = `__rangeErrorMessage__`;
+}
+
 export function Range(min: number | Date, max: number | Date, errorMessage?: string) {
     return function rangeInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -40,11 +47,4 @@ export function Range(min: number | Date, max: number | Date, errorMessage?: str
             }
         );
     };
-}
-
-class RangeMetadata {
-    public static hasRange = '__hasRange__';
-    public static rangeMin = `__rangeMin__`;
-    public static rangeMax = `__rangeMax__`;
-    public static rangeErrorMessage = `__rangeErrorMessage__`;
 }

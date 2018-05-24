@@ -14,6 +14,7 @@ export class AurFormControl extends FormControl {
     placeholder: string;
 
     hint?: { type: HintType, params: Array<{ key: string, value: string }> } | null;
+    isPassword: boolean;
     isReadonly: boolean;
 
     hasCompare: boolean;
@@ -35,6 +36,7 @@ export class AurFormControl extends FormControl {
 
         isDisabled: boolean = false,
         hint?: { type: HintType, params: Array<{ key: string, value: string }> } | null,
+        password: boolean = false,
         isReadonly: boolean = false,
 
         hasCompare: boolean = false,
@@ -57,6 +59,7 @@ export class AurFormControl extends FormControl {
         this.placeholder = displayModel.name;
 
         this.hint = hint;
+        this.isPassword = password;
         this.isReadonly = isReadonly;
 
         this.hasCompare = hasCompare;

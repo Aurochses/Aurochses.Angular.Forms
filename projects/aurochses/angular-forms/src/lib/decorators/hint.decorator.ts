@@ -1,5 +1,11 @@
 import { HintType } from '../models/hint.type';
 
+class HintMetadata {
+    public static hasHint = '__hasHint__';
+    public static hintType = '__hintType__';
+    public static hintParams = '__hintParams__';
+}
+
 export function Hint(type: HintType, params?: { key: {}, value: {} }[]) {
     return function hintInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -51,10 +57,4 @@ export function getHintModel<T>(instance: T, property: keyof T): { type: HintTyp
     }
 
     return null;
-}
-
-class HintMetadata {
-    public static hasHint = '__hasHint__';
-    public static hintType = '__hintType__';
-    public static hintParams = '__hintParams__';
 }

@@ -1,5 +1,9 @@
 import { ActionsModel } from '../models/actions.model';
 
+class ActionsMetadata {
+    public static show = `__actions__show`;
+}
+
 export function Actions(show = true) {
     return function actionsInternal(target: Object): void {
         Object.defineProperty(
@@ -24,8 +28,4 @@ export function getActionsModel<T>(instance: T): ActionsModel {
     }
 
     return model;
-}
-
-class ActionsMetadata {
-    public static show = `__actions__show`;
 }
