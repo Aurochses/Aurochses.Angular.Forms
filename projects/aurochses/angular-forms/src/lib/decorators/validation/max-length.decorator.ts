@@ -1,3 +1,9 @@
+class MaxLengthMetadata {
+    public static hasMaxLength = '__hasMaxLength__';
+    public static maxLength = '__maxLength__';
+    public static maxLengthErrorMessage = `__maxLengthErrorMessage__`;
+}
+
 export function MaxLength(length: number, errorMessage?: string) {
     return function maxLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -49,10 +55,4 @@ export function getMaxLengthModel<T>(instance: T, property: keyof T): { maxLengt
     }
 
     return null;
-}
-
-class MaxLengthMetadata {
-    public static hasMaxLength = '__hasMaxLength__';
-    public static maxLength = '__maxLength__';
-    public static maxLengthErrorMessage = `__maxLengthErrorMessage__`;
 }

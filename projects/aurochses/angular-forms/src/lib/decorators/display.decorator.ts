@@ -1,5 +1,11 @@
 import { DisplayModel } from '../models/display.model';
 
+class DisplayMetadata {
+    public static displayName = `__displayName__`;
+    public static displayOrder = `__displayOrder__`;
+    public static displayDescription = `__displayDescription__`;
+}
+
 export function Display(name: string, order: number = 0, description?: string) {
     return function displayInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -54,11 +60,4 @@ export function getDisplayModel<T>(instance: T, property: keyof T): DisplayModel
     }
 
     return model;
-}
-
-
-class DisplayMetadata {
-    public static displayName = `__displayName__`;
-    public static displayOrder = `__displayOrder__`;
-    public static displayDescription = `__displayDescription__`;
 }

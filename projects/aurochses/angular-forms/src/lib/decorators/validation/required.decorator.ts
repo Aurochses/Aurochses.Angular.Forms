@@ -1,3 +1,8 @@
+class RequiredMetadata {
+    public static isRequired = `__isRequired__`;
+    public static requiredErrorMessage = `__requiredErrorMessage__`;
+}
+
 export function Required(errorMessage?: string) {
     return function requiredInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -38,9 +43,4 @@ export function getRequiredModel<T>(instance: T, property: keyof T): { errorMess
     }
 
     return null;
-}
-
-class RequiredMetadata {
-    public static isRequired = `__isRequired__`;
-    public static requiredErrorMessage = `__requiredErrorMessage__`;
 }

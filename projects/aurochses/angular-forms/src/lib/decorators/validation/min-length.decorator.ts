@@ -1,3 +1,9 @@
+class MinLengthMetadata {
+    public static hasMinLength = '__hasMinLength__';
+    public static minLength = '__minLength__';
+    public static minLengthErrorMessage = `__minLengthErrorMessage__`;
+}
+
 export function MinLength(length: number, errorMessage?: string) {
     return function minLengthInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -49,10 +55,4 @@ export function getMinLengthModel<T>(instance: T, property: keyof T): { minLengt
     }
 
     return null;
-}
-
-class MinLengthMetadata {
-    public static hasMinLength = '__hasMinLength__';
-    public static minLength = '__minLength__';
-    public static minLengthErrorMessage = `__minLengthErrorMessage__`;
 }

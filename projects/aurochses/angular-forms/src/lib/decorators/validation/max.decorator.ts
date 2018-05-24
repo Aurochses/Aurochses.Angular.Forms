@@ -1,3 +1,9 @@
+class MaxMetadata {
+    public static hasMax = '__hasMax__';
+    public static max = `__max__`;
+    public static maxErrorMessage = `__maxErrorMessage__`;
+}
+
 export function Max(max: number | Date, errorMessage?: string) {
     return function maxInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
@@ -50,10 +56,4 @@ export function getMaxModel<T>(instance: T, property: keyof T): { max: number | 
     }
 
     return null;
-}
-
-class MaxMetadata {
-    public static hasMax = '__hasMax__';
-    public static max = `__max__`;
-    public static maxErrorMessage = `__maxErrorMessage__`;
 }
