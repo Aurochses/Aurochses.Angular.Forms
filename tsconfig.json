@@ -18,7 +18,7 @@
     ],
     "paths": {
       "@aurochses/angular-forms": [
-        //"dist/angular-forms"
+        //"dist/aurochses/angular-forms"
         "projects/aurochses/angular-forms/src/public_api.ts"
       ]
     }

@@ -76,7 +76,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "styles.scss"
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -125,7 +125,7 @@
       "root": "projects/aurochses/angular-forms",
       "sourceRoot": "projects/aurochses/angular-forms/src",
       "projectType": "library",
-      "prefix": "aur",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
