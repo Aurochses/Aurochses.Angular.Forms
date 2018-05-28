@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 import { AurFormControl } from '../models/form-control.model';
 import { AurFormGroup } from '../models/form-group.model';
 import { InputType } from '../models/input.type';
-import { HintType } from '../models/hint.type';
 
 @Component({
     selector: 'aur-form-group',
@@ -18,7 +17,6 @@ export class FormGroupComponent implements OnInit {
     controls = new Array<AurFormControl | AurFormGroup>();
 
     inputType = InputType;
-    hintType = HintType;
 
     constructor() { }
 

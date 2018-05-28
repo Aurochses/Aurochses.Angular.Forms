@@ -16,11 +16,11 @@ import { FormComponent } from './components/form.component';
 import { FormGroupComponent } from './components/form-group.component';
 import { BooleanComponent } from './components/editors/boolean.component';
 import { DateComponent } from './components/editors/date.component';
-import { DropDownComponent } from './components/editors/dropdown.component';
+import { DropdownComponent } from './components/editors/dropdown.component';
 import { StringComponent } from './components/editors/string.component';
 import { HiddenComponent } from './components/editors/hidden.component';
 import { NumberComponent } from './components/editors/number.component';
-import { TextComponent } from './components/editors/text.component';
+import { TextareaComponent } from './components/editors/textarea.component';
 
 import { FormService } from './services/form.service';
 
@@ -43,11 +43,11 @@ import { FormService } from './services/form.service';
         FormGroupComponent,
         BooleanComponent,
         DateComponent,
-        DropDownComponent,
+        DropdownComponent,
         StringComponent,
         HiddenComponent,
         NumberComponent,
-        TextComponent
+        TextareaComponent
     ],
     providers: [
         FormService

@@ -1,10 +1,13 @@
-import { hasHint } from '../decorators/hint.decorator';
 import { isHidden } from '../decorators/hidden.decorator';
+import { isDropdown } from '../decorators/dropdown.decorator';
+import { hasData, getDataModel } from '../decorators/data.decorator';
+import { DataType } from './data.type';
 
 export enum InputType {
     default = 'default',
-    hint = 'hint',
     hidden = 'hidden',
+    dropdown = 'dropdown',
+    textarea = 'textarea',
     string = 'string',
     boolean = 'boolean',
     number = 'number',
@@ -13,12 +16,20 @@ export enum InputType {
 }
 
 export function getInputType<T>(instance: T, property: keyof T): InputType {
-    if (hasHint(instance, property)) {
-        return InputType.hint;
-    }
-
     if (isHidden(instance, property)) {
         return InputType.hidden;
+    }
+
+    if (isDropdown(instance, property)) {
+        return InputType.dropdown;
+    }
+
+    if (hasData(instance, property)) {
+        const data = getDataModel(instance, property);
+
+        if (data === DataType.multilineText) {
+            return InputType.textarea;
+        }
     }
 
     if (typeof instance[property] === 'string') {
