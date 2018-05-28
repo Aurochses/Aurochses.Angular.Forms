@@ -7,20 +7,19 @@ import { AurFormControl } from '../../models/form-control.model';
     selector: 'aur-dropdown',
     templateUrl: './dropdown.component.html'
 })
-export class DropDownComponent implements OnInit {
+export class DropdownComponent implements OnInit {
 
     @Input() formGroup: FormGroup;
     @Input() control: AurFormControl;
     @Input() component: Component;
 
-    dropDownValues: Array<{ key: string, value: string }>;
+    dropdownValues: Array<{ key: any, value: string }>;
 
     ngOnInit(): void {
-        // todo: v.rodchenko: solve this!!!
-        const methodName = 'get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropDownValues';
+        const methodName = 'get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropdownValues';
 
         try {
-            this.dropDownValues = Object.getPrototypeOf(this.component)[methodName]();
+            this.dropdownValues = Object.getPrototypeOf(this.component)[methodName]();
         } catch (error) {
             console.error(methodName, error);
         }

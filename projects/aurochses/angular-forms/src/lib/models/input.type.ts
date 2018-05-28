@@ -1,9 +1,11 @@
 import { hasHint } from '../decorators/hint.decorator';
+import { isDropdown } from '../decorators/dropdown.decorator';
 import { isHidden } from '../decorators/hidden.decorator';
 
 export enum InputType {
     default = 'default',
     hint = 'hint',
+    dropdown = 'dropdown',
     hidden = 'hidden',
     string = 'string',
     boolean = 'boolean',
@@ -15,6 +17,10 @@ export enum InputType {
 export function getInputType<T>(instance: T, property: keyof T): InputType {
     if (hasHint(instance, property)) {
         return InputType.hint;
+    }
+
+    if (isDropdown(instance, property)) {
+        return InputType.dropdown;
     }
 
     if (isHidden(instance, property)) {

@@ -6,6 +6,7 @@ export * from './lib/decorators/actions.decorator';
 export * from './lib/decorators/disabled.decorator';
 export * from './lib/decorators/display-group.decorator';
 export * from './lib/decorators/display.decorator';
+export * from './lib/decorators/dropdown.decorator';
 export * from './lib/decorators/hidden.decorator';
 export * from './lib/decorators/hint.decorator';
 export * from './lib/decorators/password.decorator';

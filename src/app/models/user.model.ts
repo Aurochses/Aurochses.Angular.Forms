@@ -1,4 +1,4 @@
-import { Actions, Compare, Display, Email, MaxLength, MinLength, Password, Required } from '@aurochses/angular-forms';
+import { Actions, Compare, Display, Dropdown, Email, MaxLength, MinLength, Password, Required } from '@aurochses/angular-forms';
 
 @Actions()
 export class UserModel {
@@ -23,4 +23,8 @@ export class UserModel {
     isActive = false;
 
     num = 0;
+
+    @Display('Role')
+    @Dropdown()
+    roleId = 0;
 }
