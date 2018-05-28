@@ -8,11 +8,9 @@ import { AurFormGroup } from '../models/form-group.model';
 import { ErrorMessageModel } from '../models/error-message.model';
 
 import { InputType, getInputType } from '../models/input.type';
-import { HintType } from '../models/hint.type';
 
 import { getDisplayModel } from '../decorators/display.decorator';
 import { isDisabled } from '../decorators/disabled.decorator';
-import { getHintModel } from '../decorators/hint.decorator';
 import { isPassword } from '../decorators/password.decorator';
 import { isReadonly } from '../decorators/readonly.decorator';
 
@@ -59,7 +57,6 @@ export class FormService {
                     const errorMessages = new Array<ErrorMessageModel>();
 
                     const disabled = isDisabled(instance, property);
-                    const hint: { type: HintType, params: Array<{ key: string, value: string }> } | null = getHintModel(instance, property);
                     const password = isPassword(instance, property);
                     const readonly = isReadonly(instance, property);
 
@@ -137,7 +134,6 @@ export class FormService {
                             displayModel,
 
                             disabled,
-                            hint,
                             password,
                             readonly,
 
