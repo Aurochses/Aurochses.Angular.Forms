@@ -5,11 +5,11 @@ import { AurFormControl } from '../../models/form-control.model';
 import { ErrorMessageModel } from '../../models/error-message.model';
 
 @Component({
-    selector: 'aur-text',
-    templateUrl: './text.component.html'
+    selector: 'aur-textarea',
+    templateUrl: './textarea.component.html'
 })
 
-export class TextComponent {
+export class TextareaComponent {
 
     @Input() formGroup: FormGroup;
     @Input() control: AurFormControl;

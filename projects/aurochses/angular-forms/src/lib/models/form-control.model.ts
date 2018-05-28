@@ -1,7 +1,6 @@
 import { FormControl, ValidatorFn } from '@angular/forms';
 
 import { InputType } from './input.type';
-import { HintType } from './hint.type';
 import { DisplayModel } from './display.model';
 import { ErrorMessageModel } from './error-message.model';
 
@@ -13,7 +12,6 @@ export class AurFormControl extends FormControl {
     name: string;
     placeholder: string;
 
-    hint?: { type: HintType, params: Array<{ key: string, value: string }> } | null;
     isPassword: boolean;
     isReadonly: boolean;
 
@@ -35,7 +33,6 @@ export class AurFormControl extends FormControl {
         displayModel: DisplayModel,
 
         isDisabled: boolean = false,
-        hint?: { type: HintType, params: Array<{ key: string, value: string }> } | null,
         password: boolean = false,
         isReadonly: boolean = false,
 
@@ -58,7 +55,6 @@ export class AurFormControl extends FormControl {
         this.name = property;
         this.placeholder = displayModel.name;
 
-        this.hint = hint;
         this.isPassword = password;
         this.isReadonly = isReadonly;
 
