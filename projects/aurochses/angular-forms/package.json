@@ -1,6 +1,6 @@
 {
   "name": "@aurochses/angular-forms",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Aurochses",
   "peerDependencies": {
     "@angular/animations": "^6.0.0",

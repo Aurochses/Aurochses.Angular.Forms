@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { UserModel } from '../../models/user.model';
 
@@ -11,17 +14,29 @@ export class HomeComponent implements OnInit {
 
   viewModel: UserModel;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.viewModel = new UserModel();
   }
 
-  getRoleIdDropdownValues(): Array<{ key: number, value: string }> {
-    return [
-      { key: 1, value: 'User' },
-      { key: 2, value: 'Admin' }
-    ];
+  getRoleIdDropdownValues(): Observable<Array<{ key: string, value: string }>> {
+    return this.httpClient.get('http://api.identityserver.test.csharp.aurochses.demo.by/api/Values')
+      .pipe(
+        map(
+          (values: string[]) => {
+            const result = new Array<{ key: string, value: string }>();
+
+            values.forEach(
+              (value) => {
+                result.push({ key: value, value: value });
+              }
+            );
+
+            return result;
+          }
+        )
+      );
   }
 
   submit(item: UserModel): void {
