@@ -1,11 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
-import {UserModel} from '../../models/user.model';
-import {of as observableOf} from 'rxjs';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -14,28 +10,18 @@ import {HttpClient} from '@angular/common/http';
 export class HomeComponent implements OnInit {
 
   viewModel: UserModel;
-  values: any;
-  emitter;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.viewModel = new UserModel();
-    this.http.get('http://api.identityserver.test.csharp.aurochses.demo.by/api/Values')
-      .subscribe(val => {
-        this.values = [
-          {key: 1, value: val[0]},
-          {key: 2, value: val[1]}
-        ];
-        this.emitter.next(this.values);
-      });
   }
 
-  getRoleIdDropdownValues(): Observable<Array<{ key: number, value: string }>> {
-    return new Observable<Array<{key: number, value: string}>>(
-      e => this.emitter = e
-    );
+  getRoleIdDropdownValues(): Array<{ key: number, value: string }> {
+    return [
+      { key: 1, value: 'User' },
+      { key: 2, value: 'Admin' }
+    ];
   }
 
   submit(item: UserModel): void {

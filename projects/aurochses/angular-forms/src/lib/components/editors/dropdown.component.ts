@@ -13,13 +13,15 @@ export class DropdownComponent implements OnInit {
     @Input() control: AurFormControl;
     @Input() component: Component;
 
-    dropdownValues: Array<{ key: any, value: string }> = [];
+    dropdownValues: Array<{ key: any, value: string }>;
 
     ngOnInit(): void {
         const methodName = 'get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropdownValues';
-          Object.getPrototypeOf(this.component)[methodName]()
-            .subscribe( value =>  {
-              this.dropdownValues = value;
-              }, error => console.error(methodName, error));
+
+        try {
+            this.dropdownValues = Object.getPrototypeOf(this.component)[methodName]();
+        } catch (error) {
+            console.error(methodName, error);
+        }
     }
 }
