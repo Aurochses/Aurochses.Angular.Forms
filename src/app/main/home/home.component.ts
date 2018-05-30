@@ -1,11 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import {UserModel} from '../../models/user.model';
-import {of as observableOf} from 'rxjs';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -14,28 +10,27 @@ import {HttpClient} from '@angular/common/http';
 export class HomeComponent implements OnInit {
 
   viewModel: UserModel;
-  values: any;
-  emitter;
+  roleIdDropdownValuesLoadeded = new EventEmitter<Array<{ key: string, value: string }>>();
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.viewModel = new UserModel();
-    this.http.get('http://api.identityserver.test.csharp.aurochses.demo.by/api/Values')
-      .subscribe(val => {
-        this.values = [
-          {key: 1, value: val[0]},
-          {key: 2, value: val[1]}
-        ];
-        this.emitter.next(this.values);
-      });
-  }
 
-  getRoleIdDropdownValues(): Observable<Array<{ key: number, value: string }>> {
-    return new Observable<Array<{key: number, value: string}>>(
-      e => this.emitter = e
-    );
+    this.httpClient.get('http://api.identityserver.test.csharp.aurochses.demo.by/api/Values')
+      .subscribe(
+        (values: string[]) => {
+          const result = new Array<{ key: string, value: string }>();
+
+          values.forEach(
+            (value) => {
+              result.push({ key: value, value: value });
+            }
+          );
+
+          return this.roleIdDropdownValuesLoadeded.emit(result);
+        }
+      );
   }
 
   submit(item: UserModel): void {

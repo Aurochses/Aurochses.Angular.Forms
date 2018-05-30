@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AurFormsModule } from '@aurochses/angular-forms';
 
 import { HomeComponent } from './home/home.component';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
-    AurFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AurFormsModule
   ]
 })
 export class MainModule { }
