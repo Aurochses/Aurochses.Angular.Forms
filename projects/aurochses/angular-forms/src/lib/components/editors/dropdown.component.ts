@@ -16,14 +16,14 @@ export class DropdownComponent implements OnInit {
   dropdownValues: Array<{ key: any, value: string }> = [];
 
   ngOnInit(): void {
-    const eventName = this.control.name + 'DropdownValuesLoadeded';
+    const methodName = 'get' + this.control.name.charAt(0).toUpperCase() + this.control.name.slice(1) + 'DropdownValues';
 
-    this.component[eventName]
+    this.component[methodName]()
       .subscribe(
         (values: Array<{ key: any, value: string }>) => {
           this.dropdownValues = values;
         },
-        error => console.error(eventName, error)
+        error => console.error(methodName, error)
       );
   }
 }
