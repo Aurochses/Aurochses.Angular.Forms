@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
+
 import { UserModel } from '../../models/user.model';
 
 @Component({
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
   getRoleIdDropdownValues(): Observable<Array<{ key: string, value: string }>> {
-    return this.httpClient.get('http://api.identityserver.test.csharp.aurochses.demo.by/api/Values')
+    return this.httpClient.get(`${environment.apiUrl}/api/Values`)
       .pipe(
         map(
           (values: string[]) => {

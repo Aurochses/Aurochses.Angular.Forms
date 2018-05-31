@@ -1,3 +1,4 @@
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://api.identityserver.test.csharp.aurochses.demo.by'
 };
