@@ -3,6 +3,7 @@ import {
     Compare,
     Data,
     DataType,
+    DefaultValue,
     Display,
     Dropdown,
     Email,
@@ -34,11 +35,14 @@ export class UserModel {
 
     isActive = false;
 
+    @DefaultValue(10)
     num = 0;
 
     @Display('Role')
     @Dropdown()
-    roleId = 0;
+    @Required()
+    @DefaultValue('value1')
+    roleId = '';
 
     @Data(DataType.multilineText)
     description = '';
