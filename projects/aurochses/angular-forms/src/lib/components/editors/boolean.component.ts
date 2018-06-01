@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { AurFormControl } from '../../models/form-control.model';
@@ -7,8 +7,14 @@ import { AurFormControl } from '../../models/form-control.model';
     selector: 'aur-boolean',
     templateUrl: './boolean.component.html'
 })
-export class BooleanComponent {
+export class BooleanComponent implements OnInit {
 
     @Input() formGroup: FormGroup;
     @Input() control: AurFormControl;
+
+    ngOnInit(): void {
+        if (this.control.value === '') {
+            this.control.setValue(false);
+        }
+    }
 }

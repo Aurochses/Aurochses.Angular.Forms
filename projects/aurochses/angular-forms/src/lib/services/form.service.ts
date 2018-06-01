@@ -21,6 +21,7 @@ import { hasMinLength, getMinLengthModel } from '../decorators/validation/min-le
 import { hasMin, getMinModel } from '../decorators/validation/min.decorator';
 import { hasPattern, getPatternModel } from '../decorators/validation/pattern.decorator';
 import { isRequired, getRequiredModel } from '../decorators/validation/required.decorator';
+import { hasDefaultValue, getDefaultValueModel } from '../decorators/default-value.decorator';
 
 @Injectable()
 export class FormService {
@@ -55,6 +56,11 @@ export class FormService {
                 } else {
                     const validators = new Array<ValidatorFn>();
                     const errorMessages = new Array<ErrorMessageModel>();
+
+                    let defaultValue: any | undefined;
+                    if (hasDefaultValue(instance, property)) {
+                        defaultValue = getDefaultValueModel(instance, property);
+                    }
 
                     const disabled = isDisabled(instance, property);
                     const password = isPassword(instance, property);
@@ -128,6 +134,7 @@ export class FormService {
                         property.toString(),
                         new AurFormControl(
                             property,
+                            defaultValue,
 
                             inputType,
 

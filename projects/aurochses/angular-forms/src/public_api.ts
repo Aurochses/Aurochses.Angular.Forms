@@ -4,6 +4,7 @@
 
 export * from './lib/decorators/actions.decorator';
 export * from './lib/decorators/data.decorator';
+export * from './lib/decorators/default-value.decorator';
 export * from './lib/decorators/disabled.decorator';
 export * from './lib/decorators/display-group.decorator';
 export * from './lib/decorators/display.decorator';

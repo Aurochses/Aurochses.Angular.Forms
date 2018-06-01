@@ -22,6 +22,14 @@ export class DropdownComponent implements OnInit {
       .subscribe(
         (values: Array<{ key: any, value: string }>) => {
           this.dropdownValues = values;
+
+          if (this.control.value !== '') {
+            if (values.some((value) => value.key === this.control.value)) {
+              this.control.setValue(this.control.value);
+            } else {
+              this.control.setValue('');
+            }
+          }
         },
         error => console.error(methodName, error)
       );

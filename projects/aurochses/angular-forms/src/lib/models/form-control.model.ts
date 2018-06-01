@@ -27,6 +27,7 @@ export class AurFormControl extends FormControl {
 
     constructor(
         property: string,
+        defaultValue: any | undefined,
 
         inputType: InputType,
 
@@ -47,7 +48,13 @@ export class AurFormControl extends FormControl {
         validator?: ValidatorFn | ValidatorFn[] | null,
         errorMessages: Array<ErrorMessageModel> = new Array<ErrorMessageModel>()
     ) {
-        super({ value: '', disabled: isDisabled }, validator);
+        super(
+            {
+                value: defaultValue ? defaultValue : '',
+                disabled: isDisabled
+            },
+            validator
+        );
 
         this.inputType = inputType;
 
