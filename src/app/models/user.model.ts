@@ -8,6 +8,7 @@ import {
     Dropdown,
     Email,
     MaxLength,
+    Min,
     MinLength,
     Password,
     Required
@@ -36,6 +37,7 @@ export class UserModel {
     isActive = false;
 
     @DefaultValue(10)
+    @Min(0)
     num = 0;
 
     @Display('Role')

@@ -30,8 +30,7 @@ export function Max(max: number | Date, errorMessage?: string) {
             target,
             `${MaxMetadata.maxErrorMessage}${property.toString()}`,
             {
-                // todo: Ask v.rodchenko message for this place
-                value: errorMessage || `The field ${property.toString()} has max length of ${max} characters`,
+                value: errorMessage || `The field ${property.toString()} has max value of ${max}`,
                 configurable: false,
                 enumerable: false
             }

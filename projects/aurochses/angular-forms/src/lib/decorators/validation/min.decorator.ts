@@ -31,7 +31,7 @@ export function Min(min: number | Date, errorMessage?: string) {
             `${MinMetadata.minErrorMessage}${property.toString()}`,
             {
                 // todo: Ask v.rodchenko message for this place
-                value: errorMessage || `The field ${property.toString()} needs at least ${min} characters`,
+                value: errorMessage || `The field ${property.toString()} has min value of ${min}`,
                 configurable: false,
                 enumerable: false
             }
