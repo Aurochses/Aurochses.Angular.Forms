@@ -4,7 +4,7 @@ class MinMetadata {
     public static minErrorMessage = `__minErrorMessage__`;
 }
 
-export function Min(min: number | Date, errorMessage?: string) {
+export function Min(min: number, errorMessage?: string) {
     return function minInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,
@@ -44,7 +44,7 @@ export function hasMin<T>(instance: T, property: keyof T): boolean {
     return !!prototype[`${MinMetadata.hasMin}${property}`];
 }
 
-export function getMinModel<T>(instance: T, property: keyof T): { min: number | Date, errorMessage: string } | null {
+export function getMinModel<T>(instance: T, property: keyof T): { min: number, errorMessage: string } | null {
     if (hasMin(instance, property)) {
         const prototype = Object.getPrototypeOf(instance);
 
