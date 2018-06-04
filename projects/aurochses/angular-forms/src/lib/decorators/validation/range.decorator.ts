@@ -5,7 +5,7 @@ class RangeMetadata {
     public static rangeErrorMessage = `__rangeErrorMessage__`;
 }
 
-export function Range(min: number | Date, max: number | Date, errorMessage?: string) {
+export function Range(min: number, max: number, errorMessage?: string) {
     return function rangeInternal(target: Object, property: string | symbol): void {
         Object.defineProperty(
             target,

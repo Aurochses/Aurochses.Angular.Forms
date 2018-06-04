@@ -2,49 +2,51 @@ import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { AurFormControl } from '../models/form-control.model';
 
-export function Min(min: number | Date): ValidatorFn {
+export function Min(min: number): ValidatorFn {
     return function minInternal(control: AurFormControl): ValidationErrors | null {
 
         if (control.value == null || min == null) {
             return null;
         }
 
-        if (Number(min) && Number(control.value)) {
-            min = Number(min);
-            const value = Number(control.value);
-            return !isNaN(value) && value < min ? { 'min': { 'min': min, 'actual': control.value } } : null;
-        }
-
-        if (Date.parse(min.toString()) && Date.parse(control.value)) {
-            min = Date.parse(min.toString());
-            const value = Date.parse(control.value);
-            return !isNaN(value) && value < min ? { 'min': { 'min': min, 'actual': control.value } } : null;
-        }
-
-        return null;
+        const value = Number(control.value);
+        return !isNaN(value) && value < min ? { 'min': { 'min': min, 'actual': control.value } } : null;
     };
 }
 
-export function Max(max: number | Date): ValidatorFn {
+export function MinDate(min: Date): ValidatorFn {
+    return function minDateInternal(control: AurFormControl): ValidationErrors | null {
+
+        if (control.value == null || min == null) {
+            return null;
+        }
+
+        const value = new Date(control.value);
+        return value < min ? { 'min': { 'min': min, 'actual': control.value } } : null;
+    };
+}
+
+export function Max(max: number): ValidatorFn {
     return function (control: AurFormControl): ValidationErrors | null {
 
         if (control.value == null || max == null) {
             return null;
         }
 
-        if (Number(max) && Number(control.value)) {
-            max = Number(max);
-            const value = Number(control.value);
-            return !isNaN(value) && value > max ? { 'max': { 'max': max, 'actual': control.value } } : null;
+        const value = Number(control.value);
+        return !isNaN(value) && value > max ? { 'max': { 'max': max, 'actual': control.value } } : null;
+    };
+}
+
+export function MaxDate(max: Date): ValidatorFn {
+    return function (control: AurFormControl): ValidationErrors | null {
+
+        if (control.value == null || max == null) {
+            return null;
         }
 
-        if (Date.parse(max.toString()) && Date.parse(control.value)) {
-            max = Date.parse(max.toString());
-            const value = Date.parse(control.value);
-            return !isNaN(value) && value > max ? { 'max': { 'max': max, 'actual': control.value } } : null;
-        }
-
-        return null;
+        const value = new Date(control.value);
+        return value > max ? { 'max': { 'max': max, 'actual': control.value } } : null;
     };
 }
 
