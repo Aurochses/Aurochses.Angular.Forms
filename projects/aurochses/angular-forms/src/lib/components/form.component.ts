@@ -27,7 +27,7 @@ export class FormComponent<T> implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes['viewModel'].firstChange) {
-            this.formGroup.setValue(this.viewModel);
+            this.formGroup.patchValue(this.viewModel);
         }
     }
 
