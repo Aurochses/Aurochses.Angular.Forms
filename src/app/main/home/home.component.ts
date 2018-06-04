@@ -50,10 +50,10 @@ export class HomeComponent implements OnInit {
   }
 
   setValue(): void {
-    const newUserModel = new UserModel();
-
-    newUserModel.firstName = 'John';
-
-    this.viewModel = newUserModel;
+    this.httpClient.get<UserModel>(`/assets/user.json`).subscribe(
+      (item) => {
+        this.viewModel = item;
+      }
+    );
   }
 }
