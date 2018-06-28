@@ -8,7 +8,6 @@ import { ErrorMessageModel } from '../../models/error-message.model';
     selector: 'aur-textarea',
     templateUrl: './textarea.component.html'
 })
-
 export class TextareaComponent {
 
     @Input() formGroup: FormGroup;

@@ -1,15 +1,18 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
     <textarea matInput
-    matTextareaAutosize
-    [formControlName]="control.name"
-    [readOnly]="control.isReadonly"
-    [placeholder]="control.placeholder"
-    [required]="control.isRequired"
-    [maxlength]="control.maxLength"
-    [minlength]="control.minLength"></textarea>
+        matTextareaAutosize
+        [formControlName]="control.name"
+        [readonly]="control.isReadonly"
+        [placeholder]="control.placeholder"
+        [required]="control.isRequired"
+        [maxlength]="control.maxLength"
+        [minlength]="control.minLength">
+    </textarea>
+
     <mat-hint *ngIf="control.maxLength" align="end">
         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}
     </mat-hint>
+
     <mat-error>
         {{ getErrorMessage() }}
     </mat-error>

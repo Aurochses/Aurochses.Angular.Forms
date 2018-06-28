@@ -2,12 +2,13 @@
     <input matInput
         type="number"
         [formControlName]="control.name"
-        [readOnly]="control.isReadonly"
+        [readonly]="control.isReadonly"
         [placeholder]="control.placeholder"
         [required]="control.isRequired"
         [max]="control.max"
         [min]="control.min" />
-        <mat-error>
-            {{ getErrorMessage() }}
-        </mat-error>
-   </mat-form-field>
+
+    <mat-error>
+        {{ getErrorMessage() }}
+    </mat-error>
+</mat-form-field>

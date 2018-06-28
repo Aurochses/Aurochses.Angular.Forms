@@ -11,11 +11,12 @@ import {
     Min,
     MinLength,
     Password,
+    Readonly,
     Required
 } from '@aurochses/angular-forms';
 
 @Actions()
-export class UserModel {
+export class FormsModel {
     @Display('First Name')
     firstName = '';
 
@@ -34,6 +35,8 @@ export class UserModel {
     @Email()
     email = '';
 
+    dateOfBirth: Date = new Date();
+
     isActive = false;
 
     @DefaultValue(10)
@@ -48,4 +51,18 @@ export class UserModel {
 
     @Data(DataType.multilineText)
     description = '';
+
+    @Readonly()
+    readonlyBoolean = false;
+
+    @Readonly()
+    readonlyDate: Date = new Date();
+
+    @Readonly()
+    @Dropdown()
+    @DefaultValue('value2')
+    readonlyRoleId = '';
+
+    @Readonly()
+    readonlyString = '';
 }

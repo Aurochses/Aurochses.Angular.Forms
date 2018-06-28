@@ -8,7 +8,6 @@ import { ErrorMessageModel } from '../../models/error-message.model';
     selector: 'aur-string',
     templateUrl: './string.component.html'
 })
-
 export class StringComponent {
 
     @Input() formGroup: FormGroup;
