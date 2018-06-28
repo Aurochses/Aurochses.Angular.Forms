@@ -1,8 +1,8 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
     <mat-select
         [formControlName]="control.name"
-        [disabled]="control.isReadonly"
-        [placeholder]="control.placeholder">
+        [placeholder]="control.placeholder"
+        disabled="{{control.isReadonly}}">
 
         <mat-option *ngFor="let item of dropdownValues" [value]="item.key">
             {{item.value}}

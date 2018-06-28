@@ -1,14 +1,14 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
     <input matInput
-        [formControlName]="control.name"
         [matDatepicker]="datepicker"
-        [readonly]="control.isReadonly"
+        [formControlName]="control.name"
         [placeholder]="control.placeholder"
         [required]="control.isRequired"
         [max]="control.max"
-        [min]="control.min" />
+        [min]="control.min"
+        disabled="{{control.isReadonly}}" />
 
-    <mat-datepicker-toggle *ngIf="!control.isReadonly" matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
 
     <mat-datepicker #datepicker></mat-datepicker>
 

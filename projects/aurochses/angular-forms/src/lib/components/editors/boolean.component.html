@@ -1,7 +1,7 @@
 <div [formGroup]="formGroup" fxFlex>
     <mat-checkbox
         [formControlName]="control.name"
-        [disabled]="control.isReadonly">
+        disabled="{{control.isReadonly}}">
         {{ control.placeholder }}
     </mat-checkbox>
 </div>
