@@ -1,12 +1,14 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
     <input matInput
-        type="{{control.isPassword ? 'password' : 'text'}}"
+        type="{{control.isPassword ? (hide ? 'password' : 'text') : 'text'}}"
         [formControlName]="control.name"
         [readonly]="control.isReadonly"
         [placeholder]="control.placeholder"
         [required]="control.isRequired"
         [maxlength]="control.maxLength"
         [minlength]="control.minLength" />
+
+    <mat-icon *ngIf="control.isPassword" matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
 
     <mat-hint *ngIf="control.maxLength" align="end">
         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}

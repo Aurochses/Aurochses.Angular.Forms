@@ -13,6 +13,8 @@ export class StringComponent {
     @Input() formGroup: FormGroup;
     @Input() control: AurFormControl;
 
+    hide = true;
+
     getErrorMessage(): string {
         return (<AurFormControl>this.formGroup.controls[this.control.name]).errorMessages
             .filter((errorMessage: ErrorMessageModel) => this.formGroup.controls[this.control.name].hasError(errorMessage.type))
