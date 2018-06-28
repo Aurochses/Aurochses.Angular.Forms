@@ -1,4 +1,6 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
+    <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
+
     <textarea matInput
         matTextareaAutosize
         [formControlName]="control.name"
@@ -8,6 +10,8 @@
         [maxlength]="control.maxLength"
         [minlength]="control.minLength">
     </textarea>
+
+    <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
 
     <mat-hint *ngIf="control.maxLength" align="end">
         {{ formGroup.controls[control.name].value.length }} / {{ control.maxLength }}

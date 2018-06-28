@@ -12,6 +12,9 @@ export class AurFormControl extends FormControl {
     name: string;
     placeholder: string;
 
+    prefix: string;
+    suffix: string;
+
     isPassword: boolean;
     isReadonly: boolean;
 
@@ -31,6 +34,7 @@ export class AurFormControl extends FormControl {
 
         inputType: InputType,
 
+        index: number,
         displayModel: DisplayModel,
 
         isDisabled: boolean = false,
@@ -58,9 +62,12 @@ export class AurFormControl extends FormControl {
 
         this.inputType = inputType;
 
-        this.key = displayModel.order;
+        this.key = displayModel.order ? displayModel.order : index;
         this.name = property;
         this.placeholder = displayModel.name;
+
+        this.prefix = displayModel.prefix;
+        this.suffix = displayModel.suffix;
 
         this.isPassword = password;
         this.isReadonly = isReadonly;

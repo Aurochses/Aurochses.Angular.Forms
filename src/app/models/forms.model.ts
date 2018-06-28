@@ -32,6 +32,7 @@ export class FormsModel {
     @Compare('password')
     comparePassword = '';
 
+    @Display('Email', undefined, undefined, '@', ' mm')
     @Email()
     email = '';
 
@@ -43,7 +44,7 @@ export class FormsModel {
     @Min(0)
     num = 0;
 
-    @Display('Role')
+    @Display('Role', 90)
     @Dropdown()
     @Required()
     @DefaultValue('value1')

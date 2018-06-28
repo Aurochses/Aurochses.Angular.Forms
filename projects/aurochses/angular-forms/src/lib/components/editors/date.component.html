@@ -1,4 +1,6 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
+    <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
+
     <input matInput
         [matDatepicker]="datepicker"
         [formControlName]="control.name"
@@ -9,8 +11,9 @@
         disabled="{{control.isReadonly}}" />
 
     <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-
     <mat-datepicker #datepicker></mat-datepicker>
+
+    <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
 
     <mat-error>
         {{ getErrorMessage() }}

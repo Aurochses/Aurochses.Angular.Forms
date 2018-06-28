@@ -1,4 +1,6 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
+    <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
+
     <mat-select
         [formControlName]="control.name"
         [placeholder]="control.placeholder"
@@ -9,4 +11,6 @@
         </mat-option>
 
     </mat-select>
+
+    <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
 </mat-form-field>

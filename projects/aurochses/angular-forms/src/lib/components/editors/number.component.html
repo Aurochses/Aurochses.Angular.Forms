@@ -1,4 +1,6 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
+    <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
+
     <input matInput
         type="number"
         [formControlName]="control.name"
@@ -7,6 +9,8 @@
         [required]="control.isRequired"
         [max]="control.max"
         [min]="control.min" />
+
+    <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
 
     <mat-error>
         {{ getErrorMessage() }}

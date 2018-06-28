@@ -9,6 +9,7 @@ import { ErrorMessageModel } from '../models/error-message.model';
 
 import { InputType, getInputType } from '../models/input.type';
 
+import { getDisplayGroupModel } from '../decorators/display-group.decorator';
 import { getDisplayModel } from '../decorators/display.decorator';
 import { isDisabled } from '../decorators/disabled.decorator';
 import { isPassword } from '../decorators/password.decorator';
@@ -39,21 +40,26 @@ export class FormService {
     private iterate<T>(instance: T) {
         const formGroup: FormGroup = new FormGroup({});
 
+        let i = 0;
         for (const property in instance) {
             if (instance.hasOwnProperty(property)) {
                 const inputType = getInputType(instance, property);
-                const displayModel = getDisplayModel(instance, property);
 
                 if (inputType === InputType.object) {
+                    const displayGroupModel = getDisplayGroupModel(instance, property);
+
                     formGroup.addControl(
                         property.toString(),
                         new AurFormGroup(
                             this.formBuilder.group(this.iterate(instance[property])).controls,
                             inputType,
-                            displayModel
+                            i,
+                            displayGroupModel
                         )
                     );
                 } else {
+                    const displayModel = getDisplayModel(instance, property);
+
                     const validators = new Array<ValidatorFn>();
                     const errorMessages = new Array<ErrorMessageModel>();
 
@@ -138,6 +144,7 @@ export class FormService {
 
                             inputType,
 
+                            i,
                             displayModel,
 
                             disabled,
@@ -157,6 +164,8 @@ export class FormService {
                         )
                     );
                 }
+
+                i++;
             }
         }
 
