@@ -2,7 +2,7 @@
     <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
 
     <input matInput
-        type="{{control.isPassword ? (hide ? 'password' : 'text') : 'text'}}"
+        type="{{ control.isPassword ? (hide ? 'password' : 'text') : 'text' }}"
         [formControlName]="control.name"
         [readonly]="control.isReadonly"
         [placeholder]="control.placeholder"

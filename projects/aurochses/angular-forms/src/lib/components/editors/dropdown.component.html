@@ -4,7 +4,7 @@
     <mat-select
         [formControlName]="control.name"
         [placeholder]="control.placeholder"
-        disabled="{{control.isReadonly}}">
+        disabled="{{ control.isReadonly }}">
 
         <mat-option *ngFor="let item of dropdownValues" [value]="item.key">
             {{item.value}}

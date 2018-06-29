@@ -11,6 +11,8 @@ import { InputType, getInputType } from '../models/input.type';
 
 import { getDisplayGroupModel } from '../decorators/display-group.decorator';
 import { getDisplayModel } from '../decorators/display.decorator';
+import { hasDefaultValue, getDefaultValueModel } from '../decorators/default-value.decorator';
+import { hasNumber, getNumberStep } from '../decorators/number.decorator';
 import { isDisabled } from '../decorators/disabled.decorator';
 import { isPassword } from '../decorators/password.decorator';
 import { isReadonly } from '../decorators/readonly.decorator';
@@ -22,7 +24,6 @@ import { hasMinLength, getMinLengthModel } from '../decorators/validation/min-le
 import { hasMin, getMinModel } from '../decorators/validation/min.decorator';
 import { hasPattern, getPatternModel } from '../decorators/validation/pattern.decorator';
 import { isRequired, getRequiredModel } from '../decorators/validation/required.decorator';
-import { hasDefaultValue, getDefaultValueModel } from '../decorators/default-value.decorator';
 
 @Injectable()
 export class FormService {
@@ -66,6 +67,11 @@ export class FormService {
                     let defaultValue: any | undefined;
                     if (hasDefaultValue(instance, property)) {
                         defaultValue = getDefaultValueModel(instance, property);
+                    }
+
+                    let numberStep: number | undefined;
+                    if (hasNumber(instance, property)) {
+                        numberStep = getNumberStep(instance, property);
                     }
 
                     const disabled = isDisabled(instance, property);
@@ -146,6 +152,8 @@ export class FormService {
 
                             i,
                             displayModel,
+
+                            numberStep,
 
                             disabled,
                             password,

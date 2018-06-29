@@ -8,7 +8,8 @@
         [placeholder]="control.placeholder"
         [required]="control.isRequired"
         [max]="control.max"
-        [min]="control.min" />
+        [min]="control.min"
+        step="{{ control.numberStep ? control.numberStep : 1 }}" />
 
     <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
 

@@ -10,6 +10,7 @@ import {
     MaxLength,
     Min,
     MinLength,
+    Number,
     Password,
     Readonly,
     Required
@@ -41,6 +42,7 @@ export class FormsModel {
     isActive = false;
 
     @DefaultValue(10)
+    @Number(0.1)
     @Min(0)
     num = 0;
 
