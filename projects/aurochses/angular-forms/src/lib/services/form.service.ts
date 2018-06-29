@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { Compare, Max, Min } from './validators';
+import { Compare, Range } from './validators';
 
 import { AurFormControl } from '../models/form-control.model';
 import { AurFormGroup } from '../models/form-group.model';
@@ -23,6 +23,7 @@ import { hasMax, getMaxModel } from '../decorators/validation/max.decorator';
 import { hasMinLength, getMinLengthModel } from '../decorators/validation/min-length.decorator';
 import { hasMin, getMinModel } from '../decorators/validation/min.decorator';
 import { hasPattern, getPatternModel } from '../decorators/validation/pattern.decorator';
+import { hasRange, getRangeModel } from '../decorators/validation/range.decorator';
 import { isRequired, getRequiredModel } from '../decorators/validation/required.decorator';
 
 @Injectable()
@@ -95,12 +96,12 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('maxlength', maxLengthModel.errorMessage));
                     }
 
-                    let max: number | Date | null = null;
+                    let max: number | null = null;
                     if (hasMax(instance, property)) {
                         const maxModel = getMaxModel(instance, property);
 
                         max = maxModel.max;
-                        validators.push(Max(max));
+                        validators.push(Validators.max(max));
                         errorMessages.push(new ErrorMessageModel('max', maxModel.errorMessage));
                     }
 
@@ -113,12 +114,12 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('minlength', minLengthModel.errorMessage));
                     }
 
-                    let min: number | Date | null = null;
+                    let min: number | null = null;
                     if (hasMin(instance, property)) {
                         const minModel = getMinModel(instance, property);
 
                         min = minModel.min;
-                        validators.push(Min(min));
+                        validators.push(Validators.min(min));
                         errorMessages.push(new ErrorMessageModel('min', minModel.errorMessage));
                     }
 
@@ -130,7 +131,15 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('pattern', patternModel.errorMessage));
                     }
 
-                    // todo: v.rodchenko: range decorator???
+                    const range = hasRange(instance, property);
+                    if (range) {
+                        const rangeModel = getRangeModel(instance, property);
+
+                        min = rangeModel.min;
+                        max = rangeModel.max;
+                        validators.push(Range(rangeModel.min, rangeModel.max));
+                        errorMessages.push(new ErrorMessageModel('range', rangeModel.errorMessage));
+                    }
 
                     const required = isRequired(instance, property);
                     if (required) {

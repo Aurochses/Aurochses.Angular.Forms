@@ -21,9 +21,9 @@ export class AurFormControl extends FormControl {
 
     hasCompare: boolean;
     maxLength?: number | null;
-    max?: number | Date | null;
+    max?: number | null;
     minLength?: number | null;
-    min?: number | Date | null;
+    min?: number | null;
     hasPattern: boolean;
     isRequired: boolean;
 
@@ -46,9 +46,9 @@ export class AurFormControl extends FormControl {
 
         hasCompare: boolean = false,
         maxLength?: number | null,
-        max?: number | Date | null,
+        max?: number | null,
         minLength?: number | null,
-        min?: number | Date | null,
+        min?: number | null,
         hasPattern: boolean = false,
         isRequired: boolean = false,
 

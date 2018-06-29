@@ -12,6 +12,7 @@ import {
     MinLength,
     Number,
     Password,
+    Range,
     Readonly,
     Required
 } from '@aurochses/angular-forms';
@@ -42,9 +43,12 @@ export class FormsModel {
     isActive = false;
 
     @DefaultValue(10)
-    @Number(0.1)
     @Min(0)
     num = 0;
+
+    @Number(0.1)
+    @Range(0, 1)
+    numRange = 0;
 
     @Display('Role', 90)
     @Dropdown()
