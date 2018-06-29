@@ -48,3 +48,23 @@ export function Range(min: number, max: number, errorMessage?: string) {
         );
     };
 }
+
+export function hasRange<T>(instance: T, property: keyof T): boolean {
+    const prototype = Object.getPrototypeOf(instance);
+
+    return !!prototype[`${RangeMetadata.hasRange}${property}`];
+}
+
+export function getRangeModel<T>(instance: T, property: keyof T): { min: number, max: number, errorMessage: string } | null {
+    if (hasRange(instance, property)) {
+        const prototype = Object.getPrototypeOf(instance);
+
+        return {
+            min: prototype[`${RangeMetadata.rangeMin}${property}`],
+            max: prototype[`${RangeMetadata.rangeMax}${property}`],
+            errorMessage: prototype[`${RangeMetadata.rangeErrorMessage}${property}`]
+        };
+    }
+
+    return null;
+}

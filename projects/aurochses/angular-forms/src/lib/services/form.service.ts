@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { Compare, Max, Min } from './validators';
+import { Compare, Range } from './validators';
 
 import { AurFormControl } from '../models/form-control.model';
 import { AurFormGroup } from '../models/form-group.model';
@@ -9,7 +9,10 @@ import { ErrorMessageModel } from '../models/error-message.model';
 
 import { InputType, getInputType } from '../models/input.type';
 
+import { getDisplayGroupModel } from '../decorators/display-group.decorator';
 import { getDisplayModel } from '../decorators/display.decorator';
+import { hasDefaultValue, getDefaultValueModel } from '../decorators/default-value.decorator';
+import { hasNumber, getNumberStep } from '../decorators/number.decorator';
 import { isDisabled } from '../decorators/disabled.decorator';
 import { isPassword } from '../decorators/password.decorator';
 import { isReadonly } from '../decorators/readonly.decorator';
@@ -20,8 +23,8 @@ import { hasMax, getMaxModel } from '../decorators/validation/max.decorator';
 import { hasMinLength, getMinLengthModel } from '../decorators/validation/min-length.decorator';
 import { hasMin, getMinModel } from '../decorators/validation/min.decorator';
 import { hasPattern, getPatternModel } from '../decorators/validation/pattern.decorator';
+import { hasRange, getRangeModel } from '../decorators/validation/range.decorator';
 import { isRequired, getRequiredModel } from '../decorators/validation/required.decorator';
-import { hasDefaultValue, getDefaultValueModel } from '../decorators/default-value.decorator';
 
 @Injectable()
 export class FormService {
@@ -39,27 +42,37 @@ export class FormService {
     private iterate<T>(instance: T) {
         const formGroup: FormGroup = new FormGroup({});
 
+        let i = 0;
         for (const property in instance) {
             if (instance.hasOwnProperty(property)) {
                 const inputType = getInputType(instance, property);
-                const displayModel = getDisplayModel(instance, property);
 
                 if (inputType === InputType.object) {
+                    const displayGroupModel = getDisplayGroupModel(instance, property);
+
                     formGroup.addControl(
                         property.toString(),
                         new AurFormGroup(
                             this.formBuilder.group(this.iterate(instance[property])).controls,
                             inputType,
-                            displayModel
+                            i,
+                            displayGroupModel
                         )
                     );
                 } else {
+                    const displayModel = getDisplayModel(instance, property);
+
                     const validators = new Array<ValidatorFn>();
                     const errorMessages = new Array<ErrorMessageModel>();
 
                     let defaultValue: any | undefined;
                     if (hasDefaultValue(instance, property)) {
                         defaultValue = getDefaultValueModel(instance, property);
+                    }
+
+                    let numberStep: number | undefined;
+                    if (hasNumber(instance, property)) {
+                        numberStep = getNumberStep(instance, property);
                     }
 
                     const disabled = isDisabled(instance, property);
@@ -83,12 +96,12 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('maxlength', maxLengthModel.errorMessage));
                     }
 
-                    let max: number | Date | null = null;
+                    let max: number | null = null;
                     if (hasMax(instance, property)) {
                         const maxModel = getMaxModel(instance, property);
 
                         max = maxModel.max;
-                        validators.push(Max(max));
+                        validators.push(Validators.max(max));
                         errorMessages.push(new ErrorMessageModel('max', maxModel.errorMessage));
                     }
 
@@ -101,12 +114,12 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('minlength', minLengthModel.errorMessage));
                     }
 
-                    let min: number | Date | null = null;
+                    let min: number | null = null;
                     if (hasMin(instance, property)) {
                         const minModel = getMinModel(instance, property);
 
                         min = minModel.min;
-                        validators.push(Min(min));
+                        validators.push(Validators.min(min));
                         errorMessages.push(new ErrorMessageModel('min', minModel.errorMessage));
                     }
 
@@ -118,7 +131,15 @@ export class FormService {
                         errorMessages.push(new ErrorMessageModel('pattern', patternModel.errorMessage));
                     }
 
-                    // todo: v.rodchenko: range decorator???
+                    const range = hasRange(instance, property);
+                    if (range) {
+                        const rangeModel = getRangeModel(instance, property);
+
+                        min = rangeModel.min;
+                        max = rangeModel.max;
+                        validators.push(Range(rangeModel.min, rangeModel.max));
+                        errorMessages.push(new ErrorMessageModel('range', rangeModel.errorMessage));
+                    }
 
                     const required = isRequired(instance, property);
                     if (required) {
@@ -138,7 +159,10 @@ export class FormService {
 
                             inputType,
 
+                            i,
                             displayModel,
+
+                            numberStep,
 
                             disabled,
                             password,
@@ -157,6 +181,8 @@ export class FormService {
                         )
                     );
                 }
+
+                i++;
             }
         }
 

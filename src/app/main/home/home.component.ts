@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { UserModel } from '../../models/user.model';
+import { FormsModel } from '../../models/forms.model';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +14,12 @@ import { UserModel } from '../../models/user.model';
 })
 export class HomeComponent implements OnInit {
 
-  viewModel: UserModel;
+  viewModel: FormsModel;
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.viewModel = new UserModel();
+    this.viewModel = new FormsModel();
   }
 
   getRoleIdDropdownValues(): Observable<Array<{ key: string, value: string }>> {
@@ -41,7 +41,26 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  submit(item: UserModel): void {
+  getReadonlyRoleIdDropdownValues(): Observable<Array<{ key: string, value: string }>> {
+    return this.httpClient.get(`${environment.apiUrl}/api/Values`)
+      .pipe(
+        map(
+          (values: string[]) => {
+            const result = new Array<{ key: string, value: string }>();
+
+            values.forEach(
+              (value) => {
+                result.push({ key: value, value: value });
+              }
+            );
+
+            return result;
+          }
+        )
+      );
+  }
+
+  submit(item: FormsModel): void {
     console.log(item);
   }
 
@@ -50,7 +69,7 @@ export class HomeComponent implements OnInit {
   }
 
   setValue(): void {
-    this.httpClient.get<UserModel>(`/assets/user.json`).subscribe(
+    this.httpClient.get<FormsModel>(`/assets/forms.model.json`).subscribe(
       (item) => {
         this.viewModel = item;
       }

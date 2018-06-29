@@ -1,13 +1,19 @@
 <mat-form-field [formGroup]="formGroup" fxFlex>
+    <span *ngIf="control.prefix" matPrefix>{{ control.prefix }}</span>
+
     <input matInput
         type="number"
         [formControlName]="control.name"
-        [readOnly]="control.isReadonly"
+        [readonly]="control.isReadonly"
         [placeholder]="control.placeholder"
         [required]="control.isRequired"
         [max]="control.max"
-        [min]="control.min" />
-        <mat-error>
-            {{ getErrorMessage() }}
-        </mat-error>
-   </mat-form-field>
+        [min]="control.min"
+        step="{{ control.numberStep ? control.numberStep : 1 }}" />
+
+    <span *ngIf="control.suffix" matSuffix>{{ control.suffix }}</span>
+
+    <mat-error>
+        {{ getErrorMessage() }}
+    </mat-error>
+</mat-form-field>
