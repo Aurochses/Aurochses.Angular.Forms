@@ -8,11 +8,12 @@ import { ErrorMessageModel } from '../../models/error-message.model';
     selector: 'aur-string',
     templateUrl: './string.component.html'
 })
-
 export class StringComponent {
 
     @Input() formGroup: FormGroup;
     @Input() control: AurFormControl;
+
+    hide = true;
 
     getErrorMessage(): string {
         return (<AurFormControl>this.formGroup.controls[this.control.name]).errorMessages

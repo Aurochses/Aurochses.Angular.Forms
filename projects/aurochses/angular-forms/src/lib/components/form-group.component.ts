@@ -18,8 +18,6 @@ export class FormGroupComponent implements OnInit {
 
     inputType = InputType;
 
-    constructor() { }
-
     ngOnInit() {
         for (const control in this.formGroup.controls) {
             if (this.formGroup.controls.hasOwnProperty(control)) {

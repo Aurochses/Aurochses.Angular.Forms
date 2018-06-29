@@ -1,7 +1,7 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { InputType } from './input.type';
-import { DisplayModel } from './display.model';
+import { DisplayGroupModel } from './display-group.model';
 
 export class AurFormGroup extends FormGroup {
 
@@ -9,11 +9,19 @@ export class AurFormGroup extends FormGroup {
     key: number;
     placeholder: string;
 
-    constructor(ctrls: { [key: string]: AbstractControl }, inputType: InputType, displayModel: DisplayModel) {
-        super(ctrls);
+    constructor(
+        controls: { [key: string]: AbstractControl },
+
+        inputType: InputType,
+
+        index: number,
+        displayGroupModel: DisplayGroupModel
+    ) {
+        super(controls);
 
         this.inputType = inputType;
-        this.key = displayModel.order;
-        this.placeholder = displayModel.name;
+
+        this.key = displayGroupModel.order ? displayGroupModel.order : index;
+        this.placeholder = displayGroupModel.name;
     }
 }
