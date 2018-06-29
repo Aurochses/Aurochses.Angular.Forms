@@ -9,7 +9,8 @@ import { FormService } from '../services/form.service';
 
 @Component({
     selector: 'aur-form',
-    templateUrl: './form.component.html'
+    templateUrl: './form.component.html',
+    styleUrls: ['form.component.scss'],
 })
 export class FormComponent<T> implements OnChanges, OnInit {
 
